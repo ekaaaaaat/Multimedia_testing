@@ -191,6 +191,23 @@
   color: #b2ebf2;
 }
 
+.lesson-image-container {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.image-caption {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  color: #666;
+  font-style: italic;
+  text-align: center;
+}
+
+.lesson-detail-page.dark .image-caption {
+  color: #b2ebf2;
+}
+
 .lesson-detail-page.dark .text-section p {
   color: #e0e0e0;
 }
