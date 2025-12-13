@@ -173,7 +173,20 @@ const SnakeGame = () => {
 
   return (
     <div className={`snake-game-container ${theme}`}>
-      <div className="game-header">
+      {!isStarted ? (
+        <div className="game-start-screen">
+          <div className="start-screen-content">
+            <h2>Готовы начать игру? <CatIcon variant={0} size="1.5em" /></h2>
+            <p>Управляйте котиком с помощью клавиш W, A, S, D</p>
+            <p>Нажмите Пробел для паузы</p>
+            <button className="start-game-button" onClick={startGame}>
+              ▶️ Начать игру
+            </button>
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className="game-header">
         <div className="game-score">
           <span>Очки: <strong>{score}</strong></span>
         </div>
