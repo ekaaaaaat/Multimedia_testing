@@ -892,6 +892,21 @@ const LessonDetail = () => {
                   </div>
                 </div>
               ))}
+              {id === '1' && (
+                <div className="start-test-section">
+                  <div className="start-test-content">
+                    <h3>Готовы проверить свои знания?</h3>
+                    <p>Пройдите итоговый тест по уроку, чтобы закрепить изученный материал</p>
+                    <button 
+                      className="start-test-button"
+                      onClick={() => handleSectionChange('test')}
+                    >
+                      <CatIcon variant={1} size="1.5em" />
+                      <span>Начать тест</span>
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}
