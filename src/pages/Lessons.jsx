@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useTheme } from '../contexts/ThemeContext'
 import { useProgress } from '../contexts/ProgressContext'
+import CatIcon from '../components/CatIcon'
 import './Lessons.css'
 
 const lessons = [
@@ -62,7 +63,7 @@ const Lessons = () => {
   return (
     <div className={`lessons-page ${theme}`}>
       <section className="lessons-header">
-        <h1>Уроки по тестированию программного обеспечения 🐱</h1>
+        <h1>Уроки по тестированию программного обеспечения <CatIcon variant={1} size="1.5em" /></h1>
         <p className="lessons-intro">
           Изучайте тестирование программного обеспечения через интерактивные уроки. 
           Каждый урок содержит теоретический материал, примеры, мультимедийные материалы, 
@@ -123,7 +124,7 @@ const Lessons = () => {
                 </ul>
               </div>
               <Link to={`/lessons/${lesson.id}`} className="lesson-button">
-                {progress.completed ? 'Повторить урок 🐱' : 'Начать урок 🐱'}
+                {progress.completed ? <>Повторить урок <CatIcon variant={2} size="1em" /></> : <>Начать урок <CatIcon variant={0} size="1em" /></>}
               </Link>
             </div>
           )

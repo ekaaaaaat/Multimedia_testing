@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useTheme } from '../contexts/ThemeContext'
+import CatIcon from '../components/CatIcon'
 import './Home.css'
 
 const Home = () => {
@@ -8,7 +9,7 @@ const Home = () => {
   return (
     <div className={`home-page ${theme}`}>
       <section className="hero-section">
-        <h2>Добро пожаловать в мультимедийное пособие 🐱</h2>
+        <h2>Добро пожаловать в мультимедийное пособие <CatIcon variant={0} size="1.5em" /></h2>
         <h3>по тестированию программного обеспечения</h3>
         <p className="hero-description">
           Интерактивное мультимедийное пособие для изучения основ, методов и практик тестирования программного обеспечения. 

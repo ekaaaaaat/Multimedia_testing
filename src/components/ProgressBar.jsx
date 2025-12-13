@@ -1,4 +1,5 @@
 import { useProgress } from '../contexts/ProgressContext'
+import CatIcon from './CatIcon'
 import './ProgressBar.css'
 
 const ProgressBar = ({ lessonId }) => {
@@ -19,7 +20,7 @@ const ProgressBar = ({ lessonId }) => {
   return (
     <div className="progress-bar-container">
       <div className="progress-header">
-        <span className="progress-title">🐱 Прогресс урока</span>
+        <span className="progress-title"><CatIcon variant={2} size="1.2em" /> Прогресс урока</span>
         <span className="progress-percentage">{percentage}%</span>
       </div>
       <div className="progress-bar">
@@ -42,7 +43,7 @@ const ProgressBar = ({ lessonId }) => {
       </div>
       {progress.completed && (
         <div className="completion-badge">
-          🎉 Урок завершен! 🐱
+          🎉 Урок завершен! <CatIcon variant={3} size="1.2em" />
         </div>
       )}
     </div>

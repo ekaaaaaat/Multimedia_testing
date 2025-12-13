@@ -11,7 +11,7 @@ const MediaPlayer = ({ type, src, title, mediaId }) => {
     return (
       <div className={`media-player ${theme}`}>
         <div className="media-header">
-          {title && <h3>{title} 🐱</h3>}
+          {title && <h3>{title} <CatIcon variant={0} size="1.2em" /></h3>}
           {mediaId && <LikeButton mediaId={mediaId} mediaType="video" />}
         </div>
         <div className="video-wrapper">
@@ -33,7 +33,7 @@ const MediaPlayer = ({ type, src, title, mediaId }) => {
     return (
       <div className={`media-player ${theme}`}>
         <div className="media-header">
-          {title && <h3>{title} 🐱</h3>}
+          {title && <h3>{title} <CatIcon variant={0} size="1.2em" /></h3>}
           {mediaId && <LikeButton mediaId={mediaId} mediaType="audio" />}
         </div>
         <div className="audio-wrapper">
@@ -55,7 +55,7 @@ const MediaPlayer = ({ type, src, title, mediaId }) => {
     return (
       <div className={`media-player ${theme}`}>
         <div className="media-header">
-          {title && <h3>{title} 🐱</h3>}
+          {title && <h3>{title} <CatIcon variant={0} size="1.2em" /></h3>}
           {mediaId && <LikeButton mediaId={mediaId} mediaType="image" />}
         </div>
         <div className="image-wrapper">

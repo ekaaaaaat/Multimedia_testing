@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useTheme } from '../contexts/ThemeContext'
+import CatIcon from './CatIcon'
 import './Layout.css'
 
 const Layout = ({ children }) => {
@@ -13,7 +14,10 @@ const Layout = ({ children }) => {
       <header className="app-header">
         <div className="header-container">
           <Link to="/" className="logo">
-            <h1>Тестирование программного обеспечения 🐱</h1>
+            <h1>
+              Тестирование программного обеспечения{' '}
+              <CatIcon variant={0} size="1.2em" />
+            </h1>
             <span className="subtitle">Мультимедийное пособие</span>
           </Link>
           <button className="theme-toggle" onClick={toggleTheme}>
@@ -65,7 +69,7 @@ const Layout = ({ children }) => {
       </main>
 
       <footer className="app-footer">
-        <p>&copy; 2024 Мультимедийное пособие по тестированию программного обеспечения. Все права защищены. 🐱</p>
+        <p>&copy; 2024 Мультимедийное пособие по тестированию программного обеспечения. Все права защищены. <CatIcon variant={1} size="1em" /></p>
       </footer>
     </div>
   )

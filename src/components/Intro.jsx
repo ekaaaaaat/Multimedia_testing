@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useTheme } from '../contexts/ThemeContext'
+import CatIcon from './CatIcon'
 import './Intro.css'
 
 const Intro = ({ onComplete }) => {
@@ -79,12 +80,14 @@ const Intro = ({ onComplete }) => {
             <div className="paw-print">🐾</div>
           </div>
           <div className={`cat-face stage-${stage}`}>
-            <div className="cat-emoji">🐱</div>
+            <div className="cat-emoji">
+              <CatIcon variant={0} size="8rem" />
+            </div>
           </div>
         </div>
         
         <div className={`intro-content stage-${stage >= 1 ? '1' : '0'}`}>
-          <h1 className="intro-title">Добро пожаловать! 🐱</h1>
+          <h1 className="intro-title">Добро пожаловать! <CatIcon variant={1} size="2rem" /></h1>
           <p className="intro-text">Кот размещает контент лапками...</p>
         </div>
 

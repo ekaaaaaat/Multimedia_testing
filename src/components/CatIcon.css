@@ -1,0 +1,24 @@
+.cat-icon {
+  display: inline-block;
+  vertical-align: middle;
+  filter: brightness(0) saturate(100%);
+  transition: all 0.3s ease;
+}
+
+.cat-icon.light {
+  filter: brightness(0) saturate(100%) invert(28%) sepia(67%) saturate(1000%) hue-rotate(140deg) brightness(0.8);
+}
+
+.cat-icon.dark {
+  filter: brightness(0) saturate(100%) invert(75%) sepia(50%) saturate(200%) hue-rotate(150deg) brightness(1.1);
+}
+
+.cat-icon:hover {
+  transform: scale(1.1);
+  filter: brightness(0) saturate(100%) invert(28%) sepia(67%) saturate(1000%) hue-rotate(140deg) brightness(1);
+}
+
+.cat-icon.dark:hover {
+  filter: brightness(0) saturate(100%) invert(75%) sepia(50%) saturate(200%) hue-rotate(150deg) brightness(1.3);
+}
+

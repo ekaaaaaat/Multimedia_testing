@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useTheme } from '../contexts/ThemeContext'
 import MediaPlayer from '../components/MediaPlayer'
+import CatIcon from '../components/CatIcon'
 import './Media.css'
 
 const Media = () => {
@@ -55,7 +56,7 @@ const Media = () => {
   return (
     <div className={`media-page ${theme}`}>
       <section className="media-header">
-        <h1>Медиа материалы 🐱</h1>
+        <h1>Медиа материалы <CatIcon variant={3} size="1.5em" /></h1>
         <p className="media-intro">
           Коллекция мультимедийных материалов по тестированию программного обеспечения. 
           Здесь вы найдете видео, аудио, изображения и анимации для лучшего понимания материала. 

@@ -6,6 +6,7 @@ import InteractiveTest from '../components/InteractiveTest'
 import MediaPlayer from '../components/MediaPlayer'
 import ProgressBar from '../components/ProgressBar'
 import LessonNavigation from '../components/LessonNavigation'
+import CatIcon from '../components/CatIcon'
 import './LessonDetail.css'
 
 const LessonDetail = () => {
@@ -478,7 +479,7 @@ const LessonDetail = () => {
   return (
     <div className={`lesson-detail-page ${theme}`}>
       <div className="lesson-nav">
-        <Link to="/lessons" className="back-link">← Вернуться к урокам 🐱</Link>
+        <Link to="/lessons" className="back-link">← Вернуться к урокам <CatIcon variant={0} size="1em" /></Link>
         <div className="section-tabs">
           <button 
             className={currentSection === 'content' ? 'active' : ''}
@@ -573,7 +574,7 @@ const LessonDetail = () => {
 
         {currentSection === 'test' && (
           <div className="lesson-test">
-            <h1>Итоговый тест по уроку 🐱</h1>
+            <h1>Итоговый тест по уроку <CatIcon variant={1} size="1.5em" /></h1>
             <InteractiveTest 
               questions={testQuestions} 
               onComplete={handleTestComplete}
@@ -583,9 +584,11 @@ const LessonDetail = () => {
 
         {currentSection === 'game' && (
           <div className="lesson-game">
-            <h1>Обучающая игра 🐱</h1>
+            <h1>Обучающая игра <CatIcon variant={2} size="1.5em" /></h1>
             <div className="game-placeholder">
-              <div className="cat-emoji-large">🐱</div>
+              <div className="cat-emoji-large">
+                <CatIcon variant={3} size="5rem" />
+              </div>
               <p>🎮 Игра будет добавлена позже</p>
               <p>Здесь будет интересная игра для закрепления материала!</p>
             </div>
@@ -594,7 +597,7 @@ const LessonDetail = () => {
 
         {currentSection === 'music' && (
           <div className="lesson-music">
-            <h1>Расслабляющая музыка 🐱</h1>
+            <h1>Расслабляющая музыка <CatIcon variant={4} size="1.5em" /></h1>
             <MediaPlayer 
               type="audio" 
               src="" 
