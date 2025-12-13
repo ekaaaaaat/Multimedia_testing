@@ -24,6 +24,7 @@ import animation404Cat from '../assets/animation/404Cat.gif'
 
 // Import videos
 import videoLesson1 from '../assets/videos/Lesson1.mp4'
+import videoLesson2 from '../assets/videos/Lesson2.mp4'
 
 // Import music
 import musicLesson1 from '../assets/music/relaxing_music_lesson1.mp3'
