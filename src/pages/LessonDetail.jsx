@@ -669,10 +669,6 @@ const LessonDetail = () => {
                             // Обычный параграф без маркера
                             const trimmed = para.trim()
                             
-                          } else {
-                            // Обычный параграф без маркера
-                            const trimmed = para.trim()
-                            
                             // Проверяем, является ли весь параграф заголовком **текст** или **текст:**
                             if (trimmed.match(/^\*\*[^*]+\*\*:?\s*$/)) {
                               const text = trimmed.replace(/\*\*/g, '').replace(/:\s*$/, ':').trim()
