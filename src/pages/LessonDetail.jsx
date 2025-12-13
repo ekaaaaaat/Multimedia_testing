@@ -924,10 +924,16 @@ const LessonDetail = () => {
                   <p className="music-hint">💡 Включите фоновую музыку, чтобы она играла на всем сайте</p>
                   <button 
                     className="play-global-music-btn"
-                    onClick={() => playMusic(musicLesson1, 'Расслабляющая музыка для изучения материала')}
-                    disabled={currentTrack && currentTrack.src === musicLesson1 && isPlaying}
+                    onClick={() => {
+                      try {
+                        playMusic(musicLesson1, 'Расслабляющая музыка для изучения материала')
+                      } catch (error) {
+                        console.error('Error playing music:', error)
+                      }
+                    }}
+                    disabled={currentTrack && String(currentTrack.src) === String(musicLesson1) && isPlaying}
                   >
-                    {currentTrack && currentTrack.src === musicLesson1 && isPlaying ? (
+                    {currentTrack && String(currentTrack.src) === String(musicLesson1) && isPlaying ? (
                       <>🎵 Музыка играет</>
                     ) : (
                       <>▶️ Включить фоновую музыку</>
