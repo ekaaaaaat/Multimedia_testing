@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useTheme } from '../contexts/ThemeContext'
 import { useProgress } from '../contexts/ProgressContext'
 import { useMusic } from '../contexts/MusicContext'
@@ -29,10 +29,39 @@ const LessonDetail = () => {
   const { updateLessonProgress, markLessonComplete, getLessonProgress } = useProgress()
   const { playMusic, currentTrack, isPlaying } = useMusic()
   const [currentSection, setCurrentSection] = useState('content')
+  const contentEndRef = useRef(null)
+  const contentContainerRef = useRef(null)
 
+  // Отслеживание прокрутки до конца контента
   useEffect(() => {
-    updateLessonProgress(id, 'contentViewed', true)
-  }, [id, updateLessonProgress])
+    if (currentSection !== 'content' || !contentEndRef.current) {
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Пользователь доскроллил до конца контента
+            updateLessonProgress(id, 'contentViewed', true)
+            observer.disconnect()
+          }
+        })
+      },
+      {
+        threshold: 0.5, // Считаем видимым, когда видно хотя бы 50% элемента
+        rootMargin: '0px'
+      }
+    )
+
+    if (contentEndRef.current) {
+      observer.observe(contentEndRef.current)
+    }
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [id, currentSection, updateLessonProgress])
 
   const handleSectionChange = (section) => {
     setCurrentSection(section)
@@ -907,6 +936,8 @@ const LessonDetail = () => {
                   </div>
                 </div>
               )}
+              {/* Маркер конца контента для отслеживания прокрутки */}
+              <div ref={contentEndRef} className="content-end-marker" />
             </div>
           </div>
         )}

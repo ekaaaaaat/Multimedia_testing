@@ -364,6 +364,14 @@
   box-shadow: 0 6px 20px rgba(128, 222, 234, 0.4);
 }
 
+.content-end-marker {
+  height: 1px;
+  width: 100%;
+  margin-top: 2rem;
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .media-section,
 .inline-test-section {
   margin-top: 2rem;
