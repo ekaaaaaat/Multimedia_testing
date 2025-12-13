@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useTheme } from '../contexts/ThemeContext'
 import { useAnimation } from '../contexts/AnimationContext'
+import { useProgress } from '../contexts/ProgressContext'
 import GlobalMusicPlayer from './GlobalMusicPlayer'
 import CatIcon from './CatIcon'
 import './Layout.css'
@@ -8,7 +9,9 @@ import './Layout.css'
 const Layout = ({ children }) => {
   const { theme, toggleTheme } = useTheme()
   const { animationsEnabled, toggleAnimations } = useAnimation()
+  const { getTotalProgress } = useProgress()
   const location = useLocation()
+  const totalProgress = getTotalProgress()
 
   const isActive = (path) => location.pathname === path
 
@@ -24,6 +27,18 @@ const Layout = ({ children }) => {
             <span className="subtitle">Мультимедийное пособие</span>
           </Link>
           <div className="header-controls">
+            <div className="header-progress">
+              <div className="progress-info">
+                <span className="progress-label">📊 Прогресс:</span>
+                <span className="progress-value">{totalProgress}%</span>
+              </div>
+              <div className="progress-bar-mini">
+                <div 
+                  className="progress-fill-mini"
+                  style={{ width: `${totalProgress}%` }}
+                />
+              </div>
+            </div>
             <button 
               className="animation-toggle" 
               onClick={toggleAnimations}
