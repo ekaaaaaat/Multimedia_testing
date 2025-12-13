@@ -17,6 +17,7 @@ const SnakeGame = () => {
   const [gameOver, setGameOver] = useState(false)
   const [score, setScore] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
+  const [isStarted, setIsStarted] = useState(false)
   const directionRef = useRef(INITIAL_DIRECTION)
   const gameLoopRef = useRef(null)
 
@@ -43,7 +44,7 @@ const SnakeGame = () => {
   }, [snake])
 
   const moveSnake = useCallback(() => {
-    if (gameOver || isPaused) return
+    if (gameOver || isPaused || !isStarted) return
 
     setSnake(prevSnake => {
       const head = { ...prevSnake[0] }
@@ -79,7 +80,7 @@ const SnakeGame = () => {
   }, [food, gameOver, isPaused, checkCollision, generateFood])
 
   useEffect(() => {
-    if (!gameOver && !isPaused) {
+    if (!gameOver && !isPaused && isStarted) {
       gameLoopRef.current = setInterval(moveSnake, GAME_SPEED)
     } else {
       if (gameLoopRef.current) {
@@ -92,10 +93,10 @@ const SnakeGame = () => {
         clearInterval(gameLoopRef.current)
       }
     }
-  }, [moveSnake, gameOver, isPaused])
+  }, [moveSnake, gameOver, isPaused, isStarted])
 
   const handleKeyPress = useCallback((e) => {
-    if (gameOver) return
+    if (gameOver || !isStarted) return
 
     const key = e.key
     const newDirection = { ...directionRef.current }
@@ -144,6 +145,12 @@ const SnakeGame = () => {
     }
   }, [handleKeyPress])
 
+  const startGame = () => {
+    setIsStarted(true)
+    setIsPaused(false)
+    setGameOver(false)
+  }
+
   const resetGame = () => {
     setSnake(INITIAL_SNAKE)
     setFood(generateFood())
@@ -152,7 +159,17 @@ const SnakeGame = () => {
     setGameOver(false)
     setScore(0)
     setIsPaused(false)
+    setIsStarted(true)
   }
+
+  // Остановка игры при размонтировании компонента
+  useEffect(() => {
+    return () => {
+      if (gameLoopRef.current) {
+        clearInterval(gameLoopRef.current)
+      }
+    }
+  }, [])
 
   return (
     <div className={`snake-game-container ${theme}`}>
@@ -225,18 +242,20 @@ const SnakeGame = () => {
         </div>
       )}
 
-      <div className="game-footer">
-        <button className="reset-button" onClick={resetGame}>
-          ↻ Начать заново
-        </button>
-        <button 
-          className="pause-button" 
-          onClick={() => setIsPaused(prev => !prev)}
-          disabled={gameOver}
-        >
-          {isPaused ? '▶️ Продолжить' : '⏸️ Пауза'}
-        </button>
-      </div>
+          <div className="game-footer">
+            <button className="reset-button" onClick={resetGame}>
+              ↻ Начать заново
+            </button>
+            <button 
+              className="pause-button" 
+              onClick={() => setIsPaused(prev => !prev)}
+              disabled={gameOver}
+            >
+              {isPaused ? '▶️ Продолжить' : '⏸️ Пауза'}
+            </button>
+          </div>
+        </>
+      )}
     </div>
   )
 }
