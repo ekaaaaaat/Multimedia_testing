@@ -9,11 +9,14 @@ import './Layout.css'
 const Layout = ({ children }) => {
   const { theme, toggleTheme } = useTheme()
   const { animationsEnabled, toggleAnimations } = useAnimation()
-  const { getTotalProgress } = useProgress()
+  const { getTotalProgress, progress } = useProgress()
   const location = useLocation()
   const totalProgress = getTotalProgress()
 
   const isActive = (path) => location.pathname === path
+  
+  // Пересчитываем прогресс при изменении progress
+  const currentProgress = getTotalProgress()
 
   return (
     <div className={`app ${theme}`}>
@@ -30,12 +33,12 @@ const Layout = ({ children }) => {
             <div className="header-progress">
               <div className="progress-info">
                 <span className="progress-label">📊 Прогресс:</span>
-                <span className="progress-value">{totalProgress}%</span>
+                <span className="progress-value">{currentProgress}%</span>
               </div>
               <div className="progress-bar-mini">
                 <div 
                   className="progress-fill-mini"
-                  style={{ width: `${totalProgress}%` }}
+                  style={{ width: `${currentProgress}%` }}
                 />
               </div>
             </div>
