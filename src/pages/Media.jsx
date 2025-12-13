@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useTheme } from '../contexts/ThemeContext'
+import { useMusic } from '../contexts/MusicContext'
 import MediaPlayer from '../components/MediaPlayer'
 import CatIcon from '../components/CatIcon'
 import './Media.css'
@@ -14,6 +15,7 @@ import imageDiagram from '../assets/images/diagram.png'
 
 const Media = () => {
   const { theme } = useTheme()
+  const { playMusic, currentTrack, isPlaying } = useMusic()
   const [activeTab, setActiveTab] = useState('video')
 
   const videos = [
@@ -126,6 +128,22 @@ const Media = () => {
                     mediaId={`audio-${audio.id}`}
                   />
                   <p className="media-description">{audio.description}</p>
+                  {audio.src && (
+                    <div className="global-music-controls">
+                      <p className="music-hint">💡 Включите фоновую музыку, чтобы она играла на всем сайте</p>
+                      <button 
+                        className="play-global-music-btn"
+                        onClick={() => playMusic(audio.src, audio.title)}
+                        disabled={currentTrack && currentTrack.src === audio.src && isPlaying}
+                      >
+                        {currentTrack && currentTrack.src === audio.src && isPlaying ? (
+                          <>🎵 Музыка играет</>
+                        ) : (
+                          <>▶️ Включить фоновую музыку</>
+                        )}
+                      </button>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
