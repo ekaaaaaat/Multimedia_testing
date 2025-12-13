@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useTheme } from '../contexts/ThemeContext'
 import LikeButton from './LikeButton'
+import CatIcon from './CatIcon'
 import './MediaPlayer.css'
 
 const MediaPlayer = ({ type, src, title, mediaId }) => {
