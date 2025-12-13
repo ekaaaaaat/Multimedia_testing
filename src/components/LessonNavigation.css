@@ -1,0 +1,125 @@
+.lesson-navigation {
+  position: sticky;
+  top: 120px;
+  width: 250px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  max-height: calc(100vh - 150px);
+  overflow-y: auto;
+  margin-right: 2rem;
+  flex-shrink: 0;
+}
+
+.lesson-navigation.dark {
+  background: rgba(0, 77, 64, 0.95);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.lesson-navigation h3 {
+  color: #00695c;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.lesson-navigation.dark h3 {
+  color: #80deea;
+  border-bottom-color: #00897b;
+}
+
+.nav-sections {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-sections li {
+  margin-bottom: 0.5rem;
+}
+
+.nav-item {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  border-left: 3px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.lesson-navigation.dark .nav-item {
+  color: #e0e0e0;
+}
+
+.nav-item:hover {
+  background: rgba(0, 137, 123, 0.1);
+  border-left-color: #00897b;
+  color: #00897b;
+  transform: translateX(5px);
+}
+
+.lesson-navigation.dark .nav-item:hover {
+  background: rgba(0, 172, 193, 0.2);
+  border-left-color: #00acc1;
+  color: #80deea;
+}
+
+.nav-item.active {
+  background: rgba(0, 137, 123, 0.15);
+  border-left-color: #00897b;
+  color: #00695c;
+  font-weight: 600;
+}
+
+.lesson-navigation.dark .nav-item.active {
+  background: rgba(0, 172, 193, 0.3);
+  border-left-color: #00acc1;
+  color: #80deea;
+}
+
+.nav-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.nav-text {
+  flex: 1;
+  line-height: 1.4;
+}
+
+/* Скроллбар */
+.lesson-navigation::-webkit-scrollbar {
+  width: 6px;
+}
+
+.lesson-navigation::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.lesson-navigation::-webkit-scrollbar-thumb {
+  background: #00897b;
+  border-radius: 3px;
+}
+
+.lesson-navigation::-webkit-scrollbar-thumb:hover {
+  background: #00695c;
+}
+
+@media (max-width: 1024px) {
+  .lesson-navigation {
+    display: none;
+  }
+}
+
