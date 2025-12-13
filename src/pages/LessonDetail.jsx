@@ -526,8 +526,10 @@ const LessonDetail = () => {
                             // Если есть открытый маркер, закрываем его
                             if (currentMarker) {
                               result.push(
-                                <ContentMarker key={`marker-${pIndex}`} type={currentMarker}>
-                                  {markerContent.map((item, idx) => item)}
+                                <ContentMarker key={`marker-${pIndex}-close`} type={currentMarker}>
+                                  {markerContent.map((item, idx) => (
+                                    <div key={idx}>{item}</div>
+                                  ))}
                                 </ContentMarker>
                               )
                               markerContent = []
@@ -544,61 +546,89 @@ const LessonDetail = () => {
                             
                             currentMarker = markerType
                             
-                            // Убираем пометку из текста и добавляем в контент маркера
-                            const textWithoutMarker = paragraph.replace(/(📚|💡|🔍|📊|❓)\s*/g, '').trim()
+                            // Убираем пометку из текста
+                            let textWithoutMarker = paragraph.replace(/(📚|💡|🔍|📊|❓)\s*/g, '').trim()
                             
-                            if (textWithoutMarker.startsWith('**') && textWithoutMarker.endsWith('**')) {
-                              const text = textWithoutMarker.replace(/\*\*/g, '')
-                              markerContent.push(<h3 key={pIndex} className="content-subtitle">{text}</h3>)
-                            } else if (textWithoutMarker.startsWith('•') || textWithoutMarker.startsWith('*')) {
+                            // Обрабатываем текст
+                            if (textWithoutMarker.startsWith('**') && textWithoutMarker.includes('**')) {
+                              // Заголовок с определением
+                              const match = textWithoutMarker.match(/\*\*(.*?)\*\*(.*)/)
+                              if (match) {
+                                markerContent.push(<h3 key={`h3-${pIndex}`} className="content-subtitle">{match[1]}</h3>)
+                                if (match[2].trim()) {
+                                  markerContent.push(<p key={`p-${pIndex}`}>{match[2].trim()}</p>)
+                                }
+                              } else {
+                                const text = textWithoutMarker.replace(/\*\*/g, '')
+                                markerContent.push(<h3 key={`h3-${pIndex}`} className="content-subtitle">{text}</h3>)
+                              }
+                            } else if (textWithoutMarker.startsWith('•') || (textWithoutMarker.startsWith('*') && !textWithoutMarker.startsWith('**'))) {
                               const items = textWithoutMarker.split(/\n(?=•|\*)/).filter(item => item.trim())
                               markerContent.push(
-                                <ul key={pIndex} className="content-list">
+                                <ul key={`ul-${pIndex}`} className="content-list">
                                   {items.map((item, iIndex) => (
                                     <li key={iIndex}>{item.replace(/^[•*]\s*/, '')}</li>
                                   ))}
                                 </ul>
                               )
-                            } else {
-                              markerContent.push(<p key={pIndex}>{textWithoutMarker}</p>)
+                            } else if (textWithoutMarker.startsWith('>')) {
+                              markerContent.push(<blockquote key={`quote-${pIndex}`} className="content-quote">{textWithoutMarker.replace(/^>\s*/, '')}</blockquote>)
+                            } else if (textWithoutMarker) {
+                              markerContent.push(<p key={`p-${pIndex}`}>{textWithoutMarker}</p>)
                             }
                           } else if (currentMarker) {
-                            // Продолжаем собирать контент для маркера
-                            if (paragraph.startsWith('**') && paragraph.endsWith('**')) {
-                              const text = paragraph.replace(/\*\*/g, '')
-                              markerContent.push(<h3 key={pIndex} className="content-subtitle">{text}</h3>)
-                            } else if (paragraph.startsWith('•') || paragraph.startsWith('*')) {
+                            // Продолжаем собирать контент для маркера до следующего маркера или конца
+                            if (paragraph.startsWith('**') && paragraph.includes('**')) {
+                              const match = paragraph.match(/\*\*(.*?)\*\*(.*)/)
+                              if (match) {
+                                markerContent.push(<h3 key={`h3-${pIndex}`} className="content-subtitle">{match[1]}</h3>)
+                                if (match[2].trim()) {
+                                  markerContent.push(<p key={`p-${pIndex}`}>{match[2].trim()}</p>)
+                                }
+                              } else {
+                                const text = paragraph.replace(/\*\*/g, '')
+                                markerContent.push(<h3 key={`h3-${pIndex}`} className="content-subtitle">{text}</h3>)
+                              }
+                            } else if (paragraph.startsWith('•') || (paragraph.startsWith('*') && !paragraph.startsWith('**'))) {
                               const items = paragraph.split(/\n(?=•|\*)/).filter(item => item.trim())
                               markerContent.push(
-                                <ul key={pIndex} className="content-list">
+                                <ul key={`ul-${pIndex}`} className="content-list">
                                   {items.map((item, iIndex) => (
                                     <li key={iIndex}>{item.replace(/^[•*]\s*/, '')}</li>
                                   ))}
                                 </ul>
                               )
                             } else if (paragraph.startsWith('>')) {
-                              markerContent.push(<blockquote key={pIndex} className="content-quote">{paragraph.replace(/^>\s*/, '')}</blockquote>)
-                            } else {
-                              markerContent.push(<p key={pIndex}>{paragraph}</p>)
+                              markerContent.push(<blockquote key={`quote-${pIndex}`} className="content-quote">{paragraph.replace(/^>\s*/, '')}</blockquote>)
+                            } else if (paragraph.trim()) {
+                              markerContent.push(<p key={`p-${pIndex}`}>{paragraph}</p>)
                             }
                           } else {
                             // Обычный параграф без маркера
-                            if (paragraph.startsWith('**') && paragraph.endsWith('**')) {
-                              const text = paragraph.replace(/\*\*/g, '')
-                              result.push(<h3 key={pIndex} className="content-subtitle">{text}</h3>)
-                            } else if (paragraph.startsWith('•') || paragraph.startsWith('*')) {
+                            if (paragraph.startsWith('**') && paragraph.includes('**')) {
+                              const match = paragraph.match(/\*\*(.*?)\*\*(.*)/)
+                              if (match) {
+                                result.push(<h3 key={`h3-${pIndex}`} className="content-subtitle">{match[1]}</h3>)
+                                if (match[2].trim()) {
+                                  result.push(<p key={`p-${pIndex}`}>{match[2].trim()}</p>)
+                                }
+                              } else {
+                                const text = paragraph.replace(/\*\*/g, '')
+                                result.push(<h3 key={`h3-${pIndex}`} className="content-subtitle">{text}</h3>)
+                              }
+                            } else if (paragraph.startsWith('•') || (paragraph.startsWith('*') && !paragraph.startsWith('**'))) {
                               const items = paragraph.split(/\n(?=•|\*)/).filter(item => item.trim())
                               result.push(
-                                <ul key={pIndex} className="content-list">
+                                <ul key={`ul-${pIndex}`} className="content-list">
                                   {items.map((item, iIndex) => (
                                     <li key={iIndex}>{item.replace(/^[•*]\s*/, '')}</li>
                                   ))}
                                 </ul>
                               )
                             } else if (paragraph.startsWith('>')) {
-                              result.push(<blockquote key={pIndex} className="content-quote">{paragraph.replace(/^>\s*/, '')}</blockquote>)
-                            } else {
-                              result.push(<p key={pIndex}>{paragraph}</p>)
+                              result.push(<blockquote key={`quote-${pIndex}`} className="content-quote">{paragraph.replace(/^>\s*/, '')}</blockquote>)
+                            } else if (paragraph.trim()) {
+                              result.push(<p key={`p-${pIndex}`}>{paragraph}</p>)
                             }
                           }
                         })
@@ -607,7 +637,9 @@ const LessonDetail = () => {
                         if (currentMarker && markerContent.length > 0) {
                           result.push(
                             <ContentMarker key="marker-final" type={currentMarker}>
-                              {markerContent.map((item, idx) => item)}
+                              {markerContent.map((item, idx) => (
+                                <div key={idx}>{item}</div>
+                              ))}
                             </ContentMarker>
                           )
                         }
