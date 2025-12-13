@@ -514,7 +514,6 @@ const LessonDetail = () => {
                     <div className="section-content">
                       {(() => {
                         const paragraphs = section.content.split('\n\n')
-                        const result = []
                         
                         // Функция для обработки одного параграфа
                         const processParagraph = (para, index) => {
@@ -616,48 +615,48 @@ const LessonDetail = () => {
                             }
                           } else {
                             // Обычный параграф без маркера
+                            const trimmed = para.trim()
+                            
+                          } else {
                             // Обычный параграф без маркера
-                            const trimmed = paragraph.trim()
+                            const trimmed = para.trim()
                             
                             // Проверяем, является ли весь параграф заголовком **текст** или **текст:**
                             if (trimmed.match(/^\*\*[^*]+\*\*:?\s*$/)) {
                               const text = trimmed.replace(/\*\*/g, '').replace(/:\s*$/, ':').trim()
-                              result.push(<h3 key={`h3-${pIndex}`} className="content-subtitle">{text}</h3>)
+                              return <h3 key={`h3-${index}`} className="content-subtitle">{text}</h3>
                             }
                             // Проверяем заголовок с дополнительным текстом **текст** остальной текст
                             else if (trimmed.match(/^\*\*[^*]+\*\*/)) {
                               const match = trimmed.match(/^\*\*([^*]+)\*\*(.*)/)
                               if (match) {
-                                const headerText = match[1].trim()
-                                result.push(<h3 key={`h3-${pIndex}`} className="content-subtitle">{headerText}</h3>)
+                                const elements = [<h3 key={`h3-${index}`} className="content-subtitle">{match[1]}</h3>]
                                 if (match[2].trim()) {
-                                  // Обрабатываем остальной текст, убирая звездочки
-                                  const remainingText = match[2].trim().replace(/\*\*/g, '')
-                                  if (remainingText) {
-                                    result.push(<p key={`p-${pIndex}`}>{remainingText}</p>)
+                                  const remainingText = match[2].trim()
+                                  if (remainingText.includes('**')) {
+                                    const processedText = remainingText.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                                    elements.push(<p key={`p-${index}`} dangerouslySetInnerHTML={{ __html: processedText }} />)
+                                  } else {
+                                    elements.push(<p key={`p-${index}`}>{remainingText}</p>)
                                   }
                                 }
+                                return <>{elements}</>
                               }
                             }
                             // Список
                             else if (trimmed.startsWith('•') || (trimmed.startsWith('*') && !trimmed.startsWith('**'))) {
-                              const lines = paragraph.split('\n')
+                              const lines = para.split('\n')
                               const items = []
                               
                               lines.forEach(line => {
                                 const trimmedLine = line.trim()
                                 if (trimmedLine.startsWith('•') || (trimmedLine.startsWith('*') && !trimmedLine.startsWith('**'))) {
-                                  // Убираем маркер списка
                                   let cleanItem = trimmedLine.replace(/^[•*]\s*/, '').trim()
                                   
-                                  // Обрабатываем **текст** внутри элементов списка - заменяем на жирный
                                   if (cleanItem.includes('**')) {
-                                    // Заменяем **текст** на <strong>текст</strong>
                                     cleanItem = cleanItem.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
                                     items.push({ text: cleanItem, isHtml: true })
                                   } else {
-                                    // Убираем одиночные звездочки в начале (не форматирование)
-                                    cleanItem = cleanItem.replace(/^\*\s+/, '')
                                     if (cleanItem) {
                                       items.push({ text: cleanItem, isHtml: false })
                                     }
@@ -666,8 +665,8 @@ const LessonDetail = () => {
                               })
                               
                               if (items.length > 0) {
-                                result.push(
-                                  <ul key={`ul-${pIndex}`} className="content-list">
+                                return (
+                                  <ul key={`ul-${index}`} className="content-list">
                                     {items.map((item, iIndex) => (
                                       <li key={iIndex}>
                                         {item.isHtml ? (
@@ -683,41 +682,29 @@ const LessonDetail = () => {
                             }
                             // Цитата
                             else if (trimmed.startsWith('>')) {
-                              const quoteText = trimmed.replace(/^>\s*/, '').replace(/\*\*/g, '')
-                              result.push(<blockquote key={`quote-${pIndex}`} className="content-quote">{quoteText}</blockquote>)
+                              const quoteText = trimmed.replace(/^>\s*/, '')
+                              if (quoteText.includes('**')) {
+                                const processedText = quoteText.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                                return <blockquote key={`quote-${index}`} className="content-quote" dangerouslySetInnerHTML={{ __html: processedText }} />
+                              }
+                              return <blockquote key={`quote-${index}`} className="content-quote">{quoteText}</blockquote>
                             }
-                            // Обычный текст - убираем все звездочки форматирования
+                            // Обычный текст
                             else if (trimmed) {
-                              // Убираем **текст** заменяя на <strong>текст</strong>, но если весь текст в звездочках - это заголовок
-                              let cleanText = trimmed
-                              
-                              // Если есть **текст**, заменяем на жирный
-                              if (cleanText.includes('**')) {
-                                cleanText = cleanText.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-                                result.push(<p key={`p-${pIndex}`} dangerouslySetInnerHTML={{ __html: cleanText }} />)
+                              if (trimmed.includes('**')) {
+                                const processedText = trimmed.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                                return <p key={`p-${index}`} dangerouslySetInnerHTML={{ __html: processedText }} />
                               } else {
-                                // Убираем одиночные звездочки в начале строки (не форматирование)
-                                cleanText = cleanText.replace(/^\*\s+/, '')
-                                if (cleanText) {
-                                  result.push(<p key={`p-${pIndex}`}>{cleanText}</p>)
-                                }
+                                return <p key={`p-${index}`}>{trimmed}</p>
                               }
                             }
+                            
+                            return null
                           }
-                        })
-                        
-                        // Закрываем последний маркер, если он открыт
-                        if (currentMarker && markerContent.length > 0) {
-                          result.push(
-                            <ContentMarker key="marker-final" type={currentMarker}>
-                              {markerContent.map((item, idx) => (
-                                <div key={idx}>{item}</div>
-                              ))}
-                            </ContentMarker>
-                          )
                         }
                         
-                        return result
+                        // Обрабатываем все параграфы
+                        return paragraphs.map((para, pIndex) => processParagraph(para, pIndex)).filter(item => item !== null)
                       })()}
                       {section.images && section.images.map((image, imgIndex) => (
                         <div key={imgIndex} className="lesson-image-container">
