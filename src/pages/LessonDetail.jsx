@@ -1361,7 +1361,8 @@ const LessonDetail = () => {
                         
                         // Обрабатываем все параграфы
                         return paragraphs.map((para, pIndex) => processParagraph(para, pIndex)).filter(item => item !== null)
-                      })()}
+                      })()
+                          )}
                       {section.videos && section.videos.map((video, vidIndex) => (
                         <div key={vidIndex} className="lesson-video-container">
                           <MediaPlayer
