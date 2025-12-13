@@ -10,6 +10,7 @@ import LessonNavigation from '../components/LessonNavigation'
 import CatIcon from '../components/CatIcon'
 import ContentMarker from '../components/ContentMarker'
 import SnakeGame from '../components/SnakeGame'
+import MouseGame from '../components/MouseGame'
 import PieChart from '../components/PieChart'
 import './LessonDetail.css'
 
@@ -1450,6 +1451,13 @@ const LessonDetail = () => {
                   Отдохните и расслабьтесь, играя в классическую змейку! Управляйте котиком с помощью стрелок на клавиатуре.
                 </p>
                 <SnakeGame />
+              </div>
+            ) : id === '2' ? (
+              <div className="game-content">
+                <p className="game-intro">
+                  Поймайте как можно больше мышек! Кликайте по ним, пока они не убежали. У вас есть 30 секунд!
+                </p>
+                <MouseGame />
               </div>
             ) : (
               <div className="game-placeholder">
