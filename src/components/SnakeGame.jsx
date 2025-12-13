@@ -77,7 +77,7 @@ const SnakeGame = () => {
 
       return newSnake
     })
-  }, [food, gameOver, isPaused, checkCollision, generateFood])
+  }, [food, gameOver, isPaused, isStarted, checkCollision, generateFood])
 
   useEffect(() => {
     if (!gameOver && !isPaused && isStarted) {
