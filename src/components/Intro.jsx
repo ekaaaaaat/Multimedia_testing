@@ -31,28 +31,28 @@ const Intro = ({ onComplete }) => {
     } else if (stage === 2) {
       // Правая лапа размещает второй элемент
       const timer = setTimeout(() => {
-        setPlacedItems([...placedItems, contentItems[1]])
+        setPlacedItems(prev => [...prev, contentItems[1]])
         setStage(3)
       }, 1000)
       return () => clearTimeout(timer)
     } else if (stage === 3) {
       // Левая лапа размещает третий элемент
       const timer = setTimeout(() => {
-        setPlacedItems([...placedItems, contentItems[2]])
+        setPlacedItems(prev => [...prev, contentItems[2]])
         setStage(4)
       }, 1000)
       return () => clearTimeout(timer)
     } else if (stage === 4) {
       // Правая лапа размещает четвертый элемент
       const timer = setTimeout(() => {
-        setPlacedItems([...placedItems, contentItems[3]])
+        setPlacedItems(prev => [...prev, contentItems[3]])
         setStage(5)
       }, 1000)
       return () => clearTimeout(timer)
     } else if (stage === 5) {
       // Кот размещает последний элемент в центре
       const timer = setTimeout(() => {
-        setPlacedItems([...placedItems, contentItems[4]])
+        setPlacedItems(prev => [...prev, contentItems[4]])
         setStage(6)
       }, 1000)
       return () => clearTimeout(timer)
@@ -66,7 +66,7 @@ const Intro = ({ onComplete }) => {
       }, 500)
       return () => clearTimeout(timer)
     }
-  }, [stage, placedItems])
+  }, [stage, onComplete])
 
   return (
     <div className={`intro-overlay ${theme} ${showContent ? 'fade-out' : ''}`}>
