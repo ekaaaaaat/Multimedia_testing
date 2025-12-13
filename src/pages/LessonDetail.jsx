@@ -17,6 +17,7 @@ import imageMarkII from '../assets/images/Mark_II.png'
 import imageFirstBug from '../assets/images/First_Computer_Bug,_1947.jpg'
 import imageModelHierarchy from '../assets/images/model_ierarhi.png'
 import imageDiagram from '../assets/images/diagram.png'
+import imageGagarin from '../assets/images/gagarin.png'
 import animation404Cat from '../assets/animation/404Cat.gif'
 
 // Import videos
