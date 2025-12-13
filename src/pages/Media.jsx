@@ -6,6 +6,7 @@ import './Media.css'
 
 // Import media from Lesson 1
 import videoLesson1 from '../assets/videos/Lesson1.mp4'
+import musicLesson1 from '../assets/music/relaxing_music_lesson1.mp3'
 import imageMarkII from '../assets/images/Mark_II.png'
 import imageFirstBug from '../assets/images/First_Computer_Bug,_1947.jpg'
 import imageModelHierarchy from '../assets/images/model_ierarhi.png'
@@ -27,15 +28,9 @@ const Media = () => {
   const audioFiles = [
     {
       id: 1,
-      title: 'Лекция: Основы тестирования',
-      src: '',
-      description: 'Аудиолекция по основам тестирования программного обеспечения'
-    },
-    {
-      id: 2,
-      title: 'Подкаст: Тест-дизайн',
-      src: '',
-      description: 'Обсуждение методов проектирования тестов'
+      title: 'Расслабляющая музыка для изучения материала',
+      src: musicLesson1,
+      description: 'Расслабляющая музыка из первого урока для комфортного изучения материала'
     }
   ]
 
