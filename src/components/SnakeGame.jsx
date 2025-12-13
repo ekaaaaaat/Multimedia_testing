@@ -177,7 +177,7 @@ const SnakeGame = () => {
         <div className="game-start-screen">
           <div className="start-screen-content">
             <h2>Готовы начать игру? <CatIcon variant={0} size="1.5em" /></h2>
-            <p>Управляйте котиком с помощью клавиш W, A, S, D</p>
+            <p>Управляйте котиком с помощью клавиш W/Ц, A/Ф, S/Ы, D/В (английская или русская раскладка)</p>
             <p>Нажмите Пробел для паузы</p>
             <button className="start-game-button" onClick={startGame}>
               ▶️ Начать игру
@@ -197,7 +197,7 @@ const SnakeGame = () => {
           <span>Очки: <strong>{score}</strong></span>
         </div>
         <div className="game-controls-info">
-          <span>Управление: W A S D | Пауза: Пробел</span>
+          <span>Управление: W/Ц A/Ф S/Ы D/В | Пауза: Пробел</span>
         </div>
       </div>
 
