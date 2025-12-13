@@ -198,7 +198,12 @@ const SnakeGame = () => {
           </div>
         </div>
       ) : (
-        <>
+        <div 
+          ref={gameContainerRef}
+          tabIndex={0}
+          onKeyDown={handleKeyPress}
+          style={{ outline: 'none' }}
+        >
           <div className="game-header">
         <div className="game-score">
           <span>Очки: <strong>{score}</strong></span>
