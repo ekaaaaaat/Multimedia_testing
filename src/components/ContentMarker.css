@@ -1,160 +1,199 @@
 .content-marker {
-  margin: 2rem 0;
-  border-radius: 12px;
+  margin: 1.5rem 0;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
 }
 
 .content-marker:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
 .marker-header {
-  padding: 0.75rem 1.25rem;
+  padding: 0.875rem 1.125rem;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.625rem;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.95rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .marker-icon {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
+  line-height: 1;
 }
 
 .marker-label {
   flex: 1;
+  letter-spacing: 0.3px;
 }
 
 .marker-content {
-  padding: 1.25rem;
-  line-height: 1.8;
+  padding: 1.125rem 1.25rem;
+  line-height: 1.7;
+  font-size: 0.98rem;
+}
+
+.marker-content h3 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+}
+
+.marker-content p {
+  margin: 0.5rem 0;
+}
+
+.marker-content p:first-child {
+  margin-top: 0;
+}
+
+.marker-content p:last-child {
+  margin-bottom: 0;
+}
+
+.marker-content ul {
+  margin: 0.75rem 0;
+  padding-left: 1.5rem;
+}
+
+.marker-content ul:first-child {
+  margin-top: 0;
+}
+
+.marker-content ul:last-child {
+  margin-bottom: 0;
 }
 
 /* Определение */
 .definition-marker {
-  border-left: 4px solid #4caf50;
+  border-left: 3px solid #4caf50;
 }
 
 .definition-marker .marker-header {
-  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  background: #e8f5e9;
   color: #2e7d32;
 }
 
 .content-marker.dark .definition-marker .marker-header {
-  background: linear-gradient(135deg, rgba(76, 175, 80, 0.3) 0%, rgba(76, 175, 80, 0.2) 100%);
+  background: rgba(76, 175, 80, 0.25);
   color: #a5d6a7;
+  border-bottom-color: rgba(76, 175, 80, 0.2);
 }
 
 .definition-marker .marker-content {
-  background: #f1f8f4;
+  background: #f9fbf9;
   color: #1b5e20;
 }
 
 .content-marker.dark .definition-marker .marker-content {
-  background: rgba(76, 175, 80, 0.1);
+  background: rgba(76, 175, 80, 0.08);
   color: #c8e6c9;
 }
 
 /* Совет */
 .tip-marker {
-  border-left: 4px solid #ff9800;
+  border-left: 3px solid #ff9800;
 }
 
 .tip-marker .marker-header {
-  background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+  background: #fff3e0;
   color: #e65100;
 }
 
 .content-marker.dark .tip-marker .marker-header {
-  background: linear-gradient(135deg, rgba(255, 152, 0, 0.3) 0%, rgba(255, 152, 0, 0.2) 100%);
+  background: rgba(255, 152, 0, 0.25);
   color: #ffcc80;
+  border-bottom-color: rgba(255, 152, 0, 0.2);
 }
 
 .tip-marker .marker-content {
-  background: #fff8e1;
+  background: #fffbf5;
   color: #bf360c;
 }
 
 .content-marker.dark .tip-marker .marker-content {
-  background: rgba(255, 152, 0, 0.1);
+  background: rgba(255, 152, 0, 0.08);
   color: #ffe0b2;
 }
 
 /* Пример */
 .example-marker {
-  border-left: 4px solid #2196f3;
+  border-left: 3px solid #2196f3;
 }
 
 .example-marker .marker-header {
-  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  background: #e3f2fd;
   color: #0d47a1;
 }
 
 .content-marker.dark .example-marker .marker-header {
-  background: linear-gradient(135deg, rgba(33, 150, 243, 0.3) 0%, rgba(33, 150, 243, 0.2) 100%);
+  background: rgba(33, 150, 243, 0.25);
   color: #90caf9;
+  border-bottom-color: rgba(33, 150, 243, 0.2);
 }
 
 .example-marker .marker-content {
-  background: #e1f5fe;
+  background: #f5f9fd;
   color: #01579b;
 }
 
 .content-marker.dark .example-marker .marker-content {
-  background: rgba(33, 150, 243, 0.1);
+  background: rgba(33, 150, 243, 0.08);
   color: #b3e5fc;
 }
 
 /* Выводы */
 .conclusion-marker {
-  border-left: 4px solid #9c27b0;
+  border-left: 3px solid #9c27b0;
 }
 
 .conclusion-marker .marker-header {
-  background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+  background: #f3e5f5;
   color: #4a148c;
 }
 
 .content-marker.dark .conclusion-marker .marker-header {
-  background: linear-gradient(135deg, rgba(156, 39, 176, 0.3) 0%, rgba(156, 39, 176, 0.2) 100%);
+  background: rgba(156, 39, 176, 0.25);
   color: #ce93d8;
+  border-bottom-color: rgba(156, 39, 176, 0.2);
 }
 
 .conclusion-marker .marker-content {
-  background: #fce4ec;
+  background: #faf5fb;
   color: #880e4f;
 }
 
 .content-marker.dark .conclusion-marker .marker-content {
-  background: rgba(156, 39, 176, 0.1);
+  background: rgba(156, 39, 176, 0.08);
   color: #f48fb1;
 }
 
 /* Контрольные вопросы */
 .question-marker {
-  border-left: 4px solid #f44336;
+  border-left: 3px solid #f44336;
 }
 
 .question-marker .marker-header {
-  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+  background: #ffebee;
   color: #b71c1c;
 }
 
 .content-marker.dark .question-marker .marker-header {
-  background: linear-gradient(135deg, rgba(244, 67, 54, 0.3) 0%, rgba(244, 67, 54, 0.2) 100%);
+  background: rgba(244, 67, 54, 0.25);
   color: #ef5350;
+  border-bottom-color: rgba(244, 67, 54, 0.2);
 }
 
 .question-marker .marker-content {
-  background: #fff5f5;
+  background: #fffafa;
   color: #c62828;
 }
 
 .content-marker.dark .question-marker .marker-content {
-  background: rgba(244, 67, 54, 0.1);
+  background: rgba(244, 67, 54, 0.08);
   color: #ffcdd2;
 }
 

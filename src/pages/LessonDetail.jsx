@@ -515,26 +515,16 @@ const LessonDetail = () => {
                       {(() => {
                         const paragraphs = section.content.split('\n\n')
                         const result = []
-                        let currentMarker = null
-                        let markerContent = []
                         
-                        paragraphs.forEach((paragraph, pIndex) => {
+                        // Функция для обработки одного параграфа
+                        const processParagraph = (para, index) => {
+                          const trimmed = para.trim()
+                          if (!trimmed) return null
+                          
                           // Проверяем, есть ли пометка в параграфе
-                          const markerMatch = paragraph.match(/(📚|💡|🔍|📊|❓)/)
+                          const markerMatch = trimmed.match(/(📚|💡|🔍|📊|❓)/)
                           
                           if (markerMatch) {
-                            // Если есть открытый маркер, закрываем его
-                            if (currentMarker) {
-                              result.push(
-                                <ContentMarker key={`marker-${pIndex}-close`} type={currentMarker}>
-                                  {markerContent.map((item, idx) => (
-                                    <div key={idx}>{item}</div>
-                                  ))}
-                                </ContentMarker>
-                              )
-                              markerContent = []
-                            }
-                            
                             // Определяем тип маркера
                             const markerType = {
                               '📚': 'definition',
@@ -544,25 +534,33 @@ const LessonDetail = () => {
                               '❓': 'question'
                             }[markerMatch[1]]
                             
-                            currentMarker = markerType
-                            
                             // Убираем пометку из текста
-                            let textWithoutMarker = paragraph.replace(/(📚|💡|🔍|📊|❓)\s*/g, '').trim()
+                            let textWithoutMarker = trimmed.replace(/(📚|💡|🔍|📊|❓)\s*/g, '').trim()
                             
-                            // Обрабатываем текст
-                            if (textWithoutMarker.startsWith('**') && textWithoutMarker.includes('**')) {
-                              // Заголовок с определением
-                              const match = textWithoutMarker.match(/\*\*(.*?)\*\*(.*)/)
+                            // Обрабатываем содержимое маркера
+                            const markerContent = []
+                            
+                            // Обрабатываем заголовок **текст**
+                            if (textWithoutMarker.match(/^\*\*[^*]+\*\*/)) {
+                              const match = textWithoutMarker.match(/^\*\*([^*]+)\*\*(.*)/)
                               if (match) {
-                                markerContent.push(<h3 key={`h3-${pIndex}`} className="content-subtitle">{match[1]}</h3>)
+                                markerContent.push(<h3 key={`h3-${index}`} className="content-subtitle">{match[1]}</h3>)
                                 if (match[2].trim()) {
-                                  markerContent.push(<p key={`p-${pIndex}`}>{match[2].trim()}</p>)
+                                  const remainingText = match[2].trim()
+                                  if (remainingText.includes('**')) {
+                                    const processedText = remainingText.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                                    markerContent.push(<p key={`p-${index}`} dangerouslySetInnerHTML={{ __html: processedText }} />)
+                                  } else {
+                                    markerContent.push(<p key={`p-${index}`}>{remainingText}</p>)
+                                  }
                                 }
                               } else {
                                 const text = textWithoutMarker.replace(/\*\*/g, '')
-                                markerContent.push(<h3 key={`h3-${pIndex}`} className="content-subtitle">{text}</h3>)
+                                markerContent.push(<h3 key={`h3-${index}`} className="content-subtitle">{text}</h3>)
                               }
-                            } else if (textWithoutMarker.startsWith('•') || (textWithoutMarker.startsWith('*') && !textWithoutMarker.startsWith('**'))) {
+                            }
+                            // Обрабатываем список
+                            else if (textWithoutMarker.startsWith('•') || (textWithoutMarker.startsWith('*') && !textWithoutMarker.startsWith('**'))) {
                               const lines = textWithoutMarker.split('\n')
                               const items = []
                               
@@ -571,12 +569,10 @@ const LessonDetail = () => {
                                 if (trimmedLine.startsWith('•') || (trimmedLine.startsWith('*') && !trimmedLine.startsWith('**'))) {
                                   let cleanItem = trimmedLine.replace(/^[•*]\s*/, '').trim()
                                   
-                                  // Обрабатываем **текст** внутри элементов списка
                                   if (cleanItem.includes('**')) {
                                     cleanItem = cleanItem.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
                                     items.push({ text: cleanItem, isHtml: true })
                                   } else {
-                                    cleanItem = cleanItem.replace(/^\*\s+/, '')
                                     if (cleanItem) {
                                       items.push({ text: cleanItem, isHtml: false })
                                     }
@@ -586,7 +582,7 @@ const LessonDetail = () => {
                               
                               if (items.length > 0) {
                                 markerContent.push(
-                                  <ul key={`ul-${pIndex}`} className="content-list">
+                                  <ul key={`ul-${index}`} className="content-list">
                                     {items.map((item, iIndex) => (
                                       <li key={iIndex}>
                                         {item.isHtml ? (
@@ -599,67 +595,27 @@ const LessonDetail = () => {
                                   </ul>
                                 )
                               }
-                            } else if (textWithoutMarker.startsWith('>')) {
-                              markerContent.push(<blockquote key={`quote-${pIndex}`} className="content-quote">{textWithoutMarker.replace(/^>\s*/, '')}</blockquote>)
-                            } else if (textWithoutMarker) {
-                              markerContent.push(<p key={`p-${pIndex}`}>{textWithoutMarker}</p>)
                             }
-                          } else if (currentMarker) {
-                            // Продолжаем собирать контент для маркера до следующего маркера или конца
-                            if (paragraph.startsWith('**') && paragraph.includes('**')) {
-                              const match = paragraph.match(/\*\*(.*?)\*\*(.*)/)
-                              if (match) {
-                                markerContent.push(<h3 key={`h3-${pIndex}`} className="content-subtitle">{match[1]}</h3>)
-                                if (match[2].trim()) {
-                                  markerContent.push(<p key={`p-${pIndex}`}>{match[2].trim()}</p>)
-                                }
+                            // Обычный текст
+                            else if (textWithoutMarker) {
+                              if (textWithoutMarker.includes('**')) {
+                                const processedText = textWithoutMarker.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                                markerContent.push(<p key={`p-${index}`} dangerouslySetInnerHTML={{ __html: processedText }} />)
                               } else {
-                                const text = paragraph.replace(/\*\*/g, '')
-                                markerContent.push(<h3 key={`h3-${pIndex}`} className="content-subtitle">{text}</h3>)
+                                markerContent.push(<p key={`p-${index}`}>{textWithoutMarker}</p>)
                               }
-                            } else if (paragraph.startsWith('•') || (paragraph.startsWith('*') && !paragraph.startsWith('**'))) {
-                              const lines = paragraph.split('\n')
-                              const items = []
-                              
-                              lines.forEach(line => {
-                                const trimmedLine = line.trim()
-                                if (trimmedLine.startsWith('•') || (trimmedLine.startsWith('*') && !trimmedLine.startsWith('**'))) {
-                                  let cleanItem = trimmedLine.replace(/^[•*]\s*/, '').trim()
-                                  
-                                  // Обрабатываем **текст** внутри элементов списка
-                                  if (cleanItem.includes('**')) {
-                                    cleanItem = cleanItem.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-                                    items.push({ text: cleanItem, isHtml: true })
-                                  } else {
-                                    cleanItem = cleanItem.replace(/^\*\s+/, '')
-                                    if (cleanItem) {
-                                      items.push({ text: cleanItem, isHtml: false })
-                                    }
-                                  }
-                                }
-                              })
-                              
-                              if (items.length > 0) {
-                                markerContent.push(
-                                  <ul key={`ul-${pIndex}`} className="content-list">
-                                    {items.map((item, iIndex) => (
-                                      <li key={iIndex}>
-                                        {item.isHtml ? (
-                                          <span dangerouslySetInnerHTML={{ __html: item.text }} />
-                                        ) : (
-                                          item.text
-                                        )}
-                                      </li>
-                                    ))}
-                                  </ul>
-                                )
-                              }
-                            } else if (paragraph.startsWith('>')) {
-                              markerContent.push(<blockquote key={`quote-${pIndex}`} className="content-quote">{paragraph.replace(/^>\s*/, '')}</blockquote>)
-                            } else if (paragraph.trim()) {
-                              markerContent.push(<p key={`p-${pIndex}`}>{paragraph}</p>)
+                            }
+                            
+                            // Возвращаем маркер только если есть контент
+                            if (markerContent.length > 0) {
+                              return (
+                                <ContentMarker key={`marker-${index}`} type={markerType}>
+                                  {markerContent}
+                                </ContentMarker>
+                              )
                             }
                           } else {
+                            // Обычный параграф без маркера
                             // Обычный параграф без маркера
                             const trimmed = paragraph.trim()
                             
