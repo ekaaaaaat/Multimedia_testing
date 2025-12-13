@@ -136,7 +136,7 @@ const SnakeGame = () => {
 
     directionRef.current = newDirection
     setDirection(newDirection)
-  }, [gameOver])
+  }, [gameOver, isStarted])
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyPress)
