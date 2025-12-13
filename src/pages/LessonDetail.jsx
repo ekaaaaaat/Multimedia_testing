@@ -19,6 +19,7 @@ import imageFirstBug from '../assets/images/First_Computer_Bug,_1947.jpg'
 import imageModelHierarchy from '../assets/images/model_ierarhi.png'
 import imageDiagram from '../assets/images/diagram.png'
 import imageGagarin from '../assets/images/gagarin.png'
+import imageDefectLifeCycle from '../assets/images/defect_life_cycle.jpg'
 import animation404Cat from '../assets/animation/404Cat.gif'
 
 // Import videos
@@ -706,7 +707,14 @@ const LessonDetail = () => {
 
 • **VERIFIED (Проверен)** – тестировщик проверяет, действительно ли ответственный разработчик исправил дефект. Если баг больше не присутствует, он получает этот статус.
 
-Простейшие варианты жизненных циклов багов схематично представлены на рисунках 2.4, а и б.`
+Простейшие варианты жизненных циклов багов схематично представлены ниже.`,
+            images: [
+              {
+                src: imageDefectLifeCycle,
+                alt: 'Жизненный цикл дефекта',
+                caption: 'Жизненный цикл дефекта'
+              }
+            ]
           },
           {
             id: 'bug-report',
