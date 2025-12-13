@@ -86,20 +86,20 @@
   color: #2e7d32;
 }
 
-.content-marker.dark .definition-marker .marker-header {
-  background: rgba(27, 94, 32, 0.8);
-  color: #c8e6c9;
-  border-bottom-color: rgba(76, 175, 80, 0.5);
-}
-
 .definition-marker .marker-content {
   background: #f9fbf9;
   color: #1b5e20;
 }
 
-.content-marker.dark .definition-marker .marker-content {
-  background: rgba(27, 94, 32, 0.7);
-  color: #e8f5e9;
+.content-marker.dark.definition-marker .marker-header {
+  background: rgba(27, 94, 32, 0.8) !important;
+  color: #c8e6c9 !important;
+  border-bottom-color: rgba(76, 175, 80, 0.5) !important;
+}
+
+.content-marker.dark.definition-marker .marker-content {
+  background: rgba(27, 94, 32, 0.7) !important;
+  color: #e8f5e9 !important;
 }
 
 /* Совет */
@@ -112,20 +112,20 @@
   color: #e65100;
 }
 
-.content-marker.dark .tip-marker .marker-header {
-  background: rgba(140, 80, 0, 0.8);
-  color: #ffe0b2;
-  border-bottom-color: rgba(255, 152, 0, 0.5);
-}
-
 .tip-marker .marker-content {
   background: #fffbf5;
   color: #bf360c;
 }
 
-.content-marker.dark .tip-marker .marker-content {
-  background: rgba(140, 80, 0, 0.7);
-  color: #fff3e0;
+.content-marker.dark.tip-marker .marker-header {
+  background: rgba(140, 80, 0, 0.8) !important;
+  color: #ffe0b2 !important;
+  border-bottom-color: rgba(255, 152, 0, 0.5) !important;
+}
+
+.content-marker.dark.tip-marker .marker-content {
+  background: rgba(140, 80, 0, 0.7) !important;
+  color: #fff3e0 !important;
 }
 
 /* Пример */
