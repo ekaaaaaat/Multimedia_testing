@@ -138,12 +138,7 @@ const SnakeGame = () => {
     }
   }, [gameOver, isStarted, isPaused])
 
-  useEffect(() => {
-    window.addEventListener('keydown', handleKeyPress)
-    return () => {
-      window.removeEventListener('keydown', handleKeyPress)
-    }
-  }, [handleKeyPress])
+  // Обработчик клавиш теперь на контейнере игры через onKeyDown
 
   const startGame = () => {
     // Сбрасываем все состояния перед стартом
