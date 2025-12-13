@@ -1,0 +1,192 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Светлая тема */
+.app.light {
+  background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 50%, #80deea 100%);
+  color: #1a1a1a;
+}
+
+/* Темная тема */
+.app.dark {
+  background: linear-gradient(135deg, #004d40 0%, #00695c 50%, #00796b 100%);
+  color: #e0e0e0;
+}
+
+.app-header {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 1.5rem 2rem;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.app.dark .app-header {
+  background: rgba(0, 77, 64, 0.95);
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.logo {
+  text-decoration: none;
+  color: inherit;
+}
+
+.logo h1 {
+  color: #00695c;
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.app.dark .logo h1 {
+  color: #80deea;
+}
+
+.subtitle {
+  display: block;
+  font-size: 0.9rem;
+  color: #00897b;
+  font-weight: 400;
+  margin-top: 0.25rem;
+}
+
+.app.dark .subtitle {
+  color: #b2ebf2;
+}
+
+.theme-toggle {
+  background: #00897b;
+  color: white;
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 137, 123, 0.3);
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 15px rgba(0, 137, 123, 0.5);
+}
+
+.app.dark .theme-toggle {
+  background: #00acc1;
+}
+
+.nav-menu {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.nav-menu a {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #00897b;
+  background: white;
+  color: #00897b;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.app.dark .nav-menu a {
+  background: rgba(0, 77, 64, 0.8);
+  color: #80deea;
+  border-color: #00acc1;
+}
+
+.nav-menu a:hover {
+  background: #00897b;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 137, 123, 0.4);
+}
+
+.app.dark .nav-menu a:hover {
+  background: #00acc1;
+  color: #004d40;
+}
+
+.nav-menu a.active {
+  background: #00897b;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 137, 123, 0.4);
+}
+
+.app.dark .nav-menu a.active {
+  background: #00acc1;
+  color: #004d40;
+}
+
+.app-main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.app-footer {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 1.5rem;
+  text-align: center;
+  color: #666;
+  margin-top: auto;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.app.dark .app-footer {
+  background: rgba(0, 77, 64, 0.95);
+  color: #b2ebf2;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+  .app-header {
+    padding: 1rem;
+  }
+
+  .header-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .logo h1 {
+    font-size: 1.4rem;
+    text-align: center;
+  }
+
+  .nav-menu {
+    gap: 0.5rem;
+  }
+
+  .nav-menu a {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .app-main {
+    padding: 1rem;
+  }
+}
+

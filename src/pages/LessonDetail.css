@@ -1,0 +1,177 @@
+.lesson-detail-page {
+  animation: fadeIn 0.5s ease;
+}
+
+.lesson-nav {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.lesson-detail-page.dark .lesson-nav {
+  background: rgba(0, 77, 64, 0.95);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.back-link {
+  color: #00897b;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 1rem;
+  transition: color 0.3s ease;
+}
+
+.lesson-detail-page.dark .back-link {
+  color: #80deea;
+}
+
+.back-link:hover {
+  color: #00695c;
+}
+
+.lesson-detail-page.dark .back-link:hover {
+  color: #b2ebf2;
+}
+
+.section-tabs {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.section-tabs button {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #00897b;
+  background: white;
+  color: #00897b;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.lesson-detail-page.dark .section-tabs button {
+  background: rgba(0, 77, 64, 0.8);
+  color: #80deea;
+  border-color: #00acc1;
+}
+
+.section-tabs button:hover {
+  background: #00897b;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.lesson-detail-page.dark .section-tabs button:hover {
+  background: #00acc1;
+  color: #004d40;
+}
+
+.section-tabs button.active {
+  background: #00897b;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 137, 123, 0.4);
+}
+
+.lesson-detail-page.dark .section-tabs button.active {
+  background: #00acc1;
+  color: #004d40;
+}
+
+.lesson-content-wrapper {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.lesson-detail-page.dark .lesson-content-wrapper {
+  background: rgba(0, 77, 64, 0.95);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.lesson-content h1,
+.lesson-test h1,
+.lesson-game h1,
+.lesson-music h1 {
+  color: #00695c;
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
+.lesson-detail-page.dark .lesson-content h1,
+.lesson-detail-page.dark .lesson-test h1,
+.lesson-detail-page.dark .lesson-game h1,
+.lesson-detail-page.dark .lesson-music h1 {
+  color: #80deea;
+}
+
+.content-section {
+  margin-bottom: 3rem;
+}
+
+.text-section h2 {
+  color: #00897b;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.lesson-detail-page.dark .text-section h2 {
+  color: #80deea;
+}
+
+.text-section p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.lesson-detail-page.dark .text-section p {
+  color: #e0e0e0;
+}
+
+.media-section,
+.inline-test-section {
+  margin-top: 2rem;
+}
+
+.media-section h2,
+.inline-test-section h2 {
+  color: #00897b;
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.lesson-detail-page.dark .media-section h2,
+.lesson-detail-page.dark .inline-test-section h2 {
+  color: #80deea;
+}
+
+@media (max-width: 768px) {
+  .lesson-content-wrapper {
+    padding: 1.5rem;
+  }
+
+  .lesson-content h1 {
+    font-size: 1.8rem;
+  }
+
+  .section-tabs {
+    flex-direction: column;
+  }
+
+  .section-tabs button {
+    width: 100%;
+  }
+}
+

@@ -10,12 +10,23 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 100vh;
 }
 
 #root {
   min-height: 100vh;
+}
+
+/* Светлая тема по умолчанию */
+body[data-theme="light"] {
+  background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 50%, #80deea 100%);
+  color: #1a1a1a;
+}
+
+/* Темная тема */
+body[data-theme="dark"] {
+  background: linear-gradient(135deg, #004d40 0%, #00695c 50%, #00796b 100%);
+  color: #e0e0e0;
 }
 
 
