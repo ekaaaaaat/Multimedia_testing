@@ -27,6 +27,7 @@ const LessonDetail = () => {
   const { id } = useParams()
   const { theme } = useTheme()
   const { updateLessonProgress, markLessonComplete, getLessonProgress } = useProgress()
+  const { playMusic, currentTrack, isPlaying } = useMusic()
   const [currentSection, setCurrentSection] = useState('content')
 
   useEffect(() => {
