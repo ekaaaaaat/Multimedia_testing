@@ -7,6 +7,7 @@ import MediaPlayer from '../components/MediaPlayer'
 import ProgressBar from '../components/ProgressBar'
 import LessonNavigation from '../components/LessonNavigation'
 import CatIcon from '../components/CatIcon'
+import ContentMarker from '../components/ContentMarker'
 import './LessonDetail.css'
 
 const LessonDetail = () => {
@@ -58,23 +59,6 @@ const LessonDetail = () => {
 Цель данного учебного пособия – познакомить читателя с основными понятиями тестирования программного обеспечения, стратегиями и техниками тестирования. Пособие будет полезно как начинающим тестировщикам, так и программистам, желающим писать качественный код.
 
 В данном пособии рассматриваются этапы, уровни и виды тестирования ПО, техники тестирования черного и белого ящика, особенности тестирования веб- и мобильных приложений, а также ряд полезных инструментов и подходов для автоматизации тестов.`
-          },
-          {
-            id: 'conventions',
-            title: 'Соглашения, принятые в учебном пособии',
-            icon: '📋',
-            type: 'text',
-            content: `В учебном пособии используются пиктограммы и специальное выделение для улучшения восприятия и понимания материала.
-
-**Определение или новое понятие** 📚 - Эта пиктограмма означает определение или новое понятие.
-
-**Совет** 💡 - Эта пиктограмма означает совет. В данном блоке указаны более простые или иные способы выполнения определенной задачи.
-
-**Пример** 🔍 - Эта пиктограмма означает пример. В данном блоке автор может привести практический пример для пояснения и разбора основных моментов, отраженных в теоретическом материале.
-
-**Выводы** 📊 - Эта пиктограмма означает выводы. Здесь автор подводит итоги, обобщает изложенный материал или проводит анализ.
-
-**Контрольные вопросы** ❓ - Эта пиктограмма означает контрольные вопросы по главе.`
           },
           {
             id: 'what-is-testing',
@@ -528,29 +512,108 @@ const LessonDetail = () => {
                       {section.title}
                     </h2>
                     <div className="section-content">
-                      {section.content.split('\n\n').map((paragraph, pIndex) => {
-                        if (paragraph.startsWith('**') && paragraph.endsWith('**')) {
-                          // Заголовок
-                          const text = paragraph.replace(/\*\*/g, '')
-                          return <h3 key={pIndex} className="content-subtitle">{text}</h3>
-                        } else if (paragraph.startsWith('•') || paragraph.startsWith('*')) {
-                          // Список
-                          const items = paragraph.split(/\n(?=•|\*)/).filter(item => item.trim())
-                          return (
-                            <ul key={pIndex} className="content-list">
-                              {items.map((item, iIndex) => (
-                                <li key={iIndex}>{item.replace(/^[•*]\s*/, '')}</li>
-                              ))}
-                            </ul>
+                      {(() => {
+                        const paragraphs = section.content.split('\n\n')
+                        const result = []
+                        let currentMarker = null
+                        let markerContent = []
+                        
+                        paragraphs.forEach((paragraph, pIndex) => {
+                          // Проверяем, есть ли пометка в параграфе
+                          const markerMatch = paragraph.match(/(📚|💡|🔍|📊|❓)/)
+                          
+                          if (markerMatch) {
+                            // Если есть открытый маркер, закрываем его
+                            if (currentMarker) {
+                              result.push(
+                                <ContentMarker key={`marker-${pIndex}`} type={currentMarker}>
+                                  {markerContent.map((item, idx) => item)}
+                                </ContentMarker>
+                              )
+                              markerContent = []
+                            }
+                            
+                            // Определяем тип маркера
+                            const markerType = {
+                              '📚': 'definition',
+                              '💡': 'tip',
+                              '🔍': 'example',
+                              '📊': 'conclusion',
+                              '❓': 'question'
+                            }[markerMatch[1]]
+                            
+                            currentMarker = markerType
+                            
+                            // Убираем пометку из текста и добавляем в контент маркера
+                            const textWithoutMarker = paragraph.replace(/(📚|💡|🔍|📊|❓)\s*/g, '').trim()
+                            
+                            if (textWithoutMarker.startsWith('**') && textWithoutMarker.endsWith('**')) {
+                              const text = textWithoutMarker.replace(/\*\*/g, '')
+                              markerContent.push(<h3 key={pIndex} className="content-subtitle">{text}</h3>)
+                            } else if (textWithoutMarker.startsWith('•') || textWithoutMarker.startsWith('*')) {
+                              const items = textWithoutMarker.split(/\n(?=•|\*)/).filter(item => item.trim())
+                              markerContent.push(
+                                <ul key={pIndex} className="content-list">
+                                  {items.map((item, iIndex) => (
+                                    <li key={iIndex}>{item.replace(/^[•*]\s*/, '')}</li>
+                                  ))}
+                                </ul>
+                              )
+                            } else {
+                              markerContent.push(<p key={pIndex}>{textWithoutMarker}</p>)
+                            }
+                          } else if (currentMarker) {
+                            // Продолжаем собирать контент для маркера
+                            if (paragraph.startsWith('**') && paragraph.endsWith('**')) {
+                              const text = paragraph.replace(/\*\*/g, '')
+                              markerContent.push(<h3 key={pIndex} className="content-subtitle">{text}</h3>)
+                            } else if (paragraph.startsWith('•') || paragraph.startsWith('*')) {
+                              const items = paragraph.split(/\n(?=•|\*)/).filter(item => item.trim())
+                              markerContent.push(
+                                <ul key={pIndex} className="content-list">
+                                  {items.map((item, iIndex) => (
+                                    <li key={iIndex}>{item.replace(/^[•*]\s*/, '')}</li>
+                                  ))}
+                                </ul>
+                              )
+                            } else if (paragraph.startsWith('>')) {
+                              markerContent.push(<blockquote key={pIndex} className="content-quote">{paragraph.replace(/^>\s*/, '')}</blockquote>)
+                            } else {
+                              markerContent.push(<p key={pIndex}>{paragraph}</p>)
+                            }
+                          } else {
+                            // Обычный параграф без маркера
+                            if (paragraph.startsWith('**') && paragraph.endsWith('**')) {
+                              const text = paragraph.replace(/\*\*/g, '')
+                              result.push(<h3 key={pIndex} className="content-subtitle">{text}</h3>)
+                            } else if (paragraph.startsWith('•') || paragraph.startsWith('*')) {
+                              const items = paragraph.split(/\n(?=•|\*)/).filter(item => item.trim())
+                              result.push(
+                                <ul key={pIndex} className="content-list">
+                                  {items.map((item, iIndex) => (
+                                    <li key={iIndex}>{item.replace(/^[•*]\s*/, '')}</li>
+                                  ))}
+                                </ul>
+                              )
+                            } else if (paragraph.startsWith('>')) {
+                              result.push(<blockquote key={pIndex} className="content-quote">{paragraph.replace(/^>\s*/, '')}</blockquote>)
+                            } else {
+                              result.push(<p key={pIndex}>{paragraph}</p>)
+                            }
+                          }
+                        })
+                        
+                        // Закрываем последний маркер, если он открыт
+                        if (currentMarker && markerContent.length > 0) {
+                          result.push(
+                            <ContentMarker key="marker-final" type={currentMarker}>
+                              {markerContent.map((item, idx) => item)}
+                            </ContentMarker>
                           )
-                        } else if (paragraph.startsWith('>')) {
-                          // Цитата
-                          return <blockquote key={pIndex} className="content-quote">{paragraph.replace(/^>\s*/, '')}</blockquote>
-                        } else {
-                          // Обычный параграф
-                          return <p key={pIndex}>{paragraph}</p>
                         }
-                      })}
+                        
+                        return result
+                      })()}
                       {section.images && section.images.map((image, imgIndex) => (
                         <div key={imgIndex} className="lesson-image-container">
                           <MediaPlayer
