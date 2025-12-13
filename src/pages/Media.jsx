@@ -7,6 +7,7 @@ import './Media.css'
 
 // Import media from Lesson 1
 import videoLesson1 from '../assets/videos/Lesson1.mp4'
+import videoLesson2 from '../assets/videos/Lesson2.mp4'
 import musicLesson1 from '../assets/music/relaxing_music_lesson1.mp3'
 import imageMarkII from '../assets/images/Mark_II.png'
 import imageFirstBug from '../assets/images/First_Computer_Bug,_1947.jpg'
@@ -24,6 +25,12 @@ const Media = () => {
       title: 'Введение в тестирование программного обеспечения',
       src: videoLesson1,
       description: 'Видеоурок по основам тестирования программного обеспечения из первого урока'
+    },
+    {
+      id: 2,
+      title: 'Дефекты и их жизненный цикл',
+      src: videoLesson2,
+      description: 'Видеоурок по дефектам и их жизненному циклу из второго урока'
     }
   ]
 
