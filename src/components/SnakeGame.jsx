@@ -197,7 +197,8 @@ const SnakeGame = () => {
           ref={gameContainerRef}
           tabIndex={0}
           onKeyDown={handleKeyPress}
-          style={{ outline: 'none' }}
+          onClick={() => gameContainerRef.current?.focus()}
+          style={{ outline: 'none', cursor: 'default' }}
         >
           <div className="game-header">
         <div className="game-score">
