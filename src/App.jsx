@@ -13,7 +13,6 @@ import LessonDetail from './pages/LessonDetail'
 import Tests from './pages/Tests'
 import Games from './pages/Games'
 import Media from './pages/Media'
-import About from './pages/About'
 import './App.css'
 
 function App() {
@@ -48,7 +47,6 @@ function App() {
                   <Route path="/tests" element={<Tests />} />
                   <Route path="/games" element={<Games />} />
                   <Route path="/media" element={<Media />} />
-                  <Route path="/about" element={<About />} />
                 </Routes>
               </Layout>
             </Router>

@@ -93,12 +93,6 @@ const Layout = ({ children }) => {
           >
             🎥 Медиа
           </Link>
-          <Link 
-            to="/about" 
-            className={isActive('/about') ? 'active' : ''}
-          >
-            ℹ️ О проекте
-          </Link>
         </nav>
       </header>
 
