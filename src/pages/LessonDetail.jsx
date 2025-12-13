@@ -10,6 +10,12 @@ import CatIcon from '../components/CatIcon'
 import ContentMarker from '../components/ContentMarker'
 import './LessonDetail.css'
 
+// Import images
+import imageMarkII from '../assets/images/Mark_II.png'
+import imageFirstBug from '../assets/images/First_Computer_Bug,_1947.jpg'
+import imageModelHierarchy from '../assets/images/model_ierarhi.png'
+import imageDiagram from '../assets/images/diagram.png'
+
 const LessonDetail = () => {
   const { id } = useParams()
   const { theme } = useTheme()
@@ -140,12 +146,12 @@ const LessonDetail = () => {
 Самый первый компьютерный баг в истории был обнаружен 9 сентября 1947 года. Согласно фольклору, это произошло после инцидента в Гарвардском университете. После того как мотылек сел на реле калькулятора Mark II Aiken Relay Calculator, один из контактов слегка замкнулся, и вся 35-тонная установка остановилась с визгом. Инженеры извлекли мотылька, после чего аккуратно зафиксировали его скотчем в журнале испытаний с комментарием «Первый фактический случай найденного жука» (First actual case of bug being found). Именно поэтому компьютерные дефекты принято называть багами (bugs - жуки). 9 сентября отмечается как День тестировщика, что подчеркивает важность этой профессии.`,
             images: [
               {
-                src: 'https://via.placeholder.com/800x600/00897b/ffffff?text=Mark+II+Aiken+Relay+Calculator',
+                src: imageMarkII,
                 alt: 'Mark II Aiken Relay Calculator',
                 caption: 'Рис. 1.2 – Mark II Aiken Relay Calculator'
               },
               {
-                src: 'https://via.placeholder.com/800x600/00acc1/ffffff?text=Первый+компьютерный+баг+1947',
+                src: imageFirstBug,
                 alt: 'Первый компьютерный баг',
                 caption: 'Рис. 1.3 – Первый фактический случай найденного жука'
               }
@@ -197,7 +203,7 @@ const LessonDetail = () => {
 Таким образом, можно построить модель иерархии процессов обеспечения качества: тестирование – часть QC, QC – часть QA.`,
             images: [
               {
-                src: 'https://via.placeholder.com/800x400/00897b/ffffff?text=Модель+иерархии+QA+QC+Testing',
+                src: imageModelHierarchy,
                 alt: 'Модель иерархии процессов обеспечения качества',
                 caption: 'Рис. 1.4 – Модель иерархии процессов обеспечения качества'
               }
@@ -259,7 +265,7 @@ const LessonDetail = () => {
 Каждому из этих требований соответствует свой вид тестирования. Основные виды тестирования мы рассмотрим позже.`,
             images: [
               {
-                src: 'https://via.placeholder.com/800x600/00897b/ffffff?text=Диаграмма+валидации+верификации+тестирования',
+                src: imageDiagram,
                 alt: 'Диаграмма отношения валидации, верификации и тестирования',
                 caption: 'Рис. 1.5 – Диаграмма отношения валидации, верификации и тестирования'
               }
