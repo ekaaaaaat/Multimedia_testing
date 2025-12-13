@@ -39,6 +39,12 @@
   margin-bottom: 1rem;
 }
 
+.header-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
 .logo {
   text-decoration: none;
   color: inherit;
@@ -67,6 +73,7 @@
   color: #b2ebf2;
 }
 
+.animation-toggle,
 .theme-toggle {
   background: #00897b;
   color: white;
@@ -78,15 +85,25 @@
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 10px rgba(0, 137, 123, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+.animation-toggle:hover,
 .theme-toggle:hover {
   transform: scale(1.1);
   box-shadow: 0 6px 15px rgba(0, 137, 123, 0.5);
 }
 
+.app.dark .animation-toggle,
 .app.dark .theme-toggle {
   background: #00acc1;
+}
+
+.animation-toggle:active,
+.theme-toggle:active {
+  transform: scale(0.95);
 }
 
 .nav-menu {

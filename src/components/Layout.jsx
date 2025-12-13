@@ -1,10 +1,12 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useTheme } from '../contexts/ThemeContext'
+import { useAnimation } from '../contexts/AnimationContext'
 import CatIcon from './CatIcon'
 import './Layout.css'
 
 const Layout = ({ children }) => {
   const { theme, toggleTheme } = useTheme()
+  const { animationsEnabled, toggleAnimations } = useAnimation()
   const location = useLocation()
 
   const isActive = (path) => location.pathname === path
@@ -20,9 +22,22 @@ const Layout = ({ children }) => {
             </h1>
             <span className="subtitle">Мультимедийное пособие</span>
           </Link>
-          <button className="theme-toggle" onClick={toggleTheme}>
-            {theme === 'light' ? '🌙' : '☀️'}
-          </button>
+          <div className="header-controls">
+            <button 
+              className="animation-toggle" 
+              onClick={toggleAnimations}
+              title={animationsEnabled ? 'Выключить анимацию котиков' : 'Включить анимацию котиков'}
+            >
+              {animationsEnabled ? (
+                <CatIcon variant={2} size="1.5rem" />
+              ) : (
+                <CatIcon variant={3} size="1.5rem" />
+              )}
+            </button>
+            <button className="theme-toggle" onClick={toggleTheme}>
+              {theme === 'light' ? '🌙' : '☀️'}
+            </button>
+          </div>
         </div>
         <nav className="nav-menu">
           <Link 
