@@ -80,6 +80,14 @@ export const ProgressProvider = ({ children }) => {
     return totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0
   }
 
+  const resetLessonProgress = (lessonId) => {
+    setProgress(prev => {
+      const newProgress = { ...prev }
+      delete newProgress[lessonId]
+      return newProgress
+    })
+  }
+
   return (
     <ProgressContext.Provider value={{
       progress,
@@ -88,7 +96,8 @@ export const ProgressProvider = ({ children }) => {
       getLessonProgress,
       toggleLike,
       isLiked,
-      getTotalProgress
+      getTotalProgress,
+      resetLessonProgress
     }}>
       {children}
     </ProgressContext.Provider>

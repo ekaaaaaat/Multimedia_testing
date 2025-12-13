@@ -1,10 +1,12 @@
+import { useState } from 'react'
 import { useProgress } from '../contexts/ProgressContext'
 import CatIcon from './CatIcon'
 import './ProgressBar.css'
 
 const ProgressBar = ({ lessonId }) => {
-  const { getLessonProgress } = useProgress()
+  const { getLessonProgress, resetLessonProgress } = useProgress()
   const progress = getLessonProgress(lessonId)
+  const [showConfirm, setShowConfirm] = useState(false)
 
   const sections = [
     { key: 'contentViewed', label: 'Контент', emoji: '📖' },
@@ -17,11 +19,34 @@ const ProgressBar = ({ lessonId }) => {
   const totalSections = sections.length
   const percentage = totalSections > 0 ? Math.round((completedSections / totalSections) * 100) : 0
 
+  const hasProgress = completedSections > 0 || progress.completed
+
+  const handleReset = () => {
+    if (showConfirm) {
+      resetLessonProgress(lessonId)
+      setShowConfirm(false)
+    } else {
+      setShowConfirm(true)
+      setTimeout(() => setShowConfirm(false), 3000)
+    }
+  }
+
   return (
     <div className="progress-bar-container">
       <div className="progress-header">
         <span className="progress-title"><CatIcon variant={2} size="1.2em" /> Прогресс урока</span>
-        <span className="progress-percentage">{percentage}%</span>
+        <div className="progress-header-right">
+          <span className="progress-percentage">{percentage}%</span>
+          {hasProgress && (
+            <button 
+              className={`reset-progress-btn ${showConfirm ? 'confirm' : ''}`}
+              onClick={handleReset}
+              title={showConfirm ? 'Подтвердить сброс' : 'Сбросить прогресс урока'}
+            >
+              {showConfirm ? '✓' : '↻'}
+            </button>
+          )}
+        </div>
       </div>
       <div className="progress-bar">
         <div 
