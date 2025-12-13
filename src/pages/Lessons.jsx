@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useTheme } from '../contexts/ThemeContext'
+import { useProgress } from '../contexts/ProgressContext'
 import './Lessons.css'
 
 const lessons = [
@@ -55,40 +56,78 @@ const lessons = [
 
 const Lessons = () => {
   const { theme } = useTheme()
+  const { getLessonProgress, getTotalProgress } = useProgress()
+  const totalProgress = getTotalProgress()
 
   return (
     <div className={`lessons-page ${theme}`}>
       <section className="lessons-header">
-        <h1>Уроки по тестированию программного обеспечения</h1>
+        <h1>Уроки по тестированию программного обеспечения 🐱</h1>
         <p className="lessons-intro">
           Изучайте тестирование программного обеспечения через интерактивные уроки. 
           Каждый урок содержит теоретический материал, примеры, мультимедийные материалы, 
           интерактивные тесты и практические задания.
         </p>
+        {totalProgress > 0 && (
+          <div className="overall-progress">
+            <p>Общий прогресс: <strong>{totalProgress}%</strong> 🎯</p>
+            <div className="overall-progress-bar">
+              <div 
+                className="overall-progress-fill"
+                style={{ width: `${totalProgress}%` }}
+              />
+            </div>
+          </div>
+        )}
       </section>
 
       <div className="lessons-grid">
-        {lessons.map(lesson => (
-          <div key={lesson.id} className="lesson-card">
-            <div className="lesson-header">
-              <span className="lesson-level">{lesson.level}</span>
-              <span className="lesson-duration">⏱ {lesson.duration}</span>
+        {lessons.map(lesson => {
+          const progress = getLessonProgress(lesson.id)
+          const lessonProgress = [
+            progress.contentViewed,
+            progress.testCompleted,
+            progress.gamePlayed,
+            progress.musicListened
+          ].filter(Boolean).length
+          const lessonPercentage = Math.round((lessonProgress / 4) * 100)
+
+          return (
+            <div key={lesson.id} className="lesson-card">
+              <div className="lesson-header">
+                <span className="lesson-level">{lesson.level}</span>
+                <span className="lesson-duration">⏱ {lesson.duration}</span>
+              </div>
+              {progress.completed && (
+                <div className="lesson-completed-badge">✅ Завершен</div>
+              )}
+              <h2>{lesson.title}</h2>
+              <p className="lesson-description">{lesson.description}</p>
+              {lessonProgress > 0 && (
+                <div className="lesson-progress-mini">
+                  <span>Прогресс: {lessonPercentage}%</span>
+                  <div className="mini-progress-bar">
+                    <div 
+                      className="mini-progress-fill"
+                      style={{ width: `${lessonPercentage}%` }}
+                    />
+                  </div>
+                </div>
+              )}
+              <div className="lesson-topics">
+                <strong>Темы урока:</strong>
+                <ul>
+                  {lesson.topics.map((topic, index) => (
+                    <li key={index}>{topic}</li>
+                  ))}
+                </ul>
+              </div>
+              <Link to={`/lessons/${lesson.id}`} className="lesson-button">
+                {progress.completed ? 'Повторить урок 🐱' : 'Начать урок 🐱'}
+              </Link>
             </div>
-            <h2>{lesson.title}</h2>
-            <p className="lesson-description">{lesson.description}</p>
-            <div className="lesson-topics">
-              <strong>Темы урока:</strong>
-              <ul>
-                {lesson.topics.map((topic, index) => (
-                  <li key={index}>{topic}</li>
-                ))}
-              </ul>
-            </div>
-            <Link to={`/lessons/${lesson.id}`} className="lesson-button">
-              Начать урок →
-            </Link>
-          </div>
-        ))}
+          )
+        })}
       </div>
     </div>
   )

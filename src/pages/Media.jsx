@@ -55,10 +55,11 @@ const Media = () => {
   return (
     <div className={`media-page ${theme}`}>
       <section className="media-header">
-        <h1>Медиа материалы</h1>
+        <h1>Медиа материалы 🐱</h1>
         <p className="media-intro">
           Коллекция мультимедийных материалов по тестированию программного обеспечения. 
-          Здесь вы найдете видео, аудио, изображения и анимации для лучшего понимания материала.
+          Здесь вы найдете видео, аудио, изображения и анимации для лучшего понимания материала. 
+          Ставьте лайки понравившимся материалам! ❤️
         </p>
       </section>
 
@@ -90,7 +91,12 @@ const Media = () => {
             <div className="media-grid">
               {videos.map(video => (
                 <div key={video.id} className="media-item">
-                  <MediaPlayer type="video" src={video.src} title={video.title} />
+                  <MediaPlayer 
+                    type="video" 
+                    src={video.src} 
+                    title={video.title}
+                    mediaId={`video-${video.id}`}
+                  />
                   <p className="media-description">{video.description}</p>
                 </div>
               ))}
@@ -104,7 +110,12 @@ const Media = () => {
             <div className="media-grid">
               {audioFiles.map(audio => (
                 <div key={audio.id} className="media-item">
-                  <MediaPlayer type="audio" src={audio.src} title={audio.title} />
+                  <MediaPlayer 
+                    type="audio" 
+                    src={audio.src} 
+                    title={audio.title}
+                    mediaId={`audio-${audio.id}`}
+                  />
                   <p className="media-description">{audio.description}</p>
                 </div>
               ))}
@@ -118,7 +129,12 @@ const Media = () => {
             <div className="media-grid">
               {images.map(image => (
                 <div key={image.id} className="media-item">
-                  <MediaPlayer type="image" src={image.src} title={image.title} />
+                  <MediaPlayer 
+                    type="image" 
+                    src={image.src} 
+                    title={image.title}
+                    mediaId={`image-${image.id}`}
+                  />
                   <p className="media-description">{image.description}</p>
                 </div>
               ))}

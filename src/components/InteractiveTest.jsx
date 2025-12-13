@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useTheme } from '../contexts/ThemeContext'
 import './InteractiveTest.css'
 
-const InteractiveTest = ({ questions }) => {
+const InteractiveTest = ({ questions, onComplete }) => {
   const { theme } = useTheme()
   const [answers, setAnswers] = useState({})
   const [submitted, setSubmitted] = useState(false)
@@ -23,6 +23,10 @@ const InteractiveTest = ({ questions }) => {
     })
     setScore(correct)
     setSubmitted(true)
+    // Вызываем callback при завершении теста
+    if (onComplete) {
+      onComplete()
+    }
   }
 
   const handleReset = () => {

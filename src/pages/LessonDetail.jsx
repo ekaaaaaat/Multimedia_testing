@@ -1,14 +1,45 @@
 import { useParams, Link } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTheme } from '../contexts/ThemeContext'
+import { useProgress } from '../contexts/ProgressContext'
 import InteractiveTest from '../components/InteractiveTest'
 import MediaPlayer from '../components/MediaPlayer'
+import ProgressBar from '../components/ProgressBar'
 import './LessonDetail.css'
 
 const LessonDetail = () => {
   const { id } = useParams()
   const { theme } = useTheme()
+  const { updateLessonProgress, markLessonComplete, getLessonProgress } = useProgress()
   const [currentSection, setCurrentSection] = useState('content')
+
+  useEffect(() => {
+    // Отмечаем, что пользователь просмотрел контент
+    updateLessonProgress(id, 'contentViewed', true)
+  }, [id, updateLessonProgress])
+
+  const handleSectionChange = (section) => {
+    setCurrentSection(section)
+    // Отслеживаем прогресс по разделам
+    if (section === 'test') {
+      updateLessonProgress(id, 'testCompleted', false) // Будет true после прохождения теста
+    } else if (section === 'game') {
+      updateLessonProgress(id, 'gamePlayed', true)
+    } else if (section === 'music') {
+      updateLessonProgress(id, 'musicListened', true)
+    }
+  }
+
+  const handleTestComplete = () => {
+    updateLessonProgress(id, 'testCompleted', true)
+    // Проверяем, можно ли отметить урок как завершенный
+    setTimeout(() => {
+      const progress = getLessonProgress(id)
+      if (progress.contentViewed && progress.testCompleted) {
+        markLessonComplete(id)
+      }
+    }, 100)
+  }
 
   // Здесь будет загружаться контент урока по ID
   // Пока используем заглушку
@@ -67,34 +98,36 @@ const LessonDetail = () => {
   return (
     <div className={`lesson-detail-page ${theme}`}>
       <div className="lesson-nav">
-        <Link to="/lessons" className="back-link">← Вернуться к урокам</Link>
+        <Link to="/lessons" className="back-link">← Вернуться к урокам 🐱</Link>
         <div className="section-tabs">
           <button 
             className={currentSection === 'content' ? 'active' : ''}
-            onClick={() => setCurrentSection('content')}
+            onClick={() => handleSectionChange('content')}
           >
-            Контент
+            📖 Контент
           </button>
           <button 
             className={currentSection === 'test' ? 'active' : ''}
-            onClick={() => setCurrentSection('test')}
+            onClick={() => handleSectionChange('test')}
           >
-            Тест
+            📝 Тест
           </button>
           <button 
             className={currentSection === 'game' ? 'active' : ''}
-            onClick={() => setCurrentSection('game')}
+            onClick={() => handleSectionChange('game')}
           >
-            Игра
+            🎮 Игра
           </button>
           <button 
             className={currentSection === 'music' ? 'active' : ''}
-            onClick={() => setCurrentSection('music')}
+            onClick={() => handleSectionChange('music')}
           >
-            Музыка
+            🎵 Музыка
           </button>
         </div>
       </div>
+
+      <ProgressBar lessonId={id} />
 
       <div className="lesson-content-wrapper">
         {currentSection === 'content' && (
@@ -111,7 +144,11 @@ const LessonDetail = () => {
                 {section.type === 'media' && (
                   <div className="media-section">
                     <h2>{section.title}</h2>
-                    <MediaPlayer type={section.mediaType} src={section.src} />
+                    <MediaPlayer 
+                      type={section.mediaType} 
+                      src={section.src} 
+                      mediaId={section.mediaId || `lesson-${id}-media-${index}`}
+                    />
                   </div>
                 )}
                 {section.type === 'test' && (
@@ -127,24 +164,35 @@ const LessonDetail = () => {
 
         {currentSection === 'test' && (
           <div className="lesson-test">
-            <h1>Итоговый тест по уроку</h1>
-            <InteractiveTest questions={testQuestions} />
+            <h1>Итоговый тест по уроку 🐱</h1>
+            <InteractiveTest 
+              questions={testQuestions} 
+              onComplete={handleTestComplete}
+            />
           </div>
         )}
 
         {currentSection === 'game' && (
           <div className="lesson-game">
-            <h1>Обучающая игра</h1>
-            <p>Игра будет добавлена позже</p>
+            <h1>Обучающая игра 🐱</h1>
+            <div className="game-placeholder">
+              <p>🎮 Игра будет добавлена позже</p>
+              <p>Здесь будет интересная игра для закрепления материала!</p>
+            </div>
             {/* Здесь будет компонент игры */}
           </div>
         )}
 
         {currentSection === 'music' && (
           <div className="lesson-music">
-            <h1>Расслабляющая музыка</h1>
-            <MediaPlayer type="audio" src="" />
-            <p>Музыкальные треки будут добавлены позже</p>
+            <h1>Расслабляющая музыка 🐱</h1>
+            <MediaPlayer 
+              type="audio" 
+              src="" 
+              mediaId={`lesson-${id}-music`}
+              title="Расслабляющая музыка для учебы"
+            />
+            <p>🎵 Музыкальные треки будут добавлены позже</p>
           </div>
         )}
       </div>

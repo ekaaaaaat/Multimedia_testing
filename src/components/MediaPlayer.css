@@ -2,11 +2,21 @@
   margin: 2rem 0;
 }
 
+.media-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
 .media-player h3 {
   color: #00695c;
   font-size: 1.4rem;
-  margin-bottom: 1rem;
+  margin: 0;
   font-weight: 600;
+  flex: 1;
 }
 
 .media-player.dark h3 {

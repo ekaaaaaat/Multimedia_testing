@@ -13,7 +13,7 @@ const Layout = ({ children }) => {
       <header className="app-header">
         <div className="header-container">
           <Link to="/" className="logo">
-            <h1>Тестирование программного обеспечения</h1>
+            <h1>Тестирование программного обеспечения 🐱</h1>
             <span className="subtitle">Мультимедийное пособие</span>
           </Link>
           <button className="theme-toggle" onClick={toggleTheme}>
@@ -25,37 +25,37 @@ const Layout = ({ children }) => {
             to="/" 
             className={isActive('/') ? 'active' : ''}
           >
-            Главная
+            🏠 Главная
           </Link>
           <Link 
             to="/lessons" 
             className={isActive('/lessons') || location.pathname.startsWith('/lessons/') ? 'active' : ''}
           >
-            Уроки
+            📚 Уроки
           </Link>
           <Link 
             to="/tests" 
             className={isActive('/tests') ? 'active' : ''}
           >
-            Тесты
+            📝 Тесты
           </Link>
           <Link 
             to="/games" 
             className={isActive('/games') ? 'active' : ''}
           >
-            Игры
+            🎮 Игры
           </Link>
           <Link 
             to="/media" 
             className={isActive('/media') ? 'active' : ''}
           >
-            Медиа
+            🎥 Медиа
           </Link>
           <Link 
             to="/about" 
             className={isActive('/about') ? 'active' : ''}
           >
-            О проекте
+            ℹ️ О проекте
           </Link>
         </nav>
       </header>
@@ -65,7 +65,7 @@ const Layout = ({ children }) => {
       </main>
 
       <footer className="app-footer">
-        <p>&copy; 2024 Мультимедийное пособие по тестированию программного обеспечения. Все права защищены.</p>
+        <p>&copy; 2024 Мультимедийное пособие по тестированию программного обеспечения. Все права защищены. 🐱</p>
       </footer>
     </div>
   )

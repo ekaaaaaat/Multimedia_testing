@@ -1,15 +1,19 @@
 import { useState } from 'react'
 import { useTheme } from '../contexts/ThemeContext'
+import LikeButton from './LikeButton'
 import './MediaPlayer.css'
 
-const MediaPlayer = ({ type, src, title }) => {
+const MediaPlayer = ({ type, src, title, mediaId }) => {
   const { theme } = useTheme()
   const [playing, setPlaying] = useState(false)
 
   if (type === 'video') {
     return (
       <div className={`media-player ${theme}`}>
-        {title && <h3>{title}</h3>}
+        <div className="media-header">
+          {title && <h3>{title} 🐱</h3>}
+          {mediaId && <LikeButton mediaId={mediaId} mediaType="video" />}
+        </div>
         <div className="video-wrapper">
           <video 
             controls 
@@ -28,7 +32,10 @@ const MediaPlayer = ({ type, src, title }) => {
   if (type === 'audio') {
     return (
       <div className={`media-player ${theme}`}>
-        {title && <h3>{title}</h3>}
+        <div className="media-header">
+          {title && <h3>{title} 🐱</h3>}
+          {mediaId && <LikeButton mediaId={mediaId} mediaType="audio" />}
+        </div>
         <div className="audio-wrapper">
           <audio 
             controls 
@@ -47,7 +54,10 @@ const MediaPlayer = ({ type, src, title }) => {
   if (type === 'image') {
     return (
       <div className={`media-player ${theme}`}>
-        {title && <h3>{title}</h3>}
+        <div className="media-header">
+          {title && <h3>{title} 🐱</h3>}
+          {mediaId && <LikeButton mediaId={mediaId} mediaType="image" />}
+        </div>
         <div className="image-wrapper">
           <img src={src} alt={title || 'Изображение'} className="media-image" />
         </div>

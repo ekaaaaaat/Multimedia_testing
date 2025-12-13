@@ -157,6 +157,26 @@
   color: #80deea;
 }
 
+.game-placeholder {
+  text-align: center;
+  padding: 3rem;
+}
+
+.cat-emoji-large {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
 @media (max-width: 768px) {
   .lesson-content-wrapper {
     padding: 1.5rem;
