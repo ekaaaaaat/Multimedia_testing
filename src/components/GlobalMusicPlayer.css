@@ -1,0 +1,137 @@
+.global-music-player {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  padding: 1rem 1.25rem;
+  min-width: 300px;
+  max-width: 400px;
+  animation: slideInUp 0.3s ease-out;
+  border: 1px solid rgba(0, 137, 123, 0.2);
+}
+
+.global-music-player.dark {
+  background: rgba(0, 77, 64, 0.95);
+  border: 1px solid rgba(128, 222, 234, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.music-player-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.music-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.music-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.music-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #00897b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.global-music-player.dark .music-title {
+  color: #80deea;
+}
+
+.music-status {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.global-music-player.dark .music-status {
+  color: #b2ebf2;
+}
+
+.music-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.music-control-btn {
+  background: rgba(0, 137, 123, 0.1);
+  border: 1px solid rgba(0, 137, 123, 0.3);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+}
+
+.music-control-btn:hover {
+  background: rgba(0, 137, 123, 0.2);
+  transform: scale(1.05);
+}
+
+.global-music-player.dark .music-control-btn {
+  background: rgba(128, 222, 234, 0.1);
+  border-color: rgba(128, 222, 234, 0.3);
+}
+
+.global-music-player.dark .music-control-btn:hover {
+  background: rgba(128, 222, 234, 0.2);
+}
+
+.close-btn {
+  font-size: 1rem;
+  padding: 0.5rem;
+  min-width: 36px;
+  height: 36px;
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .global-music-player {
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+    min-width: auto;
+    max-width: none;
+  }
+  
+  .music-title {
+    font-size: 0.85rem;
+  }
+  
+  .music-status {
+    font-size: 0.75rem;
+  }
+}
+

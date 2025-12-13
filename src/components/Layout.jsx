@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useTheme } from '../contexts/ThemeContext'
 import { useAnimation } from '../contexts/AnimationContext'
+import GlobalMusicPlayer from './GlobalMusicPlayer'
 import CatIcon from './CatIcon'
 import './Layout.css'
 
@@ -86,6 +87,8 @@ const Layout = ({ children }) => {
       <footer className="app-footer">
         <p>&copy; 2024 Мультимедийное пособие по тестированию программного обеспечения. Все права защищены. <CatIcon variant={1} size="1em" /></p>
       </footer>
+      
+      <GlobalMusicPlayer />
     </div>
   )
 }

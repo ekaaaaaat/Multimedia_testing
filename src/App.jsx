@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { ThemeProvider } from './contexts/ThemeContext'
 import { ProgressProvider } from './contexts/ProgressContext'
 import { AnimationProvider } from './contexts/AnimationContext'
+import { MusicProvider } from './contexts/MusicContext'
 import Layout from './components/Layout'
 import CatAnimation from './components/CatAnimation'
 import Intro from './components/Intro'
@@ -35,21 +36,23 @@ function App() {
     <ThemeProvider>
       <ProgressProvider>
         <AnimationProvider>
-          <Router>
-            {showIntro && <Intro onComplete={handleIntroComplete} />}
-            <CatAnimation />
-            <Layout>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/lessons" element={<Lessons />} />
-                <Route path="/lessons/:id" element={<LessonDetail />} />
-                <Route path="/tests" element={<Tests />} />
-                <Route path="/games" element={<Games />} />
-                <Route path="/media" element={<Media />} />
-                <Route path="/about" element={<About />} />
-              </Routes>
-            </Layout>
-          </Router>
+          <MusicProvider>
+            <Router>
+              {showIntro && <Intro onComplete={handleIntroComplete} />}
+              <CatAnimation />
+              <Layout>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/lessons" element={<Lessons />} />
+                  <Route path="/lessons/:id" element={<LessonDetail />} />
+                  <Route path="/tests" element={<Tests />} />
+                  <Route path="/games" element={<Games />} />
+                  <Route path="/media" element={<Media />} />
+                  <Route path="/about" element={<About />} />
+                </Routes>
+              </Layout>
+            </Router>
+          </MusicProvider>
         </AnimationProvider>
       </ProgressProvider>
     </ThemeProvider>

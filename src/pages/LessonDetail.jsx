@@ -2,6 +2,7 @@ import { useParams, Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { useTheme } from '../contexts/ThemeContext'
 import { useProgress } from '../contexts/ProgressContext'
+import { useMusic } from '../contexts/MusicContext'
 import InteractiveTest from '../components/InteractiveTest'
 import MediaPlayer from '../components/MediaPlayer'
 import ProgressBar from '../components/ProgressBar'
@@ -912,12 +913,28 @@ const LessonDetail = () => {
           <div className="lesson-music">
             <h1>Расслабляющая музыка <CatIcon variant={4} size="1.5em" /></h1>
             {id === '1' ? (
-              <MediaPlayer 
-                type="audio" 
-                src={musicLesson1} 
-                mediaId={`lesson-${id}-music`}
-                title="Расслабляющая музыка для изучения материала"
-              />
+              <div className="music-section-content">
+                <MediaPlayer 
+                  type="audio" 
+                  src={musicLesson1} 
+                  mediaId={`lesson-${id}-music`}
+                  title="Расслабляющая музыка для изучения материала"
+                />
+                <div className="global-music-controls">
+                  <p className="music-hint">💡 Включите фоновую музыку, чтобы она играла на всем сайте</p>
+                  <button 
+                    className="play-global-music-btn"
+                    onClick={() => playMusic(musicLesson1, 'Расслабляющая музыка для изучения материала')}
+                    disabled={currentTrack && currentTrack.src === musicLesson1 && isPlaying}
+                  >
+                    {currentTrack && currentTrack.src === musicLesson1 && isPlaying ? (
+                      <>🎵 Музыка играет</>
+                    ) : (
+                      <>▶️ Включить фоновую музыку</>
+                    )}
+                  </button>
+                </div>
+              </div>
             ) : (
               <>
                 <MediaPlayer 
