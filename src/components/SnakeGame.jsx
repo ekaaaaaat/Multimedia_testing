@@ -96,34 +96,31 @@ const SnakeGame = () => {
   }, [moveSnake, gameOver, isPaused, isStarted])
 
   const handleKeyPress = useCallback((e) => {
-    if (gameOver || !isStarted) return
+    if (gameOver || !isStarted || isPaused) return
 
-    const key = e.key
-    const newDirection = { ...directionRef.current }
+    const key = e.key.toLowerCase()
+    const currentDir = directionRef.current
+    let newDirection = null
 
-    switch (key.toLowerCase()) {
+    switch (key) {
       case 'w':
-        if (directionRef.current.y === 0) {
-          newDirection.x = 0
-          newDirection.y = -1
+        if (currentDir.y === 0) {
+          newDirection = { x: 0, y: -1 }
         }
         break
       case 's':
-        if (directionRef.current.y === 0) {
-          newDirection.x = 0
-          newDirection.y = 1
+        if (currentDir.y === 0) {
+          newDirection = { x: 0, y: 1 }
         }
         break
       case 'a':
-        if (directionRef.current.x === 0) {
-          newDirection.x = -1
-          newDirection.y = 0
+        if (currentDir.x === 0) {
+          newDirection = { x: -1, y: 0 }
         }
         break
       case 'd':
-        if (directionRef.current.x === 0) {
-          newDirection.x = 1
-          newDirection.y = 0
+        if (currentDir.x === 0) {
+          newDirection = { x: 1, y: 0 }
         }
         break
       case ' ':
@@ -134,9 +131,11 @@ const SnakeGame = () => {
         return
     }
 
-    directionRef.current = newDirection
-    setDirection(newDirection)
-  }, [gameOver, isStarted])
+    if (newDirection) {
+      directionRef.current = newDirection
+      setDirection(newDirection)
+    }
+  }, [gameOver, isStarted, isPaused])
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyPress)
@@ -273,7 +272,7 @@ const SnakeGame = () => {
               {isPaused ? '▶️ Продолжить' : '⏸️ Пауза'}
             </button>
           </div>
-        </>
+        </div>
       )}
     </div>
   )
