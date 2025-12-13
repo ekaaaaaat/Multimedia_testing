@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useTheme } from '../contexts/ThemeContext'
 import SnakeGame from '../components/SnakeGame'
+import MouseGame from '../components/MouseGame'
 import CatIcon from '../components/CatIcon'
 import './Games.css'
 
@@ -18,18 +19,25 @@ const Games = () => {
     },
     {
       id: 2,
+      title: 'Поймай мышку',
+      description: 'Простая и расслабляющая игра, где нужно кликать по мышкам, которые появляются на экране. У вас есть 30 секунд, чтобы поймать как можно больше мышек!',
+      status: 'Доступна',
+      component: 'mouse'
+    },
+    {
+      id: 3,
       title: 'Найди баг',
       description: 'Расслабляющая игра для поиска ошибок. Отдохните и разомнитесь, ища дефекты в коде.',
       status: 'Скоро'
     },
     {
-      id: 3,
+      id: 4,
       title: 'Тест-кейс мастер',
       description: 'Спокойная игра для создания тест-кейсов. Расслабьтесь, создавая сценарии тестирования.',
       status: 'Скоро'
     },
     {
-      id: 4,
+      id: 5,
       title: 'Приоритизация дефектов',
       description: 'Медитативная игра для определения приоритетов. Отдохните, расставляя приоритеты дефектов.',
       status: 'Скоро'
@@ -47,7 +55,7 @@ const Games = () => {
         </p>
       </section>
 
-      {selectedGame && selectedGame.component === 'snake' ? (
+      {selectedGame && selectedGame.component ? (
         <div className="selected-game-container">
           <button 
             className="back-to-games-btn"
@@ -56,7 +64,8 @@ const Games = () => {
             ← Вернуться к играм
           </button>
           <div className="game-wrapper">
-            <SnakeGame />
+            {selectedGame.component === 'snake' && <SnakeGame />}
+            {selectedGame.component === 'mouse' && <MouseGame />}
           </div>
         </div>
       ) : (
@@ -64,7 +73,7 @@ const Games = () => {
           {games.map(game => (
             <div key={game.id} className="game-card">
               <div className="game-icon">
-                {game.component === 'snake' ? <CatIcon variant={1} size="4rem" /> : '🎮'}
+                {game.component === 'snake' ? <CatIcon variant={1} size="4rem" /> : game.component === 'mouse' ? '🐭' : '🎮'}
               </div>
               <h2>{game.title}</h2>
               <p className="game-description">{game.description}</p>
