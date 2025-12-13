@@ -14,6 +14,10 @@ export const MusicProvider = ({ children }) => {
   const [currentTrack, setCurrentTrack] = useState(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
+  const [volume, setVolume] = useState(() => {
+    const saved = localStorage.getItem('musicVolume')
+    return saved !== null ? parseFloat(saved) : 0.7
+  })
   const audioRef = useRef(null)
 
   useEffect(() => {
@@ -27,6 +31,13 @@ export const MusicProvider = ({ children }) => {
       }
     }
   }, [isPlaying])
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume
+    }
+    localStorage.setItem('musicVolume', volume.toString())
+  }, [volume])
 
   const playMusic = (src, title) => {
     if (currentTrack && currentTrack.src === src) {
@@ -60,16 +71,22 @@ export const MusicProvider = ({ children }) => {
     }
   }
 
+  const handleVolumeChange = (newVolume) => {
+    setVolume(newVolume)
+  }
+
   return (
     <MusicContext.Provider value={{
       currentTrack,
       isPlaying,
       isVisible,
+      volume,
       playMusic,
       pauseMusic,
       resumeMusic,
       stopMusic,
-      togglePlayPause
+      togglePlayPause,
+      setVolume: handleVolumeChange
     }}>
       {children}
       {currentTrack && (
