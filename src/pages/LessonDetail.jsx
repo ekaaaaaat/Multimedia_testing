@@ -563,17 +563,42 @@ const LessonDetail = () => {
                                 markerContent.push(<h3 key={`h3-${pIndex}`} className="content-subtitle">{text}</h3>)
                               }
                             } else if (textWithoutMarker.startsWith('•') || (textWithoutMarker.startsWith('*') && !textWithoutMarker.startsWith('**'))) {
-                              const items = textWithoutMarker.split(/\n(?=•|\*)/).filter(item => item.trim() && !item.match(/^\*\*.*\*\*$/))
-                              markerContent.push(
-                                <ul key={`ul-${pIndex}`} className="content-list">
-                                  {items.map((item, iIndex) => {
-                                    const cleanItem = item.replace(/^[•*]\s*/, '').trim()
-                                    // Убираем звездочки из элементов списка
-                                    const finalItem = cleanItem.replace(/\*\*/g, '')
-                                    return <li key={iIndex}>{finalItem}</li>
-                                  })}
-                                </ul>
-                              )
+                              const lines = textWithoutMarker.split('\n')
+                              const items = []
+                              
+                              lines.forEach(line => {
+                                const trimmedLine = line.trim()
+                                if (trimmedLine.startsWith('•') || (trimmedLine.startsWith('*') && !trimmedLine.startsWith('**'))) {
+                                  let cleanItem = trimmedLine.replace(/^[•*]\s*/, '').trim()
+                                  
+                                  // Обрабатываем **текст** внутри элементов списка
+                                  if (cleanItem.includes('**')) {
+                                    cleanItem = cleanItem.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                                    items.push({ text: cleanItem, isHtml: true })
+                                  } else {
+                                    cleanItem = cleanItem.replace(/^\*\s+/, '')
+                                    if (cleanItem) {
+                                      items.push({ text: cleanItem, isHtml: false })
+                                    }
+                                  }
+                                }
+                              })
+                              
+                              if (items.length > 0) {
+                                markerContent.push(
+                                  <ul key={`ul-${pIndex}`} className="content-list">
+                                    {items.map((item, iIndex) => (
+                                      <li key={iIndex}>
+                                        {item.isHtml ? (
+                                          <span dangerouslySetInnerHTML={{ __html: item.text }} />
+                                        ) : (
+                                          item.text
+                                        )}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                )
+                              }
                             } else if (textWithoutMarker.startsWith('>')) {
                               markerContent.push(<blockquote key={`quote-${pIndex}`} className="content-quote">{textWithoutMarker.replace(/^>\s*/, '')}</blockquote>)
                             } else if (textWithoutMarker) {
@@ -593,17 +618,42 @@ const LessonDetail = () => {
                                 markerContent.push(<h3 key={`h3-${pIndex}`} className="content-subtitle">{text}</h3>)
                               }
                             } else if (paragraph.startsWith('•') || (paragraph.startsWith('*') && !paragraph.startsWith('**'))) {
-                              const items = paragraph.split(/\n(?=•|\*)/).filter(item => item.trim() && !item.match(/^\*\*.*\*\*$/))
-                              markerContent.push(
-                                <ul key={`ul-${pIndex}`} className="content-list">
-                                  {items.map((item, iIndex) => {
-                                    const cleanItem = item.replace(/^[•*]\s*/, '').trim()
-                                    // Убираем звездочки из элементов списка
-                                    const finalItem = cleanItem.replace(/\*\*/g, '')
-                                    return <li key={iIndex}>{finalItem}</li>
-                                  })}
-                                </ul>
-                              )
+                              const lines = paragraph.split('\n')
+                              const items = []
+                              
+                              lines.forEach(line => {
+                                const trimmedLine = line.trim()
+                                if (trimmedLine.startsWith('•') || (trimmedLine.startsWith('*') && !trimmedLine.startsWith('**'))) {
+                                  let cleanItem = trimmedLine.replace(/^[•*]\s*/, '').trim()
+                                  
+                                  // Обрабатываем **текст** внутри элементов списка
+                                  if (cleanItem.includes('**')) {
+                                    cleanItem = cleanItem.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                                    items.push({ text: cleanItem, isHtml: true })
+                                  } else {
+                                    cleanItem = cleanItem.replace(/^\*\s+/, '')
+                                    if (cleanItem) {
+                                      items.push({ text: cleanItem, isHtml: false })
+                                    }
+                                  }
+                                }
+                              })
+                              
+                              if (items.length > 0) {
+                                markerContent.push(
+                                  <ul key={`ul-${pIndex}`} className="content-list">
+                                    {items.map((item, iIndex) => (
+                                      <li key={iIndex}>
+                                        {item.isHtml ? (
+                                          <span dangerouslySetInnerHTML={{ __html: item.text }} />
+                                        ) : (
+                                          item.text
+                                        )}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                )
+                              }
                             } else if (paragraph.startsWith('>')) {
                               markerContent.push(<blockquote key={`quote-${pIndex}`} className="content-quote">{paragraph.replace(/^>\s*/, '')}</blockquote>)
                             } else if (paragraph.trim()) {
@@ -641,11 +691,20 @@ const LessonDetail = () => {
                               lines.forEach(line => {
                                 const trimmedLine = line.trim()
                                 if (trimmedLine.startsWith('•') || (trimmedLine.startsWith('*') && !trimmedLine.startsWith('**'))) {
-                                  // Убираем маркер списка и звездочки форматирования
+                                  // Убираем маркер списка
                                   let cleanItem = trimmedLine.replace(/^[•*]\s*/, '').trim()
-                                  cleanItem = cleanItem.replace(/\*\*/g, '')
-                                  if (cleanItem) {
-                                    items.push(cleanItem)
+                                  
+                                  // Обрабатываем **текст** внутри элементов списка - заменяем на жирный
+                                  if (cleanItem.includes('**')) {
+                                    // Заменяем **текст** на <strong>текст</strong>
+                                    cleanItem = cleanItem.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                                    items.push({ text: cleanItem, isHtml: true })
+                                  } else {
+                                    // Убираем одиночные звездочки в начале (не форматирование)
+                                    cleanItem = cleanItem.replace(/^\*\s+/, '')
+                                    if (cleanItem) {
+                                      items.push({ text: cleanItem, isHtml: false })
+                                    }
                                   }
                                 }
                               })
@@ -654,7 +713,13 @@ const LessonDetail = () => {
                                 result.push(
                                   <ul key={`ul-${pIndex}`} className="content-list">
                                     {items.map((item, iIndex) => (
-                                      <li key={iIndex}>{item}</li>
+                                      <li key={iIndex}>
+                                        {item.isHtml ? (
+                                          <span dangerouslySetInnerHTML={{ __html: item.text }} />
+                                        ) : (
+                                          item.text
+                                        )}
+                                      </li>
                                     ))}
                                   </ul>
                                 )
