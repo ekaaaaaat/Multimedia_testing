@@ -103,33 +103,25 @@ const SnakeGame = () => {
     const currentDir = directionRef.current
     let newDirection = null
 
-    switch (key) {
-      case 'w':
-        if (currentDir.y === 0) {
-          newDirection = { x: 0, y: -1 }
-        }
-        break
-      case 's':
-        if (currentDir.y === 0) {
-          newDirection = { x: 0, y: 1 }
-        }
-        break
-      case 'a':
-        if (currentDir.x === 0) {
-          newDirection = { x: -1, y: 0 }
-        }
-        break
-      case 'd':
-        if (currentDir.x === 0) {
-          newDirection = { x: 1, y: 0 }
-        }
-        break
-      case ' ':
-        e.preventDefault()
-        setIsPaused(prev => !prev)
-        return
-      default:
-        return
+    // Поддержка английской и русской раскладки
+    // W/Ц - вверх, A/Ф - влево, S/Ы - вниз, D/В - вправо
+    const isUp = key === 'w' || key === 'ц' || key === 'ц' || key === 'arrowup'
+    const isDown = key === 's' || key === 'ы' || key === 'ы' || key === 'arrowdown'
+    const isLeft = key === 'a' || key === 'ф' || key === 'ф' || key === 'arrowleft'
+    const isRight = key === 'd' || key === 'в' || key === 'в' || key === 'arrowright'
+
+    if (isUp && currentDir.y === 0) {
+      newDirection = { x: 0, y: -1 }
+    } else if (isDown && currentDir.y === 0) {
+      newDirection = { x: 0, y: 1 }
+    } else if (isLeft && currentDir.x === 0) {
+      newDirection = { x: -1, y: 0 }
+    } else if (isRight && currentDir.x === 0) {
+      newDirection = { x: 1, y: 0 }
+    } else if (key === ' ') {
+      e.preventDefault()
+      setIsPaused(prev => !prev)
+      return
     }
 
     if (newDirection) {
