@@ -76,7 +76,7 @@ export const ProgressProvider = ({ children }) => {
 
   const getTotalProgress = () => {
     const totalLessons = 6 // Количество уроков
-    const completedLessons = Object.values(progress).filter(p => p.completed).length
+    const completedLessons = Object.values(progress).filter(p => p && p.completed === true).length
     return totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0
   }
 

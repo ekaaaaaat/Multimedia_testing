@@ -47,13 +47,22 @@ const LessonDetail = () => {
 
   const handleTestComplete = () => {
     updateLessonProgress(id, 'testCompleted', true)
+    // Используем useEffect для проверки после обновления состояния
     setTimeout(() => {
       const progress = getLessonProgress(id)
       if (progress.contentViewed && progress.testCompleted) {
         markLessonComplete(id)
       }
-    }, 100)
+    }, 200)
   }
+  
+  // Проверяем, нужно ли пометить урок как завершенный при изменении прогресса
+  useEffect(() => {
+    const progress = getLessonProgress(id)
+    if (progress.contentViewed && progress.testCompleted && !progress.completed) {
+      markLessonComplete(id)
+    }
+  }, [id, getLessonProgress, markLessonComplete])
 
   // Контент для первого урока
   const getLessonContent = () => {
