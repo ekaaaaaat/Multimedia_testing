@@ -208,6 +208,23 @@
   color: #b2ebf2;
 }
 
+.lesson-video-container {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.video-caption {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  color: #666;
+  font-style: italic;
+  text-align: center;
+}
+
+.lesson-detail-page.dark .video-caption {
+  color: #b2ebf2;
+}
+
 .lesson-detail-page.dark .text-section p {
   color: #e0e0e0;
 }

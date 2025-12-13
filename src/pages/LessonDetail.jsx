@@ -16,6 +16,9 @@ import imageFirstBug from '../assets/images/First_Computer_Bug,_1947.jpg'
 import imageModelHierarchy from '../assets/images/model_ierarhi.png'
 import imageDiagram from '../assets/images/diagram.png'
 
+// Import videos
+import videoLesson1 from '../assets/videos/Lesson1.mp4'
+
 const LessonDetail = () => {
   const { id } = useParams()
   const { theme } = useTheme()
@@ -64,7 +67,14 @@ const LessonDetail = () => {
 
 Цель данного учебного пособия – познакомить читателя с основными понятиями тестирования программного обеспечения, стратегиями и техниками тестирования. Пособие будет полезно как начинающим тестировщикам, так и программистам, желающим писать качественный код.
 
-В данном пособии рассматриваются этапы, уровни и виды тестирования ПО, техники тестирования черного и белого ящика, особенности тестирования веб- и мобильных приложений, а также ряд полезных инструментов и подходов для автоматизации тестов.`
+В данном пособии рассматриваются этапы, уровни и виды тестирования ПО, техники тестирования черного и белого ящика, особенности тестирования веб- и мобильных приложений, а также ряд полезных инструментов и подходов для автоматизации тестов.`,
+            videos: [
+              {
+                src: videoLesson1,
+                title: 'Введение в тестирование программного обеспечения',
+                caption: 'Видеоурок по основам тестирования ПО'
+              }
+            ]
           },
           {
             id: 'what-is-testing',
@@ -838,6 +848,19 @@ const LessonDetail = () => {
                         // Обрабатываем все параграфы
                         return paragraphs.map((para, pIndex) => processParagraph(para, pIndex)).filter(item => item !== null)
                       })()}
+                      {section.videos && section.videos.map((video, vidIndex) => (
+                        <div key={vidIndex} className="lesson-video-container">
+                          <MediaPlayer
+                            type="video"
+                            src={video.src}
+                            title={video.title}
+                            mediaId={`lesson-${id}-video-${section.id}-${vidIndex}`}
+                          />
+                          {video.caption && (
+                            <p className="video-caption">{video.caption}</p>
+                          )}
+                        </div>
+                      ))}
                       {section.images && section.images.map((image, imgIndex) => (
                         <div key={imgIndex} className="lesson-image-container">
                           <MediaPlayer
