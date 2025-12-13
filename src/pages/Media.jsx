@@ -9,10 +9,15 @@ import './Media.css'
 import videoLesson1 from '../assets/videos/Lesson1.mp4'
 import videoLesson2 from '../assets/videos/Lesson2.mp4'
 import musicLesson1 from '../assets/music/relaxing_music_lesson1.mp3'
+import musicLesson2 from '../assets/music/Daydreams-chosic.com_.mp3'
 import imageMarkII from '../assets/images/Mark_II.png'
 import imageFirstBug from '../assets/images/First_Computer_Bug,_1947.jpg'
 import imageModelHierarchy from '../assets/images/model_ierarhi.png'
 import imageDiagram from '../assets/images/diagram.png'
+// Import media from Lesson 2
+import imageGagarin from '../assets/images/gagarin.png'
+import imageDefectLifeCycle from '../assets/images/defect_life_cycle.jpg'
+import animation404Cat from '../assets/animation/404Cat.gif'
 
 const Media = () => {
   const { theme } = useTheme()
@@ -40,6 +45,12 @@ const Media = () => {
       title: 'Расслабляющая музыка для изучения материала',
       src: musicLesson1,
       description: 'Расслабляющая музыка из первого урока для комфортного изучения материала'
+    },
+    {
+      id: 2,
+      title: 'Расслабляющая музыка для изучения материала',
+      src: musicLesson2,
+      description: 'Расслабляющая музыка из второго урока для комфортного изучения материала'
     }
   ]
 
@@ -67,6 +78,24 @@ const Media = () => {
       title: 'Диаграмма отношения валидации, верификации и тестирования',
       src: imageDiagram,
       description: 'Диаграмма, показывающая взаимосвязь между валидацией, верификацией и тестированием'
+    },
+    {
+      id: 5,
+      title: 'Опечатка в макете с именем Гагарина',
+      src: imageGagarin,
+      description: 'Опечатка в макете на фестивале "ВолгаФест" 2017 года - пример недочета (fault)'
+    },
+    {
+      id: 6,
+      title: 'Жизненный цикл дефекта',
+      src: imageDefectLifeCycle,
+      description: 'Схема жизненного цикла дефекта, показывающая этапы от создания до закрытия'
+    },
+    {
+      id: 7,
+      title: 'Ошибка error 404',
+      src: animation404Cat,
+      description: 'Пример отказа (failure) - ошибка 404, когда страница не найдена'
     }
   ]
 
