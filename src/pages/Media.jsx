@@ -133,10 +133,16 @@ const Media = () => {
                       <p className="music-hint">💡 Включите фоновую музыку, чтобы она играла на всем сайте</p>
                       <button 
                         className="play-global-music-btn"
-                        onClick={() => playMusic(audio.src, audio.title)}
-                        disabled={currentTrack && currentTrack.src === audio.src && isPlaying}
+                        onClick={() => {
+                          try {
+                            playMusic(audio.src, audio.title)
+                          } catch (error) {
+                            console.error('Error playing music:', error)
+                          }
+                        }}
+                        disabled={currentTrack && String(currentTrack.src) === String(audio.src) && isPlaying}
                       >
-                        {currentTrack && currentTrack.src === audio.src && isPlaying ? (
+                        {currentTrack && String(currentTrack.src) === String(audio.src) && isPlaying ? (
                           <>🎵 Музыка играет</>
                         ) : (
                           <>▶️ Включить фоновую музыку</>
