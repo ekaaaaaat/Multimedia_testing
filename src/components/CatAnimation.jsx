@@ -11,15 +11,17 @@ const CatAnimation = () => {
 
   useEffect(() => {
     if (animationsEnabled) {
-      // Создаем несколько котиков
+      // Создаем больше котиков для более оживленной анимации
       const newCats = []
-      for (let i = 0; i < 3; i++) {
+      const catCount = 8 // Увеличено количество котиков
+      for (let i = 0; i < catCount; i++) {
         newCats.push({
           id: i,
           x: Math.random() * 100,
           y: Math.random() * 100,
           delay: Math.random() * 5,
-          speed: 0.5 + Math.random() * 0.5
+          speed: 0.5 + Math.random() * 0.5,
+          size: 2 + Math.random() * 1.5 // Разный размер для разнообразия
         })
       }
       setCats(newCats)
@@ -45,7 +47,7 @@ const CatAnimation = () => {
             animationDuration: `${3 + cat.speed}s`
           }}
         >
-          <CatIcon variant={cat.id % 5} size="2.5rem" />
+          <CatIcon variant={cat.id % 5} size={`${cat.size}rem`} />
         </div>
       ))}
     </div>
