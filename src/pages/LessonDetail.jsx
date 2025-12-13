@@ -613,16 +613,17 @@ const LessonDetail = () => {
                             // Обычный параграф без маркера
                             const trimmed = paragraph.trim()
                             
-                            // Проверяем, является ли весь параграф заголовком **текст**
-                            if (trimmed.match(/^\*\*[^*]+\*\*$/)) {
-                              const text = trimmed.replace(/\*\*/g, '')
+                            // Проверяем, является ли весь параграф заголовком **текст** или **текст:**
+                            if (trimmed.match(/^\*\*[^*]+\*\*:?\s*$/)) {
+                              const text = trimmed.replace(/\*\*/g, '').replace(/:\s*$/, ':').trim()
                               result.push(<h3 key={`h3-${pIndex}`} className="content-subtitle">{text}</h3>)
                             }
                             // Проверяем заголовок с дополнительным текстом **текст** остальной текст
                             else if (trimmed.match(/^\*\*[^*]+\*\*/)) {
                               const match = trimmed.match(/^\*\*([^*]+)\*\*(.*)/)
                               if (match) {
-                                result.push(<h3 key={`h3-${pIndex}`} className="content-subtitle">{match[1]}</h3>)
+                                const headerText = match[1].trim()
+                                result.push(<h3 key={`h3-${pIndex}`} className="content-subtitle">{headerText}</h3>)
                                 if (match[2].trim()) {
                                   // Обрабатываем остальной текст, убирая звездочки
                                   const remainingText = match[2].trim().replace(/\*\*/g, '')
