@@ -1495,6 +1495,35 @@ const LessonDetail = () => {
                   </button>
                 </div>
               </div>
+            ) : id === '2' ? (
+              <div className="music-section-content">
+                <MediaPlayer 
+                  type="audio" 
+                  src={musicLesson2} 
+                  mediaId={`lesson-${id}-music`}
+                  title="Расслабляющая музыка для изучения материала"
+                />
+                <div className="global-music-controls">
+                  <p className="music-hint">💡 Включите фоновую музыку, чтобы она играла на всем сайте</p>
+                  <button 
+                    className="play-global-music-btn"
+                    onClick={() => {
+                      try {
+                        playMusic(musicLesson2, 'Расслабляющая музыка для изучения материала')
+                      } catch (error) {
+                        console.error('Error playing music:', error)
+                      }
+                    }}
+                    disabled={currentTrack && String(currentTrack.src) === String(musicLesson2) && isPlaying}
+                  >
+                    {currentTrack && String(currentTrack.src) === String(musicLesson2) && isPlaying ? (
+                      <>🎵 Музыка играет</>
+                    ) : (
+                      <>▶️ Включить фоновую музыку</>
+                    )}
+                  </button>
+                </div>
+              </div>
             ) : (
               <>
                 <MediaPlayer 
