@@ -72,10 +72,20 @@
   font-size: 0.85rem;
   font-weight: 600;
   color: #00897b;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
 }
 
 .app.dark .progress-label {
   color: #80deea;
+}
+
+.progress-icon {
+  width: 1.2em;
+  height: 1.2em;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .progress-value {

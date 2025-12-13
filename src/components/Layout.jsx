@@ -4,6 +4,7 @@ import { useAnimation } from '../contexts/AnimationContext'
 import { useProgress } from '../contexts/ProgressContext'
 import GlobalMusicPlayer from './GlobalMusicPlayer'
 import CatIcon from './CatIcon'
+import ProgressIcon from '../assets/Icons/reshot-icon-light-bulbs-DKT43ENH8J.svg'
 import './Layout.css'
 
 const Layout = ({ children }) => {
@@ -32,7 +33,10 @@ const Layout = ({ children }) => {
           <div className="header-controls">
             <div className="header-progress">
               <div className="progress-info">
-                <span className="progress-label">📊 Прогресс:</span>
+                <span className="progress-label">
+                  <img src={ProgressIcon} alt="Прогресс" className="progress-icon" />
+                  Прогресс:
+                </span>
                 <span className="progress-value">{currentProgress}%</span>
               </div>
               <div className="progress-bar-mini">
