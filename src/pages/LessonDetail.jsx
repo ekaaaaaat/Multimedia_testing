@@ -148,12 +148,12 @@ const LessonDetail = () => {
               {
                 src: imageMarkII,
                 alt: 'Mark II Aiken Relay Calculator',
-                caption: 'Рис. 1.2 – Mark II Aiken Relay Calculator'
+                caption: 'Mark II Aiken Relay Calculator'
               },
               {
                 src: imageFirstBug,
                 alt: 'Первый компьютерный баг',
-                caption: 'Рис. 1.3 – Первый фактический случай найденного жука'
+                caption: 'Первый фактический случай найденного жука'
               }
             ]
           },
@@ -205,7 +205,7 @@ const LessonDetail = () => {
               {
                 src: imageModelHierarchy,
                 alt: 'Модель иерархии процессов обеспечения качества',
-                caption: 'Рис. 1.4 – Модель иерархии процессов обеспечения качества'
+                caption: 'Модель иерархии процессов обеспечения качества'
               }
             ]
           },
@@ -267,7 +267,7 @@ const LessonDetail = () => {
               {
                 src: imageDiagram,
                 alt: 'Диаграмма отношения валидации, верификации и тестирования',
-                caption: 'Рис. 1.5 – Диаграмма отношения валидации, верификации и тестирования'
+                caption: 'Диаграмма отношения валидации, верификации и тестирования'
               }
             ]
           },
