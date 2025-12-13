@@ -1,0 +1,141 @@
+.pie-chart-container {
+  margin: 2rem 0;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.pie-chart-container.dark {
+  background: rgba(0, 77, 64, 0.95);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.pie-chart-title {
+  text-align: center;
+  color: #00695c;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.pie-chart-container.dark .pie-chart-title {
+  color: #80deea;
+}
+
+.pie-chart-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.pie-chart {
+  max-width: 100%;
+  height: auto;
+}
+
+.pie-segment {
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.pie-segment:hover {
+  opacity: 1;
+  filter: brightness(1.2) !important;
+}
+
+.pie-label {
+  pointer-events: none;
+  user-select: none;
+}
+
+.pie-label.large {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.pie-label.small {
+  font-weight: 500;
+}
+
+.pie-legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 600px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  background: rgba(0, 137, 123, 0.05);
+  transition: all 0.3s ease;
+}
+
+.pie-chart-container.dark .legend-item {
+  background: rgba(128, 222, 234, 0.1);
+}
+
+.legend-item:hover {
+  background: rgba(0, 137, 123, 0.1);
+  transform: translateX(5px);
+}
+
+.pie-chart-container.dark .legend-item:hover {
+  background: rgba(128, 222, 234, 0.2);
+}
+
+.legend-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.legend-label {
+  flex: 1;
+  color: #555;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.pie-chart-container.dark .legend-label {
+  color: #e0e0e0;
+}
+
+.legend-value {
+  color: #00897b;
+  font-size: 1rem;
+  font-weight: 700;
+  min-width: 40px;
+  text-align: right;
+}
+
+.pie-chart-container.dark .legend-value {
+  color: #80deea;
+}
+
+@media (max-width: 768px) {
+  .pie-chart-container {
+    padding: 1.5rem;
+  }
+
+  .pie-chart-wrapper {
+    gap: 1.5rem;
+  }
+
+  .pie-legend {
+    grid-template-columns: 1fr;
+  }
+
+  .pie-chart {
+    width: 250px;
+    height: 250px;
+  }
+}
+
