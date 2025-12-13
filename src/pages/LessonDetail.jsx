@@ -955,7 +955,7 @@ const LessonDetail = () => {
 
         {currentSection === 'game' && (
           <div className="lesson-game">
-            <h1>Обучающая игра <CatIcon variant={2} size="1.5em" /></h1>
+            <h1>Расслабляющая игра <CatIcon variant={2} size="1.5em" /></h1>
             {id === '1' ? (
               <div className="game-content">
                 <p className="game-intro">

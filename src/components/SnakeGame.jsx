@@ -100,26 +100,26 @@ const SnakeGame = () => {
     const key = e.key
     const newDirection = { ...directionRef.current }
 
-    switch (key) {
-      case 'ArrowUp':
+    switch (key.toLowerCase()) {
+      case 'w':
         if (directionRef.current.y === 0) {
           newDirection.x = 0
           newDirection.y = -1
         }
         break
-      case 'ArrowDown':
+      case 's':
         if (directionRef.current.y === 0) {
           newDirection.x = 0
           newDirection.y = 1
         }
         break
-      case 'ArrowLeft':
+      case 'a':
         if (directionRef.current.x === 0) {
           newDirection.x = -1
           newDirection.y = 0
         }
         break
-      case 'ArrowRight':
+      case 'd':
         if (directionRef.current.x === 0) {
           newDirection.x = 1
           newDirection.y = 0
@@ -161,7 +161,7 @@ const SnakeGame = () => {
           <span>Очки: <strong>{score}</strong></span>
         </div>
         <div className="game-controls-info">
-          <span>Управление: ← → ↑ ↓ | Пауза: Пробел</span>
+          <span>Управление: W A S D | Пауза: Пробел</span>
         </div>
       </div>
 
