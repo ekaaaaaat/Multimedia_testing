@@ -576,38 +576,31 @@ const LessonDetail = () => {
                           const markerMatch = trimmed.match(/(📚|💡|🔍|📊|❓)/)
                           
                           if (markerMatch) {
-                            // Определяем тип маркера
-                            const markerType = {
-                              '📚': 'definition',
-                              '💡': 'tip',
-                              '🔍': 'example',
-                              '📊': 'conclusion',
-                              '❓': 'question'
-                            }[markerMatch[1]]
+                            const markerType = markerMatch[1]
                             
                             // Убираем пометку из текста
                             let textWithoutMarker = trimmed.replace(/(📚|💡|🔍|📊|❓)\s*/g, '').trim()
                             
-                            // Обрабатываем содержимое маркера
-                            const markerContent = []
+                            // Обрабатываем содержимое
+                            const content = []
                             
                             // Обрабатываем заголовок **текст**
                             if (textWithoutMarker.match(/^\*\*[^*]+\*\*/)) {
                               const match = textWithoutMarker.match(/^\*\*([^*]+)\*\*(.*)/)
                               if (match) {
-                                markerContent.push(<h3 key={`h3-${index}`} className="content-subtitle">{match[1]}</h3>)
+                                content.push(<h3 key={`h3-${index}`} className="content-subtitle">{match[1]}</h3>)
                                 if (match[2].trim()) {
                                   const remainingText = match[2].trim()
                                   if (remainingText.includes('**')) {
                                     const processedText = remainingText.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-                                    markerContent.push(<p key={`p-${index}`} dangerouslySetInnerHTML={{ __html: processedText }} />)
+                                    content.push(<p key={`p-${index}`} dangerouslySetInnerHTML={{ __html: processedText }} />)
                                   } else {
-                                    markerContent.push(<p key={`p-${index}`}>{remainingText}</p>)
+                                    content.push(<p key={`p-${index}`}>{remainingText}</p>)
                                   }
                                 }
                               } else {
                                 const text = textWithoutMarker.replace(/\*\*/g, '')
-                                markerContent.push(<h3 key={`h3-${index}`} className="content-subtitle">{text}</h3>)
+                                content.push(<h3 key={`h3-${index}`} className="content-subtitle">{text}</h3>)
                               }
                             }
                             // Обрабатываем список
@@ -632,7 +625,7 @@ const LessonDetail = () => {
                               })
                               
                               if (items.length > 0) {
-                                markerContent.push(
+                                content.push(
                                   <ul key={`ul-${index}`} className="content-list">
                                     {items.map((item, iIndex) => (
                                       <li key={iIndex}>
@@ -651,19 +644,30 @@ const LessonDetail = () => {
                             else if (textWithoutMarker) {
                               if (textWithoutMarker.includes('**')) {
                                 const processedText = textWithoutMarker.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-                                markerContent.push(<p key={`p-${index}`} dangerouslySetInnerHTML={{ __html: processedText }} />)
+                                content.push(<p key={`p-${index}`} dangerouslySetInnerHTML={{ __html: processedText }} />)
                               } else {
-                                markerContent.push(<p key={`p-${index}`}>{textWithoutMarker}</p>)
+                                content.push(<p key={`p-${index}`}>{textWithoutMarker}</p>)
                               }
                             }
                             
-                            // Возвращаем маркер только если есть контент
-                            if (markerContent.length > 0) {
-                              return (
-                                <ContentMarker key={`marker-${index}`} type={markerType}>
-                                  {markerContent}
-                                </ContentMarker>
-                              )
+                            // Выделяем только определения (📚) и советы (💡)
+                            if (content.length > 0) {
+                              if (markerType === '📚') {
+                                return (
+                                  <ContentMarker key={`marker-${index}`} type="definition">
+                                    {content}
+                                  </ContentMarker>
+                                )
+                              } else if (markerType === '💡') {
+                                return (
+                                  <ContentMarker key={`marker-${index}`} type="tip">
+                                    {content}
+                                  </ContentMarker>
+                                )
+                              } else {
+                                // Для остальных пометок (🔍, 📊, ❓) просто возвращаем контент без маркера
+                                return <>{content}</>
+                              }
                             }
                           } else {
                             // Обычный параграф без маркера
