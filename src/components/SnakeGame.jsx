@@ -146,9 +146,15 @@ const SnakeGame = () => {
   }, [handleKeyPress])
 
   const startGame = () => {
-    setIsStarted(true)
-    setIsPaused(false)
+    // Сбрасываем все состояния перед стартом
+    setSnake(INITIAL_SNAKE)
+    setFood(generateFood())
+    setDirection(INITIAL_DIRECTION)
+    directionRef.current = INITIAL_DIRECTION
     setGameOver(false)
+    setScore(0)
+    setIsPaused(false)
+    setIsStarted(true)
   }
 
   const resetGame = () => {
