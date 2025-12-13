@@ -19,6 +19,9 @@ import imageDiagram from '../assets/images/diagram.png'
 // Import videos
 import videoLesson1 from '../assets/videos/Lesson1.mp4'
 
+// Import music
+import musicLesson1 from '../assets/music/relaxing_music_lesson1.mp3'
+
 const LessonDetail = () => {
   const { id } = useParams()
   const { theme } = useTheme()
@@ -908,13 +911,24 @@ const LessonDetail = () => {
         {currentSection === 'music' && (
           <div className="lesson-music">
             <h1>Расслабляющая музыка <CatIcon variant={4} size="1.5em" /></h1>
-            <MediaPlayer 
-              type="audio" 
-              src="" 
-              mediaId={`lesson-${id}-music`}
-              title="Расслабляющая музыка для учебы"
-            />
-            <p>🎵 Музыкальные треки будут добавлены позже</p>
+            {id === '1' ? (
+              <MediaPlayer 
+                type="audio" 
+                src={musicLesson1} 
+                mediaId={`lesson-${id}-music`}
+                title="Расслабляющая музыка для изучения материала"
+              />
+            ) : (
+              <>
+                <MediaPlayer 
+                  type="audio" 
+                  src="" 
+                  mediaId={`lesson-${id}-music`}
+                  title="Расслабляющая музыка для учебы"
+                />
+                <p>🎵 Музыкальные треки будут добавлены позже</p>
+              </>
+            )}
           </div>
         )}
       </div>
