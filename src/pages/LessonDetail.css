@@ -364,6 +364,21 @@
   box-shadow: 0 6px 20px rgba(128, 222, 234, 0.4);
 }
 
+.game-content {
+  margin-top: 2rem;
+}
+
+.game-intro {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.lesson-detail-page.dark .game-intro {
+  color: #b2ebf2;
+}
+
 .content-end-marker {
   height: 1px;
   width: 100%;

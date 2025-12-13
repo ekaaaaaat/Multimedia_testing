@@ -9,6 +9,7 @@ import ProgressBar from '../components/ProgressBar'
 import LessonNavigation from '../components/LessonNavigation'
 import CatIcon from '../components/CatIcon'
 import ContentMarker from '../components/ContentMarker'
+import SnakeGame from '../components/SnakeGame'
 import './LessonDetail.css'
 
 // Import images
@@ -955,13 +956,22 @@ const LessonDetail = () => {
         {currentSection === 'game' && (
           <div className="lesson-game">
             <h1>Обучающая игра <CatIcon variant={2} size="1.5em" /></h1>
-            <div className="game-placeholder">
-              <div className="cat-emoji-large">
-                <CatIcon variant={3} size="5rem" />
+            {id === '1' ? (
+              <div className="game-content">
+                <p className="game-intro">
+                  Отдохните и расслабьтесь, играя в классическую змейку! Управляйте котиком с помощью стрелок на клавиатуре.
+                </p>
+                <SnakeGame />
               </div>
-              <p>🎮 Игра будет добавлена позже</p>
-              <p>Здесь будет интересная игра для закрепления материала!</p>
-            </div>
+            ) : (
+              <div className="game-placeholder">
+                <div className="cat-emoji-large">
+                  <CatIcon variant={3} size="5rem" />
+                </div>
+                <p>🎮 Игра будет добавлена позже</p>
+                <p>Здесь будет интересная игра для закрепления материала!</p>
+              </div>
+            )}
           </div>
         )}
 
