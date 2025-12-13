@@ -20,6 +20,7 @@ const SnakeGame = () => {
   const [isStarted, setIsStarted] = useState(false)
   const directionRef = useRef(INITIAL_DIRECTION)
   const gameLoopRef = useRef(null)
+  const gameContainerRef = useRef(null)
 
   const generateFood = useCallback(() => {
     const newFood = {
@@ -175,6 +176,13 @@ const SnakeGame = () => {
       }
     }
   }, [])
+
+  // Автоматический фокус на контейнер игры при старте
+  useEffect(() => {
+    if (isStarted && gameContainerRef.current) {
+      gameContainerRef.current.focus()
+    }
+  }, [isStarted])
 
   return (
     <div className={`snake-game-container ${theme}`}>
