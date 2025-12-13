@@ -4,6 +4,13 @@ import MediaPlayer from '../components/MediaPlayer'
 import CatIcon from '../components/CatIcon'
 import './Media.css'
 
+// Import media from Lesson 1
+import videoLesson1 from '../assets/videos/Lesson1.mp4'
+import imageMarkII from '../assets/images/Mark_II.png'
+import imageFirstBug from '../assets/images/First_Computer_Bug,_1947.jpg'
+import imageModelHierarchy from '../assets/images/model_ierarhi.png'
+import imageDiagram from '../assets/images/diagram.png'
+
 const Media = () => {
   const { theme } = useTheme()
   const [activeTab, setActiveTab] = useState('video')
@@ -11,15 +18,9 @@ const Media = () => {
   const videos = [
     {
       id: 1,
-      title: 'Введение в тестирование ПО',
-      src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-      description: 'Обзорная лекция об основах тестирования программного обеспечения'
-    },
-    {
-      id: 2,
-      title: 'Виды тестирования',
-      src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-      description: 'Подробный разбор различных видов и уровней тестирования'
+      title: 'Введение в тестирование программного обеспечения',
+      src: videoLesson1,
+      description: 'Видеоурок по основам тестирования программного обеспечения из первого урока'
     }
   ]
 
@@ -41,15 +42,27 @@ const Media = () => {
   const images = [
     {
       id: 1,
-      title: 'Схема уровней тестирования',
-      src: 'https://via.placeholder.com/800x400/00897b/ffffff?text=Схема+уровней+тестирования',
-      description: 'Визуальная схема различных уровней тестирования'
+      title: 'Mark II Aiken Relay Calculator',
+      src: imageMarkII,
+      description: 'Mark II Aiken Relay Calculator - один из первых компьютеров, на котором был обнаружен первый компьютерный баг'
     },
     {
       id: 2,
-      title: 'Жизненный цикл дефекта',
-      src: 'https://via.placeholder.com/800x400/00acc1/ffffff?text=Жизненный+цикл+дефекта',
-      description: 'Диаграмма жизненного цикла дефекта в процессе тестирования'
+      title: 'Первый фактический случай найденного жука',
+      src: imageFirstBug,
+      description: 'Первый компьютерный баг, обнаруженный 9 сентября 1947 года в Гарвардском университете'
+    },
+    {
+      id: 3,
+      title: 'Модель иерархии процессов обеспечения качества',
+      src: imageModelHierarchy,
+      description: 'Модель иерархии процессов обеспечения качества: тестирование – часть QC, QC – часть QA'
+    },
+    {
+      id: 4,
+      title: 'Диаграмма отношения валидации, верификации и тестирования',
+      src: imageDiagram,
+      description: 'Диаграмма, показывающая взаимосвязь между валидацией, верификацией и тестированием'
     }
   ]
 
