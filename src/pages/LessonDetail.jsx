@@ -603,7 +603,44 @@ const LessonDetail = () => {
                                 content.push(<h3 key={`h3-${index}`} className="content-subtitle">{text}</h3>)
                               }
                             }
-                            // Обрабатываем список
+                            // Обрабатываем нумерованный список
+                            else if (textWithoutMarker.match(/^\d+\.\s/)) {
+                              const lines = textWithoutMarker.split('\n')
+                              const items = []
+                              
+                              lines.forEach(line => {
+                                const trimmedLine = line.trim()
+                                if (trimmedLine.match(/^\d+\.\s/)) {
+                                  let cleanItem = trimmedLine.replace(/^\d+\.\s*/, '').trim()
+                                  
+                                  if (cleanItem.includes('**')) {
+                                    cleanItem = cleanItem.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                                    items.push({ text: cleanItem, isHtml: true })
+                                  } else {
+                                    if (cleanItem) {
+                                      items.push({ text: cleanItem, isHtml: false })
+                                    }
+                                  }
+                                }
+                              })
+                              
+                              if (items.length > 0) {
+                                content.push(
+                                  <ol key={`ol-${index}`} className="content-list">
+                                    {items.map((item, iIndex) => (
+                                      <li key={iIndex}>
+                                        {item.isHtml ? (
+                                          <span dangerouslySetInnerHTML={{ __html: item.text }} />
+                                        ) : (
+                                          item.text
+                                        )}
+                                      </li>
+                                    ))}
+                                  </ol>
+                                )
+                              }
+                            }
+                            // Обрабатываем маркированный список
                             else if (textWithoutMarker.startsWith('•') || (textWithoutMarker.startsWith('*') && !textWithoutMarker.startsWith('**'))) {
                               const lines = textWithoutMarker.split('\n')
                               const items = []
@@ -695,7 +732,44 @@ const LessonDetail = () => {
                                 return <>{elements}</>
                               }
                             }
-                            // Список
+                            // Нумерованный список
+                            else if (trimmed.match(/^\d+\.\s/)) {
+                              const lines = para.split('\n')
+                              const items = []
+                              
+                              lines.forEach(line => {
+                                const trimmedLine = line.trim()
+                                if (trimmedLine.match(/^\d+\.\s/)) {
+                                  let cleanItem = trimmedLine.replace(/^\d+\.\s*/, '').trim()
+                                  
+                                  if (cleanItem.includes('**')) {
+                                    cleanItem = cleanItem.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                                    items.push({ text: cleanItem, isHtml: true })
+                                  } else {
+                                    if (cleanItem) {
+                                      items.push({ text: cleanItem, isHtml: false })
+                                    }
+                                  }
+                                }
+                              })
+                              
+                              if (items.length > 0) {
+                                return (
+                                  <ol key={`ol-${index}`} className="content-list">
+                                    {items.map((item, iIndex) => (
+                                      <li key={iIndex}>
+                                        {item.isHtml ? (
+                                          <span dangerouslySetInnerHTML={{ __html: item.text }} />
+                                        ) : (
+                                          item.text
+                                        )}
+                                      </li>
+                                    ))}
+                                  </ol>
+                                )
+                              }
+                            }
+                            // Маркированный список
                             else if (trimmed.startsWith('•') || (trimmed.startsWith('*') && !trimmed.startsWith('**'))) {
                               const lines = para.split('\n')
                               const items = []
