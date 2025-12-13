@@ -18,13 +18,13 @@ const PieChart = ({ data, title }) => {
     // Вычисляем координаты для текста
     const midAngle = (startAngle + endAngle) / 2
     const radius = 120
-    const textX = Math.cos((midAngle * Math.PI) / 180) * (radius * 0.7)
-    const textY = Math.sin((midAngle * Math.PI) / 180) * (radius * 0.7)
+    const midAngleRad = (midAngle * Math.PI) / 180
     
-    // Для больших сегментов (>10%) размещаем текст внутри
+    // Для больших сегментов (>10%) размещаем текст внутри, для маленьких - снаружи
     const isLarge = percentage > 10
-    const labelX = isLarge ? textX : Math.cos((midAngle * Math.PI) / 180) * (radius * 1.15)
-    const labelY = isLarge ? textY : Math.sin((midAngle * Math.PI) / 180) * (radius * 1.15)
+    const distance = isLarge ? radius * 0.6 : radius * 1.2
+    const labelX = Math.cos(midAngleRad) * distance
+    const labelY = Math.sin(midAngleRad) * distance
     
     return {
       ...item,
@@ -86,7 +86,7 @@ const PieChart = ({ data, title }) => {
                   filter: theme === 'dark' ? 'brightness(1.1)' : 'none'
                 }}
               />
-              {segment.percentage > 3 && (
+              {segment.angle > 5 && (
                 <text
                   x={segment.labelX + 150}
                   y={segment.labelY + 150}
@@ -94,8 +94,11 @@ const PieChart = ({ data, title }) => {
                   dominantBaseline="middle"
                   className={`pie-label ${segment.isLarge ? 'large' : 'small'}`}
                   fill={segment.isLarge ? '#fff' : (theme === 'dark' ? '#e0e0e0' : '#333')}
-                  fontSize={segment.isLarge ? '16' : '12'}
-                  fontWeight="600"
+                  fontSize={segment.isLarge ? '18' : '14'}
+                  fontWeight="700"
+                  style={{
+                    textShadow: segment.isLarge ? '0 1px 3px rgba(0, 0, 0, 0.5)' : '0 1px 2px rgba(0, 0, 0, 0.3)'
+                  }}
                 >
                   {segment.percentage}%
                 </text>
