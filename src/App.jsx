@@ -1,8 +1,10 @@
+import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { ThemeProvider } from './contexts/ThemeContext'
 import { ProgressProvider } from './contexts/ProgressContext'
 import Layout from './components/Layout'
 import CatAnimation from './components/CatAnimation'
+import Intro from './components/Intro'
 import Home from './pages/Home'
 import Lessons from './pages/Lessons'
 import LessonDetail from './pages/LessonDetail'
@@ -13,10 +15,26 @@ import About from './pages/About'
 import './App.css'
 
 function App() {
+  const [showIntro, setShowIntro] = useState(true)
+
+  useEffect(() => {
+    // Проверяем, был ли интро уже показан в этой сессии
+    const introShown = sessionStorage.getItem('introShown')
+    if (introShown) {
+      setShowIntro(false)
+    }
+  }, [])
+
+  const handleIntroComplete = () => {
+    setShowIntro(false)
+    sessionStorage.setItem('introShown', 'true')
+  }
+
   return (
     <ThemeProvider>
       <ProgressProvider>
         <Router>
+          {showIntro && <Intro onComplete={handleIntroComplete} />}
           <CatAnimation />
           <Layout>
             <Routes>
