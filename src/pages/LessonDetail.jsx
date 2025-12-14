@@ -59,7 +59,7 @@ import musicLesson1 from '../assets/music/relaxing_music_lesson1.mp3'
 import musicLesson2 from '../assets/music/Daydreams-chosic.com_.mp3'
 import musicLesson3 from '../assets/music/Cozy-Place-Chill-Background-Music(chosic.com).mp3'
 import musicLesson4 from '../assets/music/Late-at-Night(chosic.com).mp3'
-import musicLesson5 from '../assets/music/5.mp3'
+import musicLesson5 from '../assets/music/m5.mp3'
 
 const LessonDetail = () => {
   const { id } = useParams()
@@ -1416,13 +1416,13 @@ const LessonDetail = () => {
             icon: '📖',
             type: 'text',
             content: `В этом уроке мы разберем, что такое баг-репорт, его структуру, типичные ошибки при написании баг-репортов, а также понятия Severity и Priority.`,
-            videos: videoLesson5 ? [
+            videos: [
               {
                 src: videoLesson5,
                 title: 'Тестовая документация. Баг-репорт.',
                 caption: 'Видеоурок по тестовой документации и баг-репортам'
               }
-            ] : []
+            ]
           },
           {
             id: 'bug-report-definition',
