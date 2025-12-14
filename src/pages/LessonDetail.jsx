@@ -1857,6 +1857,116 @@ const LessonDetail = () => {
                           return elements.length > 0 ? <>{elements}</> : <p>{text}</p>
                         }
                         
+                        // Проверяем, есть ли в секции тест-кейсы (начинаются с **Номер:**)
+                        const fullContent = section.content
+                        const hasTestCases = fullContent.includes('**Номер:**')
+                        
+                        if (hasTestCases) {
+                          // Разбиваем контент на части: текст и тест-кейсы
+                          const result = []
+                          
+                          // Находим все тест-кейсы
+                          const testCaseRegex = /\*\*Номер:\*\*/g
+                          const testCasePositions = []
+                          let match
+                          while ((match = testCaseRegex.exec(fullContent)) !== null) {
+                            testCasePositions.push(match.index)
+                          }
+                          
+                          let lastPos = 0
+                          testCasePositions.forEach((pos, idx) => {
+                            // Текст до тест-кейса
+                            if (pos > lastPos) {
+                              const beforeText = fullContent.substring(lastPos, pos).trim()
+                              if (beforeText && !beforeText.match(/^\*\*[А-Яа-я]/)) {
+                                // Обрабатываем текст до тест-кейса как обычные параграфы
+                                const beforeParagraphs = beforeText.split('\n\n')
+                                beforeParagraphs.forEach((para, pIdx) => {
+                                  if (para.trim() && !para.trim().match(/^\*\*Номер:\*\*/)) {
+                                    const processed = processParagraph(para, `before-${idx}-${pIdx}`)
+                                    if (processed) result.push(processed)
+                                  }
+                                })
+                              }
+                            }
+                            
+                            // Находим конец тест-кейса
+                            let endPos = fullContent.length
+                            if (idx < testCasePositions.length - 1) {
+                              endPos = testCasePositions[idx + 1]
+                            }
+                            
+                            // Проверяем разделитель ---
+                            const separatorIdx = fullContent.substring(pos, endPos).indexOf('\n---')
+                            if (separatorIdx !== -1) {
+                              endPos = pos + separatorIdx
+                            }
+                            
+                            // Извлекаем тест-кейс
+                            const testCaseText = fullContent.substring(pos, endPos).trim()
+                            const testCase = parseTestCase(testCaseText)
+                            if (testCase) {
+                              result.push(
+                                <table key={`test-case-${idx}`} className="test-case-table">
+                                  <tbody>
+                                    {testCase.number && (
+                                      <tr>
+                                        <td>Номер</td>
+                                        <td>{testCase.number}</td>
+                                      </tr>
+                                    )}
+                                    {testCase.title && (
+                                      <tr>
+                                        <td>Заголовок</td>
+                                        <td>{testCase.title}</td>
+                                      </tr>
+                                    )}
+                                    {testCase.preconditions && (
+                                      <tr>
+                                        <td>Предусловия</td>
+                                        <td>{formatTextWithLists(testCase.preconditions)}</td>
+                                      </tr>
+                                    )}
+                                    {testCase.steps && (
+                                      <tr>
+                                        <td>Шаги</td>
+                                        <td>{formatTextWithLists(testCase.steps)}</td>
+                                      </tr>
+                                    )}
+                                    {testCase.expectedResult && (
+                                      <tr>
+                                        <td>Ожидаемый результат</td>
+                                        <td>{formatTextWithLists(testCase.expectedResult)}</td>
+                                      </tr>
+                                    )}
+                                  </tbody>
+                                </table>
+                              )
+                            }
+                            
+                            lastPos = endPos
+                            if (separatorIdx !== -1) {
+                              lastPos += '\n---'.length
+                            }
+                          })
+                          
+                          // Оставшийся текст
+                          if (lastPos < fullContent.length) {
+                            const remainingText = fullContent.substring(lastPos).trim()
+                            if (remainingText && !remainingText.match(/^\*\*Номер:\*\*/)) {
+                              const remainingParagraphs = remainingText.split('\n\n')
+                              remainingParagraphs.forEach((para, pIdx) => {
+                                if (para.trim()) {
+                                  const processed = processParagraph(para, `after-${pIdx}`)
+                                  if (processed) result.push(processed)
+                                }
+                              })
+                            }
+                          }
+                          
+                          return result
+                        }
+                        
                         // Функция для обработки одного параграфа
                         const processParagraph = (para, index) => {
                           // Проверяем, является ли параграф тест-кейсом
