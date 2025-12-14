@@ -1879,7 +1879,29 @@ const LessonDetail = () => {
                               const match = trimmed.match(/^\*\*([^*]+)\*\*(.*)/)
                               if (match) {
                                 const elements = [<h3 key={`h3-${index}`} className="content-subtitle">{match[1]}</h3>]
-                                const remainingText = match[2].trim()
+                                
+                                // Получаем весь текст после заголовка (включая переносы строк)
+                                const allLines = trimmed.split('\n')
+                                let remainingLines = []
+                                let foundHeader = false
+                                
+                                for (let i = 0; i < allLines.length; i++) {
+                                  const line = allLines[i].trim()
+                                  if (line.match(/^\*\*[^*]+\*\*/) && !foundHeader) {
+                                    foundHeader = true
+                                    // Пропускаем строку с заголовком и берем остальное
+                                    const headerMatch = line.match(/^\*\*[^*]+\*\*(.*)/)
+                                    if (headerMatch && headerMatch[1].trim()) {
+                                      remainingLines.push(headerMatch[1].trim())
+                                    }
+                                  } else if (foundHeader) {
+                                    if (line) {
+                                      remainingLines.push(line)
+                                    }
+                                  }
+                                }
+                                
+                                const remainingText = remainingLines.join('\n').trim()
                                 
                                 if (remainingText) {
                                   // Проверяем, является ли оставшийся текст списком
