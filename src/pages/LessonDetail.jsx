@@ -1879,13 +1879,87 @@ const LessonDetail = () => {
                               const match = trimmed.match(/^\*\*([^*]+)\*\*(.*)/)
                               if (match) {
                                 const elements = [<h3 key={`h3-${index}`} className="content-subtitle">{match[1]}</h3>]
-                                if (match[2].trim()) {
-                                  const remainingText = match[2].trim()
-                                  if (remainingText.includes('**')) {
-                                    const processedText = remainingText.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-                                    elements.push(<p key={`p-${index}`} dangerouslySetInnerHTML={{ __html: processedText }} />)
-                                  } else {
-                                    elements.push(<p key={`p-${index}`}>{remainingText}</p>)
+                                const remainingText = match[2].trim()
+                                
+                                if (remainingText) {
+                                  // Проверяем, является ли оставшийся текст списком
+                                  const lines = remainingText.split('\n')
+                                  const firstLine = lines[0].trim()
+                                  
+                                  // Маркированный список
+                                  if (firstLine.startsWith('•') || (firstLine.startsWith('*') && !firstLine.startsWith('**'))) {
+                                    const items = []
+                                    lines.forEach(line => {
+                                      const trimmedLine = line.trim()
+                                      if (trimmedLine.startsWith('•') || (trimmedLine.startsWith('*') && !trimmedLine.startsWith('**'))) {
+                                        let cleanItem = trimmedLine.replace(/^[•*]\s*/, '').trim()
+                                        if (cleanItem.includes('**')) {
+                                          cleanItem = cleanItem.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                                          items.push({ text: cleanItem, isHtml: true })
+                                        } else {
+                                          if (cleanItem) {
+                                            items.push({ text: cleanItem, isHtml: false })
+                                          }
+                                        }
+                                      }
+                                    })
+                                    if (items.length > 0) {
+                                      elements.push(
+                                        <ul key={`ul-${index}`} className="content-list">
+                                          {items.map((item, iIndex) => (
+                                            <li key={iIndex}>
+                                              {item.isHtml ? (
+                                                <span dangerouslySetInnerHTML={{ __html: item.text }} />
+                                              ) : (
+                                                item.text
+                                              )}
+                                            </li>
+                                          ))}
+                                        </ul>
+                                      )
+                                    }
+                                  }
+                                  // Нумерованный список
+                                  else if (firstLine.match(/^\d+\.\s/)) {
+                                    const items = []
+                                    lines.forEach(line => {
+                                      const trimmedLine = line.trim()
+                                      if (trimmedLine.match(/^\d+\.\s/)) {
+                                        let cleanItem = trimmedLine.replace(/^\d+\.\s*/, '').trim()
+                                        if (cleanItem.includes('**')) {
+                                          cleanItem = cleanItem.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                                          items.push({ text: cleanItem, isHtml: true })
+                                        } else {
+                                          if (cleanItem) {
+                                            items.push({ text: cleanItem, isHtml: false })
+                                          }
+                                        }
+                                      }
+                                    })
+                                    if (items.length > 0) {
+                                      elements.push(
+                                        <ol key={`ol-${index}`} className="content-list">
+                                          {items.map((item, iIndex) => (
+                                            <li key={iIndex}>
+                                              {item.isHtml ? (
+                                                <span dangerouslySetInnerHTML={{ __html: item.text }} />
+                                              ) : (
+                                                item.text
+                                              )}
+                                            </li>
+                                          ))}
+                                        </ol>
+                                      )
+                                    }
+                                  }
+                                  // Обычный текст
+                                  else {
+                                    if (remainingText.includes('**')) {
+                                      const processedText = remainingText.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                                      elements.push(<p key={`p-${index}`} dangerouslySetInnerHTML={{ __html: processedText }} />)
+                                    } else {
+                                      elements.push(<p key={`p-${index}`}>{remainingText}</p>)
+                                    }
                                   }
                                 }
                                 return <>{elements}</>
