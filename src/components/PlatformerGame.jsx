@@ -166,35 +166,29 @@ const PlatformerGame = () => {
 
   // Таймер для создания препятствий
   useEffect(() => {
-    if (isStarted && !gameOver && !isPaused) {
-      // Первое препятствие через 1.5 секунды
-      const firstTimeout = setTimeout(() => {
+    if (!isStarted || gameOver || isPaused) {
+      if (obstacleSpawnTimerRef.current) {
+        clearInterval(obstacleSpawnTimerRef.current)
+        obstacleSpawnTimerRef.current = null
+      }
+      return
+    }
+
+    // Первое препятствие через 1.5 секунды
+    const firstTimeout = setTimeout(() => {
+      spawnObstacle()
+    }, 1500)
+
+    // Затем создаем препятствия с фиксированным интервалом (упрощенная версия)
+    const intervalTimeout = setTimeout(() => {
+      obstacleSpawnTimerRef.current = setInterval(() => {
         spawnObstacle()
-      }, 1500)
+      }, 2000) // Фиксированный интервал 2 секунды
+    }, 1500)
 
-      // Затем создаем препятствия с интервалом
-      const createInterval = () => {
-        const baseInterval = 2000
-        const speedFactor = Math.min(gameSpeedRef.current / INITIAL_SPEED, 2)
-        const interval = Math.max(1200, baseInterval / speedFactor)
-        
-        obstacleSpawnTimerRef.current = setInterval(() => {
-          spawnObstacle()
-        }, interval)
-      }
-
-      // Запускаем интервал после первого препятствия
-      const intervalTimeout = setTimeout(createInterval, 1500)
-
-      return () => {
-        clearTimeout(firstTimeout)
-        clearTimeout(intervalTimeout)
-        if (obstacleSpawnTimerRef.current) {
-          clearInterval(obstacleSpawnTimerRef.current)
-          obstacleSpawnTimerRef.current = null
-        }
-      }
-    } else {
+    return () => {
+      clearTimeout(firstTimeout)
+      clearTimeout(intervalTimeout)
       if (obstacleSpawnTimerRef.current) {
         clearInterval(obstacleSpawnTimerRef.current)
         obstacleSpawnTimerRef.current = null
