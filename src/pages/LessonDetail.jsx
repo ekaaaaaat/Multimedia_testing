@@ -2771,7 +2771,6 @@ const LessonDetail = () => {
                     </button>
                   </div>
                 </div>
-                </>
               ) : (
                 <div className="lab-section">
                   <h2>Практическая работа в баг-трекинговой системе</h2>
