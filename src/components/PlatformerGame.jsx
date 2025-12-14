@@ -310,18 +310,21 @@ const PlatformerGame = () => {
         </div>
 
         {/* Препятствия */}
-        {obstacles.map(obstacle => (
-          <div
-            key={obstacle.id}
-            className="obstacle"
-            style={{
-              left: obstacle.x,
-              bottom: GAME_HEIGHT - obstacle.y - obstacle.height,
-              width: obstacle.width,
-              height: obstacle.height
-            }}
-          />
-        ))}
+        {obstacles.map(obstacle => {
+          const obstacleBottom = GAME_HEIGHT - obstacle.y - obstacle.height
+          return (
+            <div
+              key={obstacle.id}
+              className="obstacle"
+              style={{
+                left: `${obstacle.x}px`,
+                bottom: `${obstacleBottom}px`,
+                width: `${obstacle.width}px`,
+                height: `${obstacle.height}px`
+              }}
+            />
+          )
+        })}
 
         {/* Начальный экран */}
         {!isStarted && (
