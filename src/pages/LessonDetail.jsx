@@ -44,11 +44,6 @@ import labImage17 from '../assets/images/Lab0/17.png'
 import labImage18 from '../assets/images/Lab0/18.png'
 import labImage19 from '../assets/images/Lab0/19.png'
 
-// Import lesson 3 images
-import imageClassicTestCase from '../assets/images/Lesson3/Classic_test_case.png'
-import imageTestCase1 from '../assets/images/Lesson3/test_case_1.png'
-import imageTrebovaniya from '../assets/images/Lesson3/trebovaniya.png'
-
 // Import videos
 import videoLesson1 from '../assets/videos/Lesson1.mp4'
 import videoLesson2 from '../assets/videos/Lesson2.mp4'
@@ -868,14 +863,7 @@ const LessonDetail = () => {
 • Пользователь успешно авторизован:
   • форма авторизации закрывается.
   • открывается главная страница сайта.
-  • в шапке сайта отображается имя пользователя - user01`,
-            images: [
-              {
-                src: imageClassicTestCase,
-                alt: 'Классический тест-кейс',
-                caption: 'Классический тест-кейс'
-              }
-            ]
+  • в шапке сайта отображается имя пользователя - user01`
           },
           {
             id: 'additional-fields',
@@ -895,14 +883,7 @@ const LessonDetail = () => {
             title: 'Пример "плохого" тест-кейса',
             icon: '❌',
             type: 'text',
-            content: `Предположим, что Олег устроился тестировщиком в проект интернет-магазина www.example.ru (это выдуманный адрес) и ему дают первую задачу: "протестируй систему отзывов на сайте, заодно познакомишься с проектом" и скидывают документ с требованиями к отзывам:`,
-            images: [
-              {
-                src: imageTrebovaniya,
-                alt: 'Требования к отзывам',
-                caption: 'Требования к отзывам'
-              }
-            ]
+            content: `Предположим, что Олег устроился тестировщиком в проект интернет-магазина www.example.ru (это выдуманный адрес) и ему дают первую задачу: "протестируй систему отзывов на сайте, заодно познакомишься с проектом" и скидывают документ с требованиями к отзывам:`
           },
           {
             id: 'bad-test-case-requirements',
@@ -918,14 +899,7 @@ const LessonDetail = () => {
 6. Минимальное количество символов в тексте отзыва = 20, максимальное = 50.
 7. Добавленные отзывы отображаются во вкладке "Отзывы" на детальной странице товара.
 
-В проекте, о чудо, есть подробные тест-кейсы и вот первый кейс на отзывы:`,
-            images: [
-              {
-                src: imageTestCase1,
-                alt: 'Пример тест-кейса на отзывы',
-                caption: 'Пример тест-кейса на отзывы'
-              }
-            ]
+В проекте, о чудо, есть подробные тест-кейсы и вот первый кейс на отзывы:`
           },
           {
             id: 'bad-test-case-details',
