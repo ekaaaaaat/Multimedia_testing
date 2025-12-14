@@ -2946,7 +2946,7 @@ Severity и Priority не всегда равны.`
                         }
                         
                         // Проверяем, есть ли в секции тест-кейсы (начинаются с **Номер:**)
-                        const fullContent = section.content
+                        const fullContent = section.content || ''
                         const hasTestCases = fullContent.includes('**Номер:**')
                         
                         if (hasTestCases) {
