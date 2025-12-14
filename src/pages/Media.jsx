@@ -25,6 +25,11 @@ import imageGagarin from '../assets/images/gagarin.png'
 import imageDefectLifeCycle from '../assets/images/defect_life_cycle.jpg'
 import animation404Cat from '../assets/animation/404Cat.gif'
 import imageTestCheck from '../assets/images/tset_check.png'
+import lesson5Image1 from '../assets/images/lesson5/1.png'
+import lesson5Image2 from '../assets/images/lesson5/2.png'
+import lesson5Image3 from '../assets/images/lesson5/3.png'
+import lesson5Image4 from '../assets/images/lesson5/4.png'
+import lesson5Image5 from '../assets/images/lesson5/5.png'
 
 const Media = () => {
   const { theme } = useTheme()
@@ -145,6 +150,36 @@ const Media = () => {
       title: 'Пример тест-кейса и чек-листа',
       src: imageTestCheck,
       description: 'Пример тест-кейса и чек-листа на авторизацию из четвертого урока'
+    },
+    {
+      id: 9,
+      title: 'Сравнение тест-кейса и баг-репорта',
+      src: lesson5Image1,
+      description: 'Разница между тест-кейсом и баг-репортом из пятого урока'
+    },
+    {
+      id: 10,
+      title: 'Баг-трекинговая система',
+      src: lesson5Image2,
+      description: 'Пример баг-трекинговой системы с заголовками баг-репортов из пятого урока'
+    },
+    {
+      id: 11,
+      title: 'Кроссбраузерное тестирование',
+      src: lesson5Image3,
+      description: 'Кроссбраузерное/кроссплатформенное тестирование из пятого урока'
+    },
+    {
+      id: 12,
+      title: 'Важность указания окружения',
+      src: lesson5Image4,
+      description: 'Важно правильно указывать окружение в баг-репортах из пятого урока'
+    },
+    {
+      id: 13,
+      title: 'Пример плохого баг-репорта',
+      src: lesson5Image5,
+      description: 'Пример плохого баг-репорта из пятого урока'
     }
   ]
 
