@@ -1698,10 +1698,207 @@ const LessonDetail = () => {
                             />
                           ) : (
                           (() => {
-                            const paragraphs = section.content.split('\n\n')
+                            // Функция для парсинга тест-кейса
+                            const parseTestCase = (text) => {
+                          const testCaseMatch = text.match(/\*\*Номер:\*\*\s*(.+?)(?=\n\*\*|\n---|$)/s)
+                          if (!testCaseMatch) return null
+                          
+                          const testCase = {
+                            number: '',
+                            title: '',
+                            preconditions: '',
+                            steps: '',
+                            expectedResult: ''
+                          }
+                          
+                          // Номер - берем до следующего ** или конца строки
+                          const numberMatch = text.match(/\*\*Номер:\*\*\s*([^\n]+)/)
+                          if (numberMatch) testCase.number = numberMatch[1].trim()
+                          
+                          // Заголовок - берем до следующего ** или конца строки
+                          const titleMatch = text.match(/\*\*Заголовок:\*\*\s*([^\n]+)/)
+                          if (titleMatch) testCase.title = titleMatch[1].trim()
+                          
+                          // Предусловия - берем до **Шаги: или следующего **
+                          const preconditionsMatch = text.match(/\*\*Предусловия:\*\*\s*([\s\S]*?)(?=\n\*\*Шаги:|\n\*\*[А-Яа-я]|\n---|$)/)
+                          if (preconditionsMatch) {
+                            testCase.preconditions = preconditionsMatch[1].trim()
+                          }
+                          
+                          // Шаги - берем до **Ожидаемый результат: или следующего **
+                          const stepsMatch = text.match(/\*\*Шаги:\*\*\s*([\s\S]*?)(?=\n\*\*Ожидаемый результат:|\n\*\*[А-Яа-я]|\n---|$)/)
+                          if (stepsMatch) {
+                            testCase.steps = stepsMatch[1].trim()
+                          }
+                          
+                          // Ожидаемый результат - берем до следующего ** или конца
+                          const expectedMatch = text.match(/\*\*Ожидаемый результат:\*\*\s*([\s\S]*?)(?=\n\*\*[А-Яа-я]|\n---|$)/)
+                          if (expectedMatch) {
+                            testCase.expectedResult = expectedMatch[1].trim()
+                          }
+                          
+                          return Object.values(testCase).some(v => v) ? testCase : null
+                        }
+                        
+                        // Функция для форматирования текста с поддержкой списков
+                        const formatTextWithLists = (text) => {
+                          if (!text) return null
+                          const lines = text.split('\n')
+                          const elements = []
+                          let currentList = []
+                          let listType = null // 'ul' or 'ol'
+                          
+                          lines.forEach((line, idx) => {
+                            const trimmed = line.trim()
+                            if (!trimmed) {
+                              if (currentList.length > 0) {
+                                if (listType === 'ul') {
+                                  elements.push(
+                                    <ul key={`list-${idx}`} className="content-list">
+                                      {currentList.map((item, i) => (
+                                        <li key={i}>{item}</li>
+                                      ))}
+                                    </ul>
+                                  )
+                                } else if (listType === 'ol') {
+                                  elements.push(
+                                    <ol key={`list-${idx}`} className="content-list">
+                                      {currentList.map((item, i) => (
+                                        <li key={i}>{item}</li>
+                                      ))}
+                                    </ol>
+                                  )
+                                }
+                                currentList = []
+                                listType = null
+                              }
+                              return
+                            }
+                            
+                            if (trimmed.startsWith('•') || (trimmed.startsWith('*') && !trimmed.startsWith('**'))) {
+                              if (listType !== 'ul') {
+                                if (currentList.length > 0 && listType === 'ol') {
+                                  elements.push(
+                                    <ol key={`list-${idx}-before`} className="content-list">
+                                      {currentList.map((item, i) => (
+                                        <li key={i}>{item}</li>
+                                      ))}
+                                    </ol>
+                                  )
+                                  currentList = []
+                                }
+                                listType = 'ul'
+                              }
+                              let cleanItem = trimmed.replace(/^[•*]\s*/, '').trim()
+                              cleanItem = cleanItem.replace(/^-\s*/, '').trim()
+                              if (cleanItem) currentList.push(cleanItem)
+                            } else if (trimmed.match(/^\d+\.\s/)) {
+                              if (listType !== 'ol') {
+                                if (currentList.length > 0 && listType === 'ul') {
+                                  elements.push(
+                                    <ul key={`list-${idx}-before`} className="content-list">
+                                      {currentList.map((item, i) => (
+                                        <li key={i}>{item}</li>
+                                      ))}
+                                    </ul>
+                                  )
+                                  currentList = []
+                                }
+                                listType = 'ol'
+                              }
+                              let cleanItem = trimmed.replace(/^\d+\.\s*/, '').trim()
+                              if (cleanItem) currentList.push(cleanItem)
+                            } else {
+                              if (currentList.length > 0) {
+                                if (listType === 'ul') {
+                                  elements.push(
+                                    <ul key={`list-${idx}-before`} className="content-list">
+                                      {currentList.map((item, i) => (
+                                        <li key={i}>{item}</li>
+                                      ))}
+                                    </ul>
+                                  )
+                                } else if (listType === 'ol') {
+                                  elements.push(
+                                    <ol key={`list-${idx}-before`} className="content-list">
+                                      {currentList.map((item, i) => (
+                                        <li key={i}>{item}</li>
+                                      ))}
+                                    </ol>
+                                  )
+                                }
+                                currentList = []
+                                listType = null
+                              }
+                              elements.push(<p key={`p-${idx}`}>{trimmed}</p>)
+                            }
+                          })
+                          
+                          if (currentList.length > 0) {
+                            if (listType === 'ul') {
+                              elements.push(
+                                <ul key={`list-final`} className="content-list">
+                                  {currentList.map((item, i) => (
+                                    <li key={i}>{item}</li>
+                                  ))}
+                                </ul>
+                              )
+                            } else if (listType === 'ol') {
+                              elements.push(
+                                <ol key={`list-final`} className="content-list">
+                                  {currentList.map((item, i) => (
+                                    <li key={i}>{item}</li>
+                                  ))}
+                                </ol>
+                              )
+                            }
+                          }
+                          
+                          return elements.length > 0 ? <>{elements}</> : <p>{text}</p>
+                        }
                         
                         // Функция для обработки одного параграфа
                         const processParagraph = (para, index) => {
+                          // Проверяем, является ли параграф тест-кейсом
+                          const testCase = parseTestCase(para)
+                          if (testCase) {
+                            return (
+                              <table key={`test-case-${index}`} className="test-case-table">
+                                <tbody>
+                                  {testCase.number && (
+                                    <tr>
+                                      <td>Номер</td>
+                                      <td>{testCase.number}</td>
+                                    </tr>
+                                  )}
+                                  {testCase.title && (
+                                    <tr>
+                                      <td>Заголовок</td>
+                                      <td>{testCase.title}</td>
+                                    </tr>
+                                  )}
+                                  {testCase.preconditions && (
+                                    <tr>
+                                      <td>Предусловия</td>
+                                      <td>{formatTextWithLists(testCase.preconditions)}</td>
+                                    </tr>
+                                  )}
+                                  {testCase.steps && (
+                                    <tr>
+                                      <td>Шаги</td>
+                                      <td>{formatTextWithLists(testCase.steps)}</td>
+                                    </tr>
+                                  )}
+                                  {testCase.expectedResult && (
+                                    <tr>
+                                      <td>Ожидаемый результат</td>
+                                      <td>{formatTextWithLists(testCase.expectedResult)}</td>
+                                    </tr>
+                                  )}
+                                </tbody>
+                              </table>
+                            )
+                          }
                           const trimmed = para.trim()
                           if (!trimmed) return null
                           

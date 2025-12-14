@@ -259,6 +259,62 @@
   color: #b2ebf2;
 }
 
+.test-case-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.lesson-detail-page.dark .test-case-table {
+  background: rgba(0, 77, 64, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.test-case-table td {
+  padding: 1rem;
+  vertical-align: top;
+  border: 1px solid rgba(0, 137, 123, 0.2);
+}
+
+.lesson-detail-page.dark .test-case-table td {
+  border-color: rgba(128, 222, 234, 0.2);
+}
+
+.test-case-table td:first-child {
+  font-weight: 600;
+  width: 200px;
+  background: rgba(0, 137, 123, 0.05);
+  color: #00897b;
+}
+
+.lesson-detail-page.dark .test-case-table td:first-child {
+  background: rgba(128, 222, 234, 0.1);
+  color: #80deea;
+}
+
+.test-case-table td:last-child {
+  color: #555;
+}
+
+.lesson-detail-page.dark .test-case-table td:last-child {
+  color: #e0e0e0;
+}
+
+.test-case-table ul,
+.test-case-table ol {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+}
+
+.test-case-table ul li,
+.test-case-table ol li {
+  margin-bottom: 0.5rem;
+}
+
 .lesson-image-container {
   margin: 2rem 0;
   text-align: center;
