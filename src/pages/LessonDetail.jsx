@@ -846,21 +846,9 @@ const LessonDetail = () => {
             title: 'Классический тест-кейс',
             icon: '📋',
             type: 'text',
-            content: `Классический тест-кейс выглядит так:`,
-            images: [
-              {
-                src: imageClassicTestCase,
-                alt: 'Классический тест-кейс',
-                caption: 'Классический тест-кейс'
-              }
-            ]
-          },
-          {
-            id: 'test-case-example-details',
-            title: '',
-            icon: '',
-            type: 'text',
-            content: `**Номер:** A-044
+            content: `Классический тест-кейс выглядит так:
+
+**Номер:** A-044
 
 **Заголовок:** Авторизация под существующим пользователем
 
@@ -880,7 +868,14 @@ const LessonDetail = () => {
 • Пользователь успешно авторизован:
   • форма авторизации закрывается.
   • открывается главная страница сайта.
-  • в шапке сайта отображается имя пользователя - user01`
+  • в шапке сайта отображается имя пользователя - user01`,
+            images: [
+              {
+                src: imageClassicTestCase,
+                alt: 'Классический тест-кейс',
+                caption: 'Классический тест-кейс'
+              }
+            ]
           },
           {
             id: 'additional-fields',
@@ -1715,10 +1710,12 @@ const LessonDetail = () => {
                   className="content-section"
                 >
                   <div className="text-section">
-                    <h2>
-                      {section.icon && <span className="section-icon">{section.icon}</span>}
-                      {section.title}
-                    </h2>
+                    {section.title && (
+                      <h2>
+                        {section.icon && <span className="section-icon">{section.icon}</span>}
+                        {section.title}
+                      </h2>
+                    )}
                         <div className="section-content">
                           {section.type === 'diagram' && section.chartData ? (
                             <PieChart 
