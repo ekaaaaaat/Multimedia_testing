@@ -9,9 +9,11 @@ import './Media.css'
 import videoLesson1 from '../assets/videos/Lesson1.mp4'
 import videoLesson2 from '../assets/videos/Lesson2.mp4'
 import videoLesson3 from '../assets/videos/Lesson3.mp4'
+import videoLesson4 from '../assets/videos/Lesson4.mp4'
 import musicLesson1 from '../assets/music/relaxing_music_lesson1.mp3'
 import musicLesson2 from '../assets/music/Daydreams-chosic.com_.mp3'
 import musicLesson3 from '../assets/music/Cozy-Place-Chill-Background-Music(chosic.com).mp3'
+import musicLesson4 from '../assets/music/Late-at-Night(chosic.com).mp3'
 import imageMarkII from '../assets/images/Mark_II.png'
 import imageFirstBug from '../assets/images/First_Computer_Bug,_1947.jpg'
 import imageModelHierarchy from '../assets/images/model_ierarhi.png'
@@ -44,6 +46,12 @@ const Media = () => {
       title: 'Тестовая документация. Тест-кейсы.',
       src: videoLesson3,
       description: 'Видеоурок по тестовой документации и тест-кейсам из третьего урока'
+    },
+    {
+      id: 4,
+      title: 'Тестовая документация. Чек-листы',
+      src: videoLesson4,
+      description: 'Видеоурок по тестовой документации и чек-листам из четвертого урока'
     }
   ]
 
@@ -65,6 +73,12 @@ const Media = () => {
       title: 'Расслабляющая музыка для изучения материала',
       src: musicLesson3,
       description: 'Расслабляющая музыка из третьего урока для комфортного изучения материала'
+    },
+    {
+      id: 4,
+      title: 'Расслабляющая музыка для изучения материала',
+      src: musicLesson4,
+      description: 'Расслабляющая музыка из четвертого урока для комфортного изучения материала'
     }
   ]
 
