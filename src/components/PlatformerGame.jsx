@@ -32,6 +32,12 @@ const PlatformerGame = () => {
   const gameLoopRef = useRef(null)
   const obstacleSpawnTimerRef = useRef(null)
   const gameContainerRef = useRef(null)
+  const playerRef = useRef({
+    x: 100,
+    y: GAME_HEIGHT - GROUND_HEIGHT - PLAYER_HEIGHT,
+    velocityY: 0,
+    isJumping: false
+  })
 
   const spawnObstacle = useCallback(() => {
     setObstacles(prev => [
@@ -58,7 +64,7 @@ const PlatformerGame = () => {
   const updateGame = useCallback(() => {
     if (gameOver || isPaused || !isStarted) return
 
-    // Обновление позиции игрока и препятствий одновременно
+    // Обновление позиции игрока
     setPlayer(prevPlayer => {
       let newY = prevPlayer.y + prevPlayer.velocityY
       let newVelocityY = prevPlayer.velocityY + GRAVITY
@@ -79,54 +85,58 @@ const PlatformerGame = () => {
         isJumping
       }
 
-      // Обновление препятствий и проверка столкновений
-      setObstacles(prevObstacles => {
-        // Обновляем позиции препятствий
-        const updatedObstacles = prevObstacles
-          .map(obstacle => ({
-            ...obstacle,
-            x: obstacle.x - gameSpeedRef.current
-          }))
-          .filter(obstacle => obstacle.x + obstacle.width > 0)
-
-        // Проверка столкновений с обновленным игроком
-        const playerRect = {
-          x: updatedPlayer.x,
-          y: updatedPlayer.y,
-          width: PLAYER_WIDTH,
-          height: PLAYER_HEIGHT
-        }
-
-        const collision = updatedObstacles.some(obstacle => {
-          const obstacleRect = {
-            x: obstacle.x,
-            y: obstacle.y,
-            width: obstacle.width,
-            height: obstacle.height
-          }
-          return checkCollision(playerRect, obstacleRect)
-        })
-
-        if (collision) {
-          setGameOver(true)
-          return updatedObstacles
-        }
-
-        // Увеличение счета за успешно пройденные препятствия
-        const passedObstacles = updatedObstacles.filter(
-          obstacle => obstacle.x + obstacle.width < updatedPlayer.x
-        )
-        if (passedObstacles.length > 0) {
-          setScore(prevScore => prevScore + passedObstacles.length)
-          return updatedObstacles.filter(
-            obstacle => obstacle.x + obstacle.width >= updatedPlayer.x
-          )
-        }
-
-        return updatedObstacles
-      })
+      // Обновляем ref для использования в проверке столкновений
+      playerRef.current = updatedPlayer
 
       return updatedPlayer
+    })
+
+    // Обновление препятствий и проверка столкновений
+    setObstacles(prevObstacles => {
+      // Обновляем позиции препятствий
+      const updatedObstacles = prevObstacles
+        .map(obstacle => ({
+          ...obstacle,
+          x: obstacle.x - gameSpeedRef.current
+        }))
+        .filter(obstacle => obstacle.x + obstacle.width > -50)
+
+      // Проверка столкновений с текущим игроком из ref
+      const currentPlayer = playerRef.current
+      const playerRect = {
+        x: currentPlayer.x,
+        y: currentPlayer.y,
+        width: PLAYER_WIDTH,
+        height: PLAYER_HEIGHT
+      }
+
+      const collision = updatedObstacles.some(obstacle => {
+        const obstacleRect = {
+          x: obstacle.x,
+          y: obstacle.y,
+          width: obstacle.width,
+          height: obstacle.height
+        }
+        return checkCollision(playerRect, obstacleRect)
+      })
+
+      if (collision) {
+        setGameOver(true)
+        return updatedObstacles
+      }
+
+      // Увеличение счета за успешно пройденные препятствия
+      const passedObstacles = updatedObstacles.filter(
+        obstacle => obstacle.x + obstacle.width < currentPlayer.x
+      )
+      if (passedObstacles.length > 0) {
+        setScore(prevScore => prevScore + passedObstacles.length)
+        return updatedObstacles.filter(
+          obstacle => obstacle.x + obstacle.width >= currentPlayer.x
+        )
+      }
+
+      return updatedObstacles
     })
 
     // Увеличение скорости
@@ -157,21 +167,37 @@ const PlatformerGame = () => {
   // Таймер для создания препятствий
   useEffect(() => {
     if (isStarted && !gameOver && !isPaused) {
-      const spawnInterval = Math.max(1500, 2500 - (gameSpeedRef.current * 100))
-      
-      obstacleSpawnTimerRef.current = setInterval(() => {
+      // Первое препятствие через 1.5 секунды
+      const firstTimeout = setTimeout(() => {
         spawnObstacle()
-      }, spawnInterval)
+      }, 1500)
+
+      // Затем создаем препятствия с интервалом
+      const createInterval = () => {
+        const baseInterval = 2000
+        const speedFactor = Math.min(gameSpeedRef.current / INITIAL_SPEED, 2)
+        const interval = Math.max(1200, baseInterval / speedFactor)
+        
+        obstacleSpawnTimerRef.current = setInterval(() => {
+          spawnObstacle()
+        }, interval)
+      }
+
+      // Запускаем интервал после первого препятствия
+      const intervalTimeout = setTimeout(createInterval, 1500)
+
+      return () => {
+        clearTimeout(firstTimeout)
+        clearTimeout(intervalTimeout)
+        if (obstacleSpawnTimerRef.current) {
+          clearInterval(obstacleSpawnTimerRef.current)
+          obstacleSpawnTimerRef.current = null
+        }
+      }
     } else {
       if (obstacleSpawnTimerRef.current) {
         clearInterval(obstacleSpawnTimerRef.current)
         obstacleSpawnTimerRef.current = null
-      }
-    }
-
-    return () => {
-      if (obstacleSpawnTimerRef.current) {
-        clearInterval(obstacleSpawnTimerRef.current)
       }
     }
   }, [isStarted, gameOver, isPaused, spawnObstacle])
@@ -215,12 +241,14 @@ const PlatformerGame = () => {
     setIsStarted(true)
     setGameOver(false)
     setScore(0)
-    setPlayer({
+    const initialPlayer = {
       x: 100,
       y: GAME_HEIGHT - GROUND_HEIGHT - PLAYER_HEIGHT,
       velocityY: 0,
       isJumping: false
-    })
+    }
+    setPlayer(initialPlayer)
+    playerRef.current = initialPlayer
     setObstacles([])
     gameSpeedRef.current = INITIAL_SPEED
   }
@@ -229,12 +257,14 @@ const PlatformerGame = () => {
     setIsStarted(false)
     setGameOver(false)
     setScore(0)
-    setPlayer({
+    const initialPlayer = {
       x: 100,
       y: GAME_HEIGHT - GROUND_HEIGHT - PLAYER_HEIGHT,
       velocityY: 0,
       isJumping: false
-    })
+    }
+    setPlayer(initialPlayer)
+    playerRef.current = initialPlayer
     setObstacles([])
     gameSpeedRef.current = INITIAL_SPEED
   }
