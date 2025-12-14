@@ -47,6 +47,7 @@ import labImage19 from '../assets/images/Lab0/19.png'
 // Import videos
 import videoLesson1 from '../assets/videos/Lesson1.mp4'
 import videoLesson2 from '../assets/videos/Lesson2.mp4'
+import videoLesson3 from '../assets/videos/Lesson3.mp4'
 
 // Import music
 import musicLesson1 from '../assets/music/relaxing_music_lesson1.mp3'
@@ -779,7 +780,14 @@ const LessonDetail = () => {
             type: 'text',
             content: `Разберем, какие документы пишут тестировщики для облегчения процесса тестирования.
 
-В каждой компании, конечно, есть свои особенности подхода к тестовой документации. Однако можно выделить основные документы, которые знают все и которыми тестировщики пользуются практически ежедневно:`
+В каждой компании, конечно, есть свои особенности подхода к тестовой документации. Однако можно выделить основные документы, которые знают все и которыми тестировщики пользуются практически ежедневно:`,
+            videos: [
+              {
+                src: videoLesson3,
+                title: 'Тестовая документация. Тест-кейсы.',
+                caption: 'Видеоурок по тестовой документации и тест-кейсам'
+              }
+            ]
           },
           {
             id: 'main-docs',

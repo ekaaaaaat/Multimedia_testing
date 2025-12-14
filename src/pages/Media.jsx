@@ -8,6 +8,7 @@ import './Media.css'
 // Import media from Lesson 1
 import videoLesson1 from '../assets/videos/Lesson1.mp4'
 import videoLesson2 from '../assets/videos/Lesson2.mp4'
+import videoLesson3 from '../assets/videos/Lesson3.mp4'
 import musicLesson1 from '../assets/music/relaxing_music_lesson1.mp3'
 import musicLesson2 from '../assets/music/Daydreams-chosic.com_.mp3'
 import imageMarkII from '../assets/images/Mark_II.png'
@@ -36,6 +37,12 @@ const Media = () => {
       title: 'Дефекты и их жизненный цикл',
       src: videoLesson2,
       description: 'Видеоурок по дефектам и их жизненному циклу из второго урока'
+    },
+    {
+      id: 3,
+      title: 'Тестовая документация. Тест-кейсы.',
+      src: videoLesson3,
+      description: 'Видеоурок по тестовой документации и тест-кейсам из третьего урока'
     }
   ]
 
