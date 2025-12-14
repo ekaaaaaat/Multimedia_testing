@@ -2945,8 +2945,13 @@ Severity и Priority не всегда равны.`
                           }
                         }
                         
+                        // Пропускаем обработку контента для секций без контента (например, game)
+                        if (!section.content) {
+                          return null
+                        }
+                        
                         // Проверяем, есть ли в секции тест-кейсы (начинаются с **Номер:**)
-                        const fullContent = section.content || ''
+                        const fullContent = section.content
                         const hasTestCases = fullContent.includes('**Номер:**')
                         
                         if (hasTestCases) {
