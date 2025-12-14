@@ -1,0 +1,230 @@
+.platformer-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.platformer-game.dark {
+  background: rgba(0, 77, 64, 0.95);
+}
+
+.game-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.stat-label {
+  font-weight: 600;
+  color: #00897b;
+  font-size: 1.1rem;
+}
+
+.platformer-game.dark .stat-label {
+  color: #80deea;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #00695c;
+}
+
+.platformer-game.dark .stat-value {
+  color: #b2ebf2;
+}
+
+.pause-indicator {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ff9800;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.game-canvas {
+  position: relative;
+  background: linear-gradient(to bottom, #87CEEB 0%, #E0F6FF 100%);
+  border: 3px solid #00897b;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.platformer-game.dark .game-canvas {
+  background: linear-gradient(to bottom, #1a237e 0%, #283593 100%);
+  border-color: #00acc1;
+}
+
+.ground {
+  position: absolute;
+  background: linear-gradient(to bottom, #8B4513 0%, #654321 100%);
+  border-top: 3px solid #6B3410;
+}
+
+.platformer-game.dark .ground {
+  background: linear-gradient(to bottom, #3e2723 0%, #212121 100%);
+  border-top-color: #5d4037;
+}
+
+.player {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: none;
+  z-index: 10;
+}
+
+.player svg {
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.obstacle {
+  position: absolute;
+  background: linear-gradient(to right, #d32f2f, #f44336);
+  border: 2px solid #b71c1c;
+  border-radius: 5px 5px 0 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.platformer-game.dark .obstacle {
+  background: linear-gradient(to right, #c62828, #e53935);
+  border-color: #b71c1c;
+}
+
+.start-screen,
+.game-over-screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+}
+
+.platformer-game.dark .start-screen,
+.platformer-game.dark .game-over-screen {
+  background: rgba(0, 77, 64, 0.95);
+  color: #e0e0e0;
+}
+
+.start-screen h2,
+.game-over-screen h2 {
+  margin: 0 0 1rem 0;
+  color: #00897b;
+  font-size: 2rem;
+}
+
+.platformer-game.dark .start-screen h2,
+.platformer-game.dark .game-over-screen h2 {
+  color: #80deea;
+}
+
+.start-screen p,
+.game-over-screen p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.platformer-game.dark .start-screen p,
+.platformer-game.dark .game-over-screen p {
+  color: #e0e0e0;
+}
+
+.controls-hint {
+  font-size: 0.9rem !important;
+  color: #888 !important;
+  font-style: italic;
+}
+
+.platformer-game.dark .controls-hint {
+  color: #b0b0b0 !important;
+}
+
+.restart-button {
+  margin-top: 1rem;
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #00897b, #00acc1);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.restart-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 137, 123, 0.4);
+}
+
+.restart-button:active {
+  transform: translateY(0);
+}
+
+.game-controls {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.jump-button,
+.pause-button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #00897b, #00acc1);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.jump-button:hover:not(:disabled),
+.pause-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 137, 123, 0.4);
+}
+
+.jump-button:active:not(:disabled),
+.pause-button:active {
+  transform: translateY(0);
+}
+
+.jump-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+

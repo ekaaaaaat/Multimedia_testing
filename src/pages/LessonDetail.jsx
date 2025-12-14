@@ -11,6 +11,7 @@ import CatIcon from '../components/CatIcon'
 import ContentMarker from '../components/ContentMarker'
 import SnakeGame from '../components/SnakeGame'
 import MouseGame from '../components/MouseGame'
+import PlatformerGame from '../components/PlatformerGame'
 import PieChart from '../components/PieChart'
 import './LessonDetail.css'
 
@@ -2439,6 +2440,13 @@ const LessonDetail = () => {
                   Поймайте как можно больше мышек! Кликайте по ним, пока они не убежали. У вас есть 30 секунд!
                 </p>
                 <MouseGame />
+              </div>
+            ) : id === '3' ? (
+              <div className="game-content">
+                <p className="game-intro">
+                  Перепрыгивайте через препятствия! Нажимайте пробел или стрелку вверх, чтобы прыгать. Чем дольше вы играете, тем быстрее становится игра!
+                </p>
+                <PlatformerGame />
               </div>
             ) : (
               <div className="game-placeholder">
