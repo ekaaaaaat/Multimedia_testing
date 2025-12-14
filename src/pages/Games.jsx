@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useTheme } from '../contexts/ThemeContext'
 import SnakeGame from '../components/SnakeGame'
 import MouseGame from '../components/MouseGame'
+import PlatformerGame from '../components/PlatformerGame'
 import CatIcon from '../components/CatIcon'
 import './Games.css'
 
@@ -23,6 +24,13 @@ const Games = () => {
       description: 'Простая и расслабляющая игра, где нужно кликать по мышкам, которые появляются на экране. У вас есть 30 секунд, чтобы поймать как можно больше мышек!',
       status: 'Доступна',
       component: 'mouse'
+    },
+    {
+      id: 3,
+      title: 'Платформер',
+      description: 'Перепрыгивайте через препятствия! Нажимайте пробел или стрелку вверх, чтобы прыгать. Чем дольше вы играете, тем быстрее становится игра!',
+      status: 'Доступна',
+      component: 'platformer'
     }
   ]
 
@@ -48,6 +56,7 @@ const Games = () => {
           <div className="game-wrapper">
             {selectedGame.component === 'snake' && <SnakeGame />}
             {selectedGame.component === 'mouse' && <MouseGame />}
+            {selectedGame.component === 'platformer' && <PlatformerGame />}
           </div>
         </div>
       ) : (
@@ -55,7 +64,7 @@ const Games = () => {
           {games.map(game => (
             <div key={game.id} className="game-card">
               <div className="game-icon">
-                {game.component === 'snake' ? <CatIcon variant={1} size="4rem" /> : game.component === 'mouse' ? '🐭' : '🎮'}
+                {game.component === 'snake' ? <CatIcon variant={1} size="4rem" /> : game.component === 'mouse' ? '🐭' : game.component === 'platformer' ? <CatIcon variant={2} size="4rem" /> : '🎮'}
               </div>
               <h2>{game.title}</h2>
               <p className="game-description">{game.description}</p>

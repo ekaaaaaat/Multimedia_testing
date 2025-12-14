@@ -300,7 +300,7 @@ const PlatformerGame = () => {
             height: PLAYER_HEIGHT
           }}
         >
-          <CatIcon variant={1} size="2em" />
+          <CatIcon variant={2} size="2em" />
         </div>
 
         {/* Препятствия */}
