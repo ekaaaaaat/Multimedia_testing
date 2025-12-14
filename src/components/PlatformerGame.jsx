@@ -40,16 +40,16 @@ const PlatformerGame = () => {
   })
 
   const spawnObstacle = useCallback(() => {
-    setObstacles(prev => [
-      ...prev,
-      {
-        id: Date.now(),
+    setObstacles(prev => {
+      const newObstacle = {
+        id: Date.now() + Math.random(), // Уникальный ID
         x: GAME_WIDTH,
         y: GAME_HEIGHT - GROUND_HEIGHT - OBSTACLE_HEIGHT,
         width: OBSTACLE_WIDTH,
         height: OBSTACLE_HEIGHT
       }
-    ])
+      return [...prev, newObstacle]
+    })
   }, [])
 
   const checkCollision = useCallback((playerRect, obstacleRect) => {
