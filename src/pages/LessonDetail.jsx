@@ -2391,7 +2391,7 @@ const LessonDetail = () => {
                   </div>
                 </div>
               ))}
-              {(id === '1' || id === '2') && (
+              {(id === '1' || id === '2' || id === '3') && (
                 <div className="start-test-section">
                   <div className="start-test-content">
                     <h3>Готовы проверить свои знания?</h3>
