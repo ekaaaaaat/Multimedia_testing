@@ -105,7 +105,8 @@
 .lesson-content h1,
 .lesson-test h1,
 .lesson-game h1,
-.lesson-music h1 {
+.lesson-music h1,
+.lesson-lab h1 {
   color: #00695c;
   font-size: 2.2rem;
   margin-bottom: 2rem;
@@ -115,7 +116,8 @@
 .lesson-detail-page.dark .lesson-content h1,
 .lesson-detail-page.dark .lesson-test h1,
 .lesson-detail-page.dark .lesson-game h1,
-.lesson-detail-page.dark .lesson-music h1 {
+.lesson-detail-page.dark .lesson-music h1,
+.lesson-detail-page.dark .lesson-lab h1 {
   color: #80deea;
 }
 
@@ -436,6 +438,180 @@
   }
 }
 
+/* Лабораторная работа */
+.lesson-lab {
+  animation: fadeIn 0.5s ease;
+}
+
+.lab-content {
+  margin-top: 1rem;
+}
+
+.lab-section {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.lab-intro {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: #555;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: rgba(0, 137, 123, 0.05);
+  border-radius: 12px;
+  border-left: 4px solid #00897b;
+}
+
+.lesson-detail-page.dark .lab-intro {
+  color: #e0e0e0;
+  background: rgba(128, 222, 234, 0.05);
+  border-left-color: #00acc1;
+}
+
+.lab-task {
+  margin-bottom: 2.5rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 137, 123, 0.2);
+}
+
+.lesson-detail-page.dark .lab-task {
+  background: rgba(0, 77, 64, 0.3);
+  border-color: rgba(128, 222, 234, 0.2);
+}
+
+.lab-task h3 {
+  color: #00897b;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.lesson-detail-page.dark .lab-task h3 {
+  color: #80deea;
+}
+
+.lab-task p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.lesson-detail-page.dark .lab-task p {
+  color: #e0e0e0;
+}
+
+.lab-task ol,
+.lab-task ul {
+  margin: 1rem 0;
+  padding-left: 2rem;
+  color: #555;
+  line-height: 1.8;
+}
+
+.lesson-detail-page.dark .lab-task ol,
+.lesson-detail-page.dark .lab-task ul {
+  color: #e0e0e0;
+}
+
+.lab-task li {
+  margin-bottom: 0.75rem;
+}
+
+.lab-task ul {
+  list-style-type: disc;
+}
+
+.lab-task ol {
+  list-style-type: decimal;
+}
+
+.lab-complete-section {
+  margin-top: 3rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(0, 137, 123, 0.1) 0%, rgba(0, 172, 193, 0.1) 100%);
+  border-radius: 12px;
+  border: 2px solid rgba(0, 137, 123, 0.3);
+  text-align: center;
+}
+
+.lesson-detail-page.dark .lab-complete-section {
+  background: linear-gradient(135deg, rgba(128, 222, 234, 0.1) 0%, rgba(0, 172, 193, 0.1) 100%);
+  border-color: rgba(128, 222, 234, 0.3);
+}
+
+.lab-complete-content h3 {
+  color: #00897b;
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.lesson-detail-page.dark .lab-complete-content h3 {
+  color: #80deea;
+}
+
+.lab-complete-content p {
+  color: #666;
+  font-size: 1.05rem;
+  margin-bottom: 1.5rem;
+}
+
+.lesson-detail-page.dark .lab-complete-content p {
+  color: #b2ebf2;
+}
+
+.lab-complete-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #00897b 0%, #00acc1 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 137, 123, 0.3);
+}
+
+.lab-complete-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 137, 123, 0.4);
+  background: linear-gradient(135deg, #00acc1 0%, #00897b 100%);
+}
+
+.lab-complete-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.lab-complete-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+}
+
+.lab-complete-button.completed {
+  background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+}
+
+.lab-complete-button span {
+  font-size: 1.2rem;
+}
+
+.lesson-detail-page.dark .lab-complete-button {
+  box-shadow: 0 4px 15px rgba(128, 222, 234, 0.3);
+}
+
+.lesson-detail-page.dark .lab-complete-button:hover:not(:disabled) {
+  box-shadow: 0 6px 20px rgba(128, 222, 234, 0.4);
+}
+
 @media (max-width: 768px) {
   .lesson-content-wrapper {
     padding: 1.5rem;
@@ -455,6 +631,14 @@
 
   .lesson-content-with-nav {
     flex-direction: column;
+  }
+
+  .lab-task {
+    padding: 1rem;
+  }
+
+  .lab-complete-section {
+    padding: 1.5rem;
   }
 }
 

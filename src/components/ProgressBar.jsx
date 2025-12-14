@@ -11,6 +11,7 @@ const ProgressBar = ({ lessonId }) => {
   const sections = [
     { key: 'contentViewed', label: 'Контент', emoji: '📖' },
     { key: 'testCompleted', label: 'Тест', emoji: '📝' },
+    ...(lessonId === '2' ? [{ key: 'labCompleted', label: 'Лабораторная работа', emoji: '🔬' }] : []),
     { key: 'gamePlayed', label: 'Игра', emoji: '🎮' },
     { key: 'musicListened', label: 'Музыка', emoji: '🎵' }
   ]

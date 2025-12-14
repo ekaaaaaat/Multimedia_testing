@@ -26,3 +26,7 @@ git add -A
 Write-Host "✅ Git hooks настроены!" -ForegroundColor Green
 Write-Host "Теперь каждый коммит будет автоматически отправляться в репозиторий" -ForegroundColor Cyan
 
+
+
+
+

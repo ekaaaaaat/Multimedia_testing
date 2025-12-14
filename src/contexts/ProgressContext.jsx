@@ -57,7 +57,8 @@ export const ProgressProvider = ({ children }) => {
       contentViewed: false,
       testCompleted: false,
       gamePlayed: false,
-      musicListened: false
+      musicListened: false,
+      labCompleted: false
     }
   }
 
