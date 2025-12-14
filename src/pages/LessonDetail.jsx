@@ -52,6 +52,7 @@ import videoLesson3 from '../assets/videos/Lesson3.mp4'
 // Import music
 import musicLesson1 from '../assets/music/relaxing_music_lesson1.mp3'
 import musicLesson2 from '../assets/music/Daydreams-chosic.com_.mp3'
+import musicLesson3 from '../assets/music/Cozy-Place-Chill-Background-Music(chosic.com).mp3'
 
 const LessonDetail = () => {
   const { id } = useParams()
