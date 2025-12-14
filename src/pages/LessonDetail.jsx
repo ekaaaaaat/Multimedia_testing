@@ -23,6 +23,27 @@ import imageGagarin from '../assets/images/gagarin.png'
 import imageDefectLifeCycle from '../assets/images/defect_life_cycle.jpg'
 import animation404Cat from '../assets/animation/404Cat.gif'
 
+// Import lab images
+import labImage1 from '../assets/images/Lab0/1.png'
+import labImage2 from '../assets/images/Lab0/2.png'
+import labImage3 from '../assets/images/Lab0/3.png'
+import labImage4 from '../assets/images/Lab0/4.png'
+import labImage5 from '../assets/images/Lab0/5.png'
+import labImage6 from '../assets/images/Lab0/6.png'
+import labImage7 from '../assets/images/Lab0/7.png'
+import labImage8 from '../assets/images/Lab0/8.png'
+import labImage9 from '../assets/images/Lab0/9.png'
+import labImage10 from '../assets/images/Lab0/10.png'
+import labImage11 from '../assets/images/Lab0/11.png'
+import labImage12 from '../assets/images/Lab0/12.png'
+import labImage13 from '../assets/images/Lab0/13.png'
+import labImage14 from '../assets/images/Lab0/14.png'
+import labImage15 from '../assets/images/Lab0/15.png'
+import labImage16 from '../assets/images/Lab0/16.png'
+import labImage17 from '../assets/images/Lab0/17.png'
+import labImage18 from '../assets/images/Lab0/18.png'
+import labImage19 from '../assets/images/Lab0/19.png'
+
 // Import videos
 import videoLesson1 from '../assets/videos/Lesson1.mp4'
 import videoLesson2 from '../assets/videos/Lesson2.mp4'
@@ -1490,88 +1511,201 @@ const LessonDetail = () => {
             <h1>Лабораторная работа <CatIcon variant={1} size="1.5em" /></h1>
             <div className="lab-content">
               <div className="lab-section">
-                <h2>ЛР 1.0 Яндекс Трекер</h2>
+                <h2>Практическая работа в баг-трекинговой системе</h2>
                 <p className="lab-intro">
-                  В данной лабораторной работе вы познакомитесь с системой отслеживания ошибок Яндекс Трекер и научитесь создавать задачи, управлять их статусами и работать с дефектами.
+                  Это первая и самая маленькая практическая работа.
                 </p>
                 
                 <div className="lab-task">
-                  <h3>Цель работы</h3>
-                  <p>Изучить основы работы с системой отслеживания ошибок Яндекс Трекер, научиться создавать задачи, управлять их жизненным циклом и оформлять отчеты о дефектах.</p>
-                </div>
-
-                <div className="lab-task">
-                  <h3>Задание 1: Регистрация и настройка</h3>
+                  <h3>Задание:</h3>
                   <ol>
-                    <li>Зарегистрируйтесь в Яндекс Трекере или войдите в существующий аккаунт</li>
-                    <li>Создайте новый проект или используйте существующий</li>
-                    <li>Изучите интерфейс системы и основные элементы управления</li>
+                    <li>Создать в Яндекс.Трекере проект, например "ДЗ по Тестированию ПО"</li>
+                    <li>Добавить колонку "В тестировании", поместить ее между колонками "В работе" и "Готово"/"Закрыт".</li>
+                    <li>Создать 4 задачи с названиями: "Задача №1", "Задача №2", "Задача №3", "Задача №4".</li>
+                    <li>Задачи 1 и 2 поместить в колонку "Готово"/"Закрыт", задачу 3 - в колонку "В работе", задачу 4 - в колонку "В тестировании".</li>
                   </ol>
                 </div>
 
                 <div className="lab-task">
-                  <h3>Задание 2: Создание задачи</h3>
-                  <ol>
-                    <li>Создайте новую задачу типа "Ошибка" (Bug)</li>
-                    <li>Заполните обязательные поля:
-                      <ul>
-                        <li>Название задачи</li>
-                        <li>Описание дефекта</li>
-                        <li>Шаги воспроизведения</li>
-                        <li>Ожидаемый результат</li>
-                        <li>Фактический результат</li>
-                      </ul>
-                    </li>
-                    <li>Установите приоритет и серьезность дефекта</li>
-                    <li>Прикрепите скриншоты, если необходимо</li>
-                  </ol>
+                  <h3>Создание проекта в Яндекс.Трекер</h3>
+                  <p>Открываем официальную страницу Яндекс.Трекер, нажимаем на "Открыть сервис"</p>
+                  <div className="lab-image-container">
+                    <MediaPlayer
+                      type="image"
+                      src={labImage1}
+                      title="Открытие Яндекс.Трекер"
+                      mediaId={`lab-${id}-img-1`}
+                    />
+                  </div>
+                  <p>Проходим авторизацию через Яндекс ID (если его нет, придется его создать)</p>
+                  <p>После авторизации должен открыться экран создания организации, в нем указываем в качестве имени компании свое имя, выбираем минимальное количество сотрудников и нажимаем "Создать организацию"</p>
+                  <div className="lab-image-container">
+                    <MediaPlayer
+                      type="image"
+                      src={labImage2}
+                      title="Создание организации"
+                      mediaId={`lab-${id}-img-2`}
+                    />
+                  </div>
+                  <p>Выбираем "Базовый шаблон", нажимаем "Продолжить"</p>
+                  <div className="lab-image-container">
+                    <MediaPlayer
+                      type="image"
+                      src={labImage3}
+                      title="Выбор шаблона"
+                      mediaId={`lab-${id}-img-3`}
+                    />
+                  </div>
+                  <p>Придумываем и вводим название очереди. Советую указывать что-то вроде "Курс Тестирование ПО". Остальные поля можно оставить по умолчанию, нажимаем "Продолжить"</p>
+                  <div className="lab-image-container">
+                    <MediaPlayer
+                      type="image"
+                      src={labImage4}
+                      title="Создание очереди"
+                      mediaId={`lab-${id}-img-4`}
+                    />
+                  </div>
+                  <p>На экране добавления коллег оставляем поля ввода пустыми и нажимаем "Приступить к работе"</p>
+                  <div className="lab-image-container">
+                    <MediaPlayer
+                      type="image"
+                      src={labImage5}
+                      title="Добавление коллег"
+                      mediaId={`lab-${id}-img-5`}
+                    />
+                  </div>
+                  <p>В результате должен открыться экран с 3 колонками: "Открыт", "В работе", "Закрыт".</p>
+                  <div className="lab-image-container">
+                    <MediaPlayer
+                      type="image"
+                      src={labImage6}
+                      title="Доска с колонками"
+                      mediaId={`lab-${id}-img-6`}
+                    />
+                  </div>
                 </div>
 
                 <div className="lab-task">
-                  <h3>Задание 3: Управление жизненным циклом задачи</h3>
-                  <ol>
-                    <li>Измените статус созданной задачи на "В работе"</li>
-                    <li>Добавьте комментарий к задаче</li>
-                    <li>Измените статус на "Решено"</li>
-                    <li>Установите резолюцию "Исправлено"</li>
-                    <li>Верните задачу на проверку (статус "На проверке")</li>
-                    <li>Закройте задачу после проверки</li>
-                  </ol>
-                </div>
-
-                <div className="lab-task">
-                  <h3>Задание 4: Работа с несколькими задачами</h3>
-                  <ol>
-                    <li>Создайте 3-5 различных задач с разными приоритетами и серьезностью</li>
-                    <li>Используйте фильтры для поиска задач по различным критериям</li>
-                    <li>Создайте доску Канбан для визуализации задач</li>
-                    <li>Используйте метки (теги) для категоризации задач</li>
-                  </ol>
-                </div>
-
-                <div className="lab-task">
-                  <h3>Задание 5: Отчет о дефекте</h3>
-                  <p>Выберите одну из созданных задач и оформите полноценный отчет о дефекте, включающий:</p>
-                  <ul>
-                    <li>Краткое описание проблемы</li>
-                    <li>Подробные шаги воспроизведения</li>
-                    <li>Ожидаемый и фактический результаты</li>
-                    <li>Окружение (браузер, ОС, версия приложения)</li>
-                    <li>Скриншоты или видео воспроизведения</li>
-                    <li>Приоритет и серьезность</li>
-                    <li>Дополнительную информацию</li>
-                  </ul>
-                </div>
-
-                <div className="lab-task">
-                  <h3>Контрольные вопросы</h3>
-                  <ol>
-                    <li>Какие основные статусы задач существуют в Яндекс Трекере?</li>
-                    <li>Чем отличается приоритет от серьезности дефекта?</li>
-                    <li>Какие резолюции можно установить для задачи?</li>
-                    <li>Как организовать работу с несколькими задачами в системе?</li>
-                    <li>Какие элементы должны быть в хорошем отчете о дефекте?</li>
-                  </ol>
+                  <h3>Подсказки для Яндекс.Трекера:</h3>
+                  <p><strong>создание новой колонки:</strong></p>
+                  <div className="lab-image-container">
+                    <MediaPlayer
+                      type="image"
+                      src={labImage7}
+                      title="Создание новой колонки"
+                      mediaId={`lab-${id}-img-7`}
+                    />
+                  </div>
+                  <p>в окне форме необходимо указать статус "Тестируется" и название "В тестировании"</p>
+                  <div className="lab-image-container">
+                    <MediaPlayer
+                      type="image"
+                      src={labImage8}
+                      title="Настройка колонки"
+                      mediaId={`lab-${id}-img-8`}
+                    />
+                  </div>
+                  <p>переместить колонку можно с помощью drag-and-drop.</p>
+                  <p><strong>создание задачи:</strong></p>
+                  <div className="lab-image-container">
+                    <MediaPlayer
+                      type="image"
+                      src={labImage9}
+                      title="Создание задачи"
+                      mediaId={`lab-${id}-img-9`}
+                    />
+                  </div>
+                  <p>созданные задачи можно перемещать с помощью drag-and-drop.</p>
+                  <p>чтобы добавить возможность перемещать задачи в колонку "В тестировании" нужно перейти в настройки очереди</p>
+                  <div className="lab-image-container">
+                    <MediaPlayer
+                      type="image"
+                      src={labImage10}
+                      title="Настройки очереди"
+                      mediaId={`lab-${id}-img-10`}
+                    />
+                  </div>
+                  <p>в настройках очереди нужно нажать кнопку "Редактировать"</p>
+                  <div className="lab-image-container">
+                    <MediaPlayer
+                      type="image"
+                      src={labImage11}
+                      title="Редактирование очереди"
+                      mediaId={`lab-${id}-img-11`}
+                    />
+                  </div>
+                  <p>на схеме рабочего процесса нужно нажать "Добавить статус"</p>
+                  <div className="lab-image-container">
+                    <MediaPlayer
+                      type="image"
+                      src={labImage12}
+                      title="Добавление статуса"
+                      mediaId={`lab-${id}-img-12`}
+                    />
+                  </div>
+                  <p>добавляем на схему статус "Тестируется"</p>
+                  <div className="lab-image-container">
+                    <MediaPlayer
+                      type="image"
+                      src={labImage13}
+                      title="Статус Тестируется"
+                      mediaId={`lab-${id}-img-13`}
+                    />
+                  </div>
+                  <p>затем добавляем возможность перехода задач в этот статус и из него</p>
+                  <p>переход "В работе" → "Тестируется"</p>
+                  <div className="lab-image-container">
+                    <MediaPlayer
+                      type="image"
+                      src={labImage14}
+                      title="Переход В работе -> Тестируется"
+                      mediaId={`lab-${id}-img-14`}
+                    />
+                  </div>
+                  <div className="lab-image-container">
+                    <MediaPlayer
+                      type="image"
+                      src={labImage15}
+                      title="Настройка перехода"
+                      mediaId={`lab-${id}-img-15`}
+                    />
+                  </div>
+                  <p>переход "Тестируется" → "Закрыт"</p>
+                  <div className="lab-image-container">
+                    <MediaPlayer
+                      type="image"
+                      src={labImage16}
+                      title="Переход Тестируется -> Закрыт"
+                      mediaId={`lab-${id}-img-16`}
+                    />
+                  </div>
+                  <p>сохраняем внесенные изменения</p>
+                  <div className="lab-image-container">
+                    <MediaPlayer
+                      type="image"
+                      src={labImage17}
+                      title="Сохранение изменений"
+                      mediaId={`lab-${id}-img-17`}
+                    />
+                  </div>
+                  <p>возвращаемся на доску задач</p>
+                  <div className="lab-image-container">
+                    <MediaPlayer
+                      type="image"
+                      src={labImage18}
+                      title="Возврат на доску"
+                      mediaId={`lab-${id}-img-18`}
+                    />
+                  </div>
+                  <p>В результате должно получится так:</p>
+                  <div className="lab-image-container">
+                    <MediaPlayer
+                      type="image"
+                      src={labImage19}
+                      title="Итоговый результат"
+                      mediaId={`lab-${id}-img-19`}
+                    />
+                  </div>
                 </div>
 
                 <div className="lab-complete-section">

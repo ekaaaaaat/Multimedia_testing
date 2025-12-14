@@ -529,6 +529,18 @@
   list-style-type: decimal;
 }
 
+.lab-image-container {
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+.lab-image-container img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
 .lab-complete-section {
   margin-top: 3rem;
   padding: 2rem;
