@@ -317,6 +317,18 @@
   margin-bottom: 0.5rem;
 }
 
+.test-case-table p {
+  margin: 0.5rem 0;
+}
+
+.test-case-table p:first-child {
+  margin-top: 0;
+}
+
+.test-case-table p:last-child {
+  margin-bottom: 0;
+}
+
 .lesson-image-container {
   margin: 2rem 0;
   text-align: center;
