@@ -58,12 +58,12 @@ const PlatformerGame = () => {
   const updateGame = useCallback(() => {
     if (gameOver || isPaused || !isStarted) return
 
-    // Обновление позиции игрока
-    setPlayer(prev => {
-      let newY = prev.y + prev.velocityY
-      let newVelocityY = prev.velocityY + GRAVITY
+    // Обновление позиции игрока и препятствий одновременно
+    setPlayer(prevPlayer => {
+      let newY = prevPlayer.y + prevPlayer.velocityY
+      let newVelocityY = prevPlayer.velocityY + GRAVITY
       const groundY = GAME_HEIGHT - GROUND_HEIGHT - PLAYER_HEIGHT
-      let isJumping = prev.isJumping
+      let isJumping = prevPlayer.isJumping
 
       // Проверка приземления
       if (newY >= groundY) {
@@ -72,78 +72,78 @@ const PlatformerGame = () => {
         isJumping = false
       }
 
-      return {
-        ...prev,
+      const updatedPlayer = {
+        ...prevPlayer,
         y: newY,
         velocityY: newVelocityY,
         isJumping
       }
-    })
 
-    // Обновление препятствий
-    setObstacles(prev => {
-      return prev
-        .map(obstacle => ({
-          ...obstacle,
-          x: obstacle.x - gameSpeedRef.current
-        }))
-        .filter(obstacle => obstacle.x + obstacle.width > 0)
+      // Обновление препятствий и проверка столкновений
+      setObstacles(prevObstacles => {
+        // Обновляем позиции препятствий
+        const updatedObstacles = prevObstacles
+          .map(obstacle => ({
+            ...obstacle,
+            x: obstacle.x - gameSpeedRef.current
+          }))
+          .filter(obstacle => obstacle.x + obstacle.width > 0)
+
+        // Проверка столкновений с обновленным игроком
+        const playerRect = {
+          x: updatedPlayer.x,
+          y: updatedPlayer.y,
+          width: PLAYER_WIDTH,
+          height: PLAYER_HEIGHT
+        }
+
+        const collision = updatedObstacles.some(obstacle => {
+          const obstacleRect = {
+            x: obstacle.x,
+            y: obstacle.y,
+            width: obstacle.width,
+            height: obstacle.height
+          }
+          return checkCollision(playerRect, obstacleRect)
+        })
+
+        if (collision) {
+          setGameOver(true)
+          return updatedObstacles
+        }
+
+        // Увеличение счета за успешно пройденные препятствия
+        const passedObstacles = updatedObstacles.filter(
+          obstacle => obstacle.x + obstacle.width < updatedPlayer.x
+        )
+        if (passedObstacles.length > 0) {
+          setScore(prevScore => prevScore + passedObstacles.length)
+          return updatedObstacles.filter(
+            obstacle => obstacle.x + obstacle.width >= updatedPlayer.x
+          )
+        }
+
+        return updatedObstacles
+      })
+
+      return updatedPlayer
     })
 
     // Увеличение скорости
     gameSpeedRef.current += SPEED_INCREMENT
+  }, [gameOver, isPaused, isStarted, checkCollision])
 
-    // Проверка столкновений
-    setObstacles(prev => {
-      const playerRect = {
-        x: player.x,
-        y: player.y,
-        width: PLAYER_WIDTH,
-        height: PLAYER_HEIGHT
-      }
-
-      const collision = prev.some(obstacle => {
-        const obstacleRect = {
-          x: obstacle.x,
-          y: obstacle.y,
-          width: obstacle.width,
-          height: obstacle.height
-        }
-        return checkCollision(playerRect, obstacleRect)
-      })
-
-      if (collision) {
-        setGameOver(true)
-        return prev
-      }
-
-      // Увеличение счета за успешно пройденные препятствия
-      const passedObstacles = prev.filter(obstacle => obstacle.x + obstacle.width < player.x)
-      if (passedObstacles.length > 0) {
-        setScore(prevScore => prevScore + passedObstacles.length)
-        return prev.filter(obstacle => obstacle.x + obstacle.width >= player.x)
-      }
-
-      return prev
-    })
-  }, [gameOver, isPaused, isStarted, player, checkCollision])
-
+  // Игровой цикл
   useEffect(() => {
     if (isStarted && !gameOver && !isPaused) {
       gameLoopRef.current = requestAnimationFrame(function gameLoop() {
         updateGame()
         gameLoopRef.current = requestAnimationFrame(gameLoop)
       })
-
-      obstacleSpawnTimerRef.current = setInterval(() => {
-        spawnObstacle()
-      }, 2000 - (gameSpeedRef.current * 50))
     } else {
       if (gameLoopRef.current) {
         cancelAnimationFrame(gameLoopRef.current)
-      }
-      if (obstacleSpawnTimerRef.current) {
-        clearInterval(obstacleSpawnTimerRef.current)
+        gameLoopRef.current = null
       }
     }
 
@@ -151,11 +151,30 @@ const PlatformerGame = () => {
       if (gameLoopRef.current) {
         cancelAnimationFrame(gameLoopRef.current)
       }
+    }
+  }, [isStarted, gameOver, isPaused, updateGame])
+
+  // Таймер для создания препятствий
+  useEffect(() => {
+    if (isStarted && !gameOver && !isPaused) {
+      const spawnInterval = Math.max(1500, 2500 - (gameSpeedRef.current * 100))
+      
+      obstacleSpawnTimerRef.current = setInterval(() => {
+        spawnObstacle()
+      }, spawnInterval)
+    } else {
+      if (obstacleSpawnTimerRef.current) {
+        clearInterval(obstacleSpawnTimerRef.current)
+        obstacleSpawnTimerRef.current = null
+      }
+    }
+
+    return () => {
       if (obstacleSpawnTimerRef.current) {
         clearInterval(obstacleSpawnTimerRef.current)
       }
     }
-  }, [isStarted, gameOver, isPaused, updateGame, spawnObstacle])
+  }, [isStarted, gameOver, isPaused, spawnObstacle])
 
   const handleJump = useCallback(() => {
     if (gameOver || !isStarted || isPaused) return
