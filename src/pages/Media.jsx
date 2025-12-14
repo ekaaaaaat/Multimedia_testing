@@ -125,6 +125,12 @@ const Media = () => {
       title: 'Ошибка error 404',
       src: animation404Cat,
       description: 'Пример отказа (failure) - ошибка 404, когда страница не найдена'
+    },
+    {
+      id: 8,
+      title: 'Пример тест-кейса и чек-листа',
+      src: imageTestCheck,
+      description: 'Пример тест-кейса и чек-листа на авторизацию из четвертого урока'
     }
   ]
 
