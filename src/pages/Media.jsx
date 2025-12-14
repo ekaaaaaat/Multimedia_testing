@@ -22,6 +22,7 @@ import imageDiagram from '../assets/images/diagram.png'
 import imageGagarin from '../assets/images/gagarin.png'
 import imageDefectLifeCycle from '../assets/images/defect_life_cycle.jpg'
 import animation404Cat from '../assets/animation/404Cat.gif'
+import imageTestCheck from '../assets/images/tset_check.png'
 
 const Media = () => {
   const { theme } = useTheme()
