@@ -1406,7 +1406,7 @@ const LessonDetail = () => {
       }
     }
     
-    if (id === '5' || id === 5) {
+    if (String(id) === '5') {
       return {
         title: 'Тестовая документация. Баг-репорт',
         sections: [
