@@ -2179,8 +2179,78 @@ const LessonDetail = () => {
                           return elements.length > 0 ? <>{elements}</> : <p>{text}</p>
                         }
                         
+                        // Функция для парсинга markdown таблицы
+                        const parseMarkdownTable = (text) => {
+                          // Ищем таблицу в формате markdown: | заголовки |, | разделитель |, | данные |
+                          const tableRegex = /\|(.+)\|\s*\n\|([-|: ]+)\|\s*\n((?:\|.+\|\s*\n?)+)/m
+                          const match = text.match(tableRegex)
+                          if (!match) return null
+                          
+                          const beforeTable = text.substring(0, match.index).trim()
+                          const afterTable = text.substring(match.index + match[0].length).trim()
+                          
+                          const headerRow = match[1]
+                          const separatorRow = match[2]
+                          const dataRows = match[3].trim().split('\n').filter(row => row.trim())
+                          
+                          const headers = headerRow.split('|').map(h => h.trim()).filter(h => h)
+                          const rows = dataRows.map(row => {
+                            const cells = row.split('|').map(cell => cell.trim())
+                            // Убираем пустые элементы в начале и конце
+                            return cells.filter((_, idx) => idx > 0 && idx <= headers.length)
+                          })
+                          
+                          return { headers, rows, beforeTable, afterTable, fullMatch: match[0] }
+                        }
+                        
                         // Функция для обработки одного параграфа
                         const processParagraph = (para, index) => {
+                          // Проверяем, содержит ли параграф markdown таблицу
+                          const tableData = parseMarkdownTable(para)
+                          if (tableData) {
+                            const result = []
+                            
+                            // Обрабатываем текст до таблицы
+                            if (tableData.beforeTable) {
+                              const beforeParts = formatTextWithLists(tableData.beforeTable)
+                              if (beforeParts) {
+                                result.push(...(Array.isArray(beforeParts) ? beforeParts : [beforeParts]))
+                              }
+                            }
+                            
+                            // Добавляем таблицу
+                            result.push(
+                              <table key={`table-${index}`} className="content-table">
+                                <thead>
+                                  <tr>
+                                    {tableData.headers.map((header, hIdx) => (
+                                      <th key={hIdx}>{header}</th>
+                                    ))}
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {tableData.rows.map((row, rIdx) => (
+                                    <tr key={rIdx}>
+                                      {row.map((cell, cIdx) => (
+                                        <td key={cIdx}>{cell}</td>
+                                      ))}
+                                    </tr>
+                                  ))}
+                                </tbody>
+                              </table>
+                            )
+                            
+                            // Обрабатываем текст после таблицы
+                            if (tableData.afterTable) {
+                              const afterParts = formatTextWithLists(tableData.afterTable)
+                              if (afterParts) {
+                                result.push(...(Array.isArray(afterParts) ? afterParts : [afterParts]))
+                              }
+                            }
+                            
+                            return result.length > 0 ? <div key={`para-wrapper-${index}`}>{result}</div> : null
+                          }
+                          
                           // Проверяем, является ли параграф тест-кейсом
                           const testCase = parseTestCase(para)
                           if (testCase) {

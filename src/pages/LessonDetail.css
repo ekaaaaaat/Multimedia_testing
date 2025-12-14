@@ -259,6 +259,62 @@
   color: #b2ebf2;
 }
 
+.content-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: table;
+  table-layout: auto;
+}
+
+.lesson-detail-page.dark .content-table {
+  background: rgba(0, 77, 64, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.content-table th,
+.content-table td {
+  padding: 0.75rem;
+  border: 1px solid rgba(0, 137, 123, 0.2);
+  text-align: left;
+}
+
+.lesson-detail-page.dark .content-table th,
+.lesson-detail-page.dark .content-table td {
+  border-color: rgba(128, 222, 234, 0.2);
+}
+
+.content-table th {
+  background: rgba(0, 137, 123, 0.1);
+  font-weight: 600;
+  color: #00897b;
+}
+
+.lesson-detail-page.dark .content-table th {
+  background: rgba(128, 222, 234, 0.15);
+  color: #80deea;
+}
+
+.content-table td {
+  color: #555;
+}
+
+.lesson-detail-page.dark .content-table td {
+  color: #e0e0e0;
+}
+
+.content-table tr:nth-child(even) {
+  background: rgba(0, 137, 123, 0.03);
+}
+
+.lesson-detail-page.dark .content-table tr:nth-child(even) {
+  background: rgba(128, 222, 234, 0.05);
+}
+
 .test-case-table {
   width: 100%;
   border-collapse: collapse;
