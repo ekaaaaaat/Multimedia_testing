@@ -1407,7 +1407,6 @@ const LessonDetail = () => {
     }
     
     if (id === '5') {
-      console.log('Lesson 5 condition matched, returning content')
       return {
         title: 'Тестовая документация. Баг-репорт',
         sections: [
@@ -1674,7 +1673,6 @@ Severity и Priority не всегда равны.`
   }
 
   const lessonContent = getLessonContent()
-  console.log('Lesson ID:', id, 'Lesson Content:', lessonContent ? 'exists' : 'null')
   const navigationSections = lessonContent?.sections.map(s => ({
     title: s.title,
     icon: s.icon
