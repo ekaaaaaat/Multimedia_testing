@@ -1170,6 +1170,34 @@ const LessonDetail = () => {
 • Применена скидка по карте лояльности но не по промокоду:
   • - на экран выведено сообщение "Промокод недействительный. Применена скидка по карте лояльности 5%"
   • - итоговая стоимость корзины пересчитана с учетом скидки по карте лояльности - сумма уменьшена на 5%`
+          },
+          {
+            id: 'lab-work',
+            title: 'Лабораторная работа',
+            icon: '🔬',
+            type: 'text',
+            content: `**Практическая работа по тест-кейсам**
+
+**Задание:**
+
+Написать 5 тест-кейсов для проверки лабораторной работы.
+
+Можете воспользоваться [шаблоном](https://docs.google.com/spreadsheets/d/1RtlhfEn-t2CF3lQdntvocQcxVcIiv5mkeHI2Ic66t_Q/edit?gid=0#gid=0).
+
+**Правила "хороших" тест-кейсов:**
+
+1. Заголовок должен передавать суть проверки.
+2. Тест-кейс должен содержать все данные, необходимые для его прохождения (или ссылку на них).
+3. Тест-кейс не должен быть излишне детализирован UI подробностями продукта.
+4. Тест-кейс должен быть написан так, чтобы любой человек, даже абсолютно не знакомый с проектом, мог его понять и пройти.
+
+**Преимущество тест-кейсов:**
+
+• Минимальный порог входа для тех кто тестирует по уже готовым тест-кейсам. По хорошо составленным тест-кейсам ПО может проверить любой человек, независимо от того, знаком ли он с продуктом и имеет ли он навыки тестирования. Это позволяет быстрее адаптировать новых тестировщиков и привлекать к тестированию коллег из других отделов или аутсорс.
+
+**Недостаток тест-кейсов:**
+
+• Сложно писать и сложно актуализировать. У большого числа кейсов будет множество совершенно одинаковых шагов, например "Нажать кнопку "Войти". Даже с учетом ctrl + C, ctrl + V написание тест-кейсов это рутинная и утомительная работа. А что, если однажды, кнопку "Войти" заменят на кнопку "Авторизоваться"? Придется править огромное количество кейсов, где упоминается эта кнопка. На это уйдет большое количество времени и сил тестировщиков, которые могли бы потратить его на более полезные занятия. В некоторых кейсах эту кнопку поправить забудут. В какой-то момент таких неактуальных сведений накопится очень много и тест-кейсами невозможно будет пользоваться.`
           }
         ]
       }
@@ -1638,7 +1666,7 @@ const LessonDetail = () => {
           >
             📝 Тест
           </button>
-          {id === '2' && (
+          {(id === '2' || id === '3') && (
             <button 
               className={currentSection === 'lab' ? 'active' : ''}
               onClick={() => handleSectionChange('lab')}
@@ -2460,12 +2488,183 @@ const LessonDetail = () => {
           </div>
         )}
 
-        {currentSection === 'lab' && id === '2' && (
+        {currentSection === 'lab' && (id === '2' || id === '3') && (
           <div className="lesson-lab">
             <h1>Лабораторная работа <CatIcon variant={1} size="1.5em" /></h1>
             <div className="lab-content">
-              <div className="lab-section">
-                <h2>Практическая работа в баг-трекинговой системе</h2>
+              {id === '3' ? (
+                <div className="lab-section">
+                  {(() => {
+                    const labSection = lessonContent?.sections.find(s => s.id === 'lab-work')
+                    if (!labSection) return null
+                    
+                    const formatTextWithLists = (text) => {
+                      if (!text) return null
+                      const lines = text.split('\n')
+                      const elements = []
+                      let currentList = []
+                      let listType = null
+                      
+                      lines.forEach((line, idx) => {
+                        const trimmed = line.trim()
+                        if (!trimmed) {
+                          if (currentList.length > 0) {
+                            if (listType === 'ul') {
+                              elements.push(<ul key={`list-${idx}`}>{currentList.map((item, i) => <li key={i}>{item}</li>)}</ul>)
+                            } else if (listType === 'ol') {
+                              elements.push(<ol key={`list-${idx}`}>{currentList.map((item, i) => <li key={i}>{item}</li>)}</ol>)
+                            }
+                            currentList = []
+                            listType = null
+                          }
+                          return
+                        }
+
+                        // Проверяем, является ли строка заголовком
+                        if (trimmed.startsWith('**') && trimmed.endsWith('**')) {
+                          if (currentList.length > 0) {
+                            if (listType === 'ul') {
+                              elements.push(<ul key={`list-${idx}`}>{currentList.map((item, i) => <li key={i}>{item}</li>)}</ul>)
+                            } else if (listType === 'ol') {
+                              elements.push(<ol key={`list-${idx}`}>{currentList.map((item, i) => <li key={i}>{item}</li>)}</ol>)
+                            }
+                            currentList = []
+                            listType = null
+                          }
+                          const headerText = trimmed.replace(/\*\*/g, '')
+                          const cleanHeaderText = headerText.replace(/^#+\s*/, '')
+                          const HeaderTag = 'h2'
+                          elements.push(<HeaderTag key={`header-${idx}`}>{formatLink(cleanHeaderText)}</HeaderTag>)
+                          return
+                        }
+
+                        // Проверяем, является ли строка элементом списка
+                        const listMatch = trimmed.match(/^(\d+\.|\•|\-)\s+(.+)$/)
+                        if (listMatch) {
+                          const isOrdered = /^\d+\./.test(trimmed)
+                          const itemText = listMatch[2]
+                          if (listType !== (isOrdered ? 'ol' : 'ul')) {
+                            if (currentList.length > 0) {
+                              if (listType === 'ul') {
+                                elements.push(<ul key={`list-${idx}`}>{currentList.map((item, i) => <li key={i}>{item}</li>)}</ul>)
+                              } else if (listType === 'ol') {
+                                elements.push(<ol key={`list-${idx}`}>{currentList.map((item, i) => <li key={i}>{item}</li>)}</ol>)
+                              }
+                              currentList = []
+                            }
+                            listType = isOrdered ? 'ol' : 'ul'
+                          }
+                          currentList.push(formatLink(itemText))
+                          return
+                        }
+
+                        // Обычный параграф
+                        if (currentList.length > 0) {
+                          if (listType === 'ul') {
+                            elements.push(<ul key={`list-${idx}`}>{currentList.map((item, i) => <li key={i}>{item}</li>)}</ul>)
+                          } else if (listType === 'ol') {
+                            elements.push(<ol key={`list-${idx}`}>{currentList.map((item, i) => <li key={i}>{item}</li>)}</ol>)
+                          }
+                          currentList = []
+                          listType = null
+                        }
+
+                        // Обработка ссылок в формате [текст](url)
+                        const formattedText = formatLink(trimmed)
+                        elements.push(<p key={`para-${idx}`}>{formattedText}</p>)
+                      })
+
+                      if (currentList.length > 0) {
+                        if (listType === 'ul') {
+                          elements.push(<ul key="list-final">{currentList.map((item, i) => <li key={i}>{item}</li>)}</ul>)
+                        } else if (listType === 'ol') {
+                          elements.push(<ol key="list-final">{currentList.map((item, i) => <li key={i}>{item}</li>)}</ol>)
+                        }
+                      }
+
+                      return elements
+                    }
+
+                    const formatLink = (text) => {
+                      const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g
+                      const parts = []
+                      let lastIndex = 0
+                      let match
+
+                      while ((match = linkRegex.exec(text)) !== null) {
+                        if (match.index > lastIndex) {
+                          parts.push(text.substring(lastIndex, match.index))
+                        }
+                        parts.push(
+                          <a key={match.index} href={match[2]} target="_blank" rel="noopener noreferrer">
+                            {match[1]}
+                          </a>
+                        )
+                        lastIndex = match.index + match[0].length
+                      }
+
+                      if (lastIndex < text.length) {
+                        parts.push(text.substring(lastIndex))
+                      }
+
+                      // Обработка жирного текста
+                      return parts.length > 0 ? parts.map((part, i) => {
+                        if (typeof part === 'string') {
+                          const boldRegex = /\*\*([^*]+)\*\*/g
+                          const boldParts = []
+                          let boldLastIndex = 0
+                          let boldMatch
+
+                          while ((boldMatch = boldRegex.exec(part)) !== null) {
+                            if (boldMatch.index > boldLastIndex) {
+                              boldParts.push(part.substring(boldLastIndex, boldMatch.index))
+                            }
+                            boldParts.push(<strong key={boldMatch.index}>{boldMatch[1]}</strong>)
+                            boldLastIndex = boldMatch.index + boldMatch[0].length
+                          }
+
+                          if (boldLastIndex < part.length) {
+                            boldParts.push(part.substring(boldLastIndex))
+                          }
+
+                          return boldParts.length > 0 ? boldParts : part
+                        }
+                        return part
+                      }) : text
+                    }
+
+                    const paragraphs = labSection.content.split('\n\n').filter(p => p.trim())
+                    return paragraphs.map((para, index) => {
+                      const formatted = formatTextWithLists(para)
+                      return <div key={`lab-para-${index}`}>{formatted}</div>
+                    })
+                  })()}
+
+                  <div className="lab-complete-section">
+                    <div className="lab-complete-content">
+                      <h3>Выполнение работы</h3>
+                      <p>После выполнения всех заданий лабораторной работы нажмите кнопку ниже, чтобы отметить работу как выполненную.</p>
+                      <button 
+                        className={`lab-complete-button ${getLessonProgress(id).labCompleted ? 'completed' : ''}`}
+                        onClick={handleLabComplete}
+                        disabled={getLessonProgress(id).labCompleted}
+                      >
+                        {getLessonProgress(id).labCompleted ? (
+                          <>
+                            <span>✓</span> Лабораторная работа выполнена
+                          </>
+                        ) : (
+                          <>
+                            <span>✓</span> Отметить работу как выполненную
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="lab-section">
+                  <h2>Практическая работа в баг-трекинговой системе</h2>
                 <p className="lab-intro">
                   Это первая и самая маленькая практическая работа.
                 </p>
